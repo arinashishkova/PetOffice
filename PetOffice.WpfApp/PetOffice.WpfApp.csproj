@@ -9,7 +9,45 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\action.png" />
+    <None Remove="Assets\add.png" />
+    <None Remove="Assets\badge.png" />
+    <None Remove="Assets\cat.png" />
+    <None Remove="Assets\coffee-cup.png" />
+    <None Remove="Assets\dog.png" />
+    <None Remove="Assets\energy.png" />
+    <None Remove="Assets\fix.png" />
+    <None Remove="Assets\hamster.png" />
+    <None Remove="Assets\log.png" />
+    <None Remove="Assets\petoffice_icon.ico" />
+    <None Remove="Assets\pet_name.png" />
+    <None Remove="Assets\remove.png" />
+    <None Remove="Assets\service.png" />
+    <None Remove="Assets\speech-bubble.png" />
+    <None Remove="Assets\work.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PetOffice.Core\PetOffice.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\action.png" />
+    <Resource Include="Assets\add.png" />
+    <Resource Include="Assets\badge.png" />
+    <Resource Include="Assets\cat.png" />
+    <Resource Include="Assets\coffee-cup.png" />
+    <Resource Include="Assets\dog.png" />
+    <Resource Include="Assets\energy.png" />
+    <Resource Include="Assets\fix.png" />
+    <Resource Include="Assets\hamster.png" />
+    <Resource Include="Assets\log.png" />
+    <Resource Include="Assets\petoffice_icon.ico" />
+    <Resource Include="Assets\pet_name.png" />
+    <Resource Include="Assets\remove.png" />
+    <Resource Include="Assets\service.png" />
+    <Resource Include="Assets\speech-bubble.png" />
+    <Resource Include="Assets\work.png" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,7 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Collections.ObjectModel;
-using PetOffice.Core.Models;
 using PetOffice.Core.Interfaces;
+using PetOffice.Core.Models;
 
 namespace PetOffice.WpfApp
 {
@@ -60,8 +59,7 @@ namespace PetOffice.WpfApp
 
                 pets.Add(pet);
 
-                LogListBox.Items.Add(
-                    $"Added: {pet.DisplayName}");
+                AddLog($"Added: {pet.DisplayName}");
 
                 NameTextBox.Clear();
             }
@@ -103,8 +101,35 @@ namespace PetOffice.WpfApp
                 $"Tasks completed: {pet.TasksCompleted}";
         }
 
+        // Enables buttons depending on the selected pet's abilities
+        private void UpdateAbilityButtons()
+        {
+            OfficePet? pet =
+                PetsListBox.SelectedItem as OfficePet;
+
+            WorkButton.IsEnabled =
+                pet is not null;
+
+            CrazyButton.IsEnabled =
+                pet is not null;
+
+            RemoveButton.IsEnabled =
+                pet is not null;
+
+            CommunicateButton.IsEnabled =
+                pet is ICommunicate;
+
+            CoffeeButton.IsEnabled =
+                pet is IMakeCoffee;
+
+            FixButton.IsEnabled =
+                pet is ITechSupport;
+        }
+
         // Runs the normal work action
-        private void WorkButton_Click(object sender, RoutedEventArgs e)
+        private void WorkButton_Click(
+            object sender,
+            RoutedEventArgs e)
         {
             if (PetsListBox.SelectedItem is not OfficePet pet)
             {
@@ -116,7 +141,7 @@ namespace PetOffice.WpfApp
             {
                 string message = pet.Work();
 
-                LogListBox.Items.Add(message);
+                AddLog(message);
                 UpdateSelectedPetInfo();
             }
             catch (InvalidOperationException ex)
@@ -125,9 +150,10 @@ namespace PetOffice.WpfApp
             }
         }
 
-
         // Runs the special action of the selected pet
-        private void CrazyButton_Click(object sender, RoutedEventArgs e)
+        private void CrazyButton_Click(
+            object sender,
+            RoutedEventArgs e)
         {
             if (PetsListBox.SelectedItem is not OfficePet pet)
             {
@@ -139,7 +165,7 @@ namespace PetOffice.WpfApp
             {
                 string message = pet.CrazyAction();
 
-                LogListBox.Items.Add(message);
+                AddLog(message);
                 UpdateSelectedPetInfo();
             }
             catch (InvalidOperationException ex)
@@ -162,7 +188,7 @@ namespace PetOffice.WpfApp
             {
                 string message = communicator.Communicate();
 
-                LogListBox.Items.Add(message);
+                AddLog(message);
                 UpdateSelectedPetInfo();
             }
             catch (InvalidOperationException ex)
@@ -171,27 +197,6 @@ namespace PetOffice.WpfApp
             }
         }
 
-        // Enables buttons depending on the selected pet's abilities
-        private void UpdateAbilityButtons()
-        {
-            OfficePet? pet = PetsListBox.SelectedItem as OfficePet;
-
-            RemoveButton.IsEnabled = pet is not null;
-
-            CommunicateButton.IsEnabled =
-                pet is ICommunicate;
-
-            CoffeeButton.IsEnabled =
-                pet is IMakeCoffee;
-
-            FixButton.IsEnabled =
-                pet is ITechSupport;
-            WorkButton.IsEnabled =
-                pet is not null;
-
-            CrazyButton.IsEnabled =
-                pet is not null;
-        }
         private void CoffeeButton_Click(
             object sender,
             RoutedEventArgs e)
@@ -206,7 +211,7 @@ namespace PetOffice.WpfApp
             {
                 string message = coffeeMaker.MakeCoffee();
 
-                LogListBox.Items.Add(message);
+                AddLog(message);
                 UpdateSelectedPetInfo();
             }
             catch (InvalidOperationException ex)
@@ -229,7 +234,7 @@ namespace PetOffice.WpfApp
             {
                 string message = techSupport.FixComputer();
 
-                LogListBox.Items.Add(message);
+                AddLog(message);
                 UpdateSelectedPetInfo();
             }
             catch (InvalidOperationException ex)
@@ -251,12 +256,22 @@ namespace PetOffice.WpfApp
 
             pets.Remove(pet);
 
-            LogListBox.Items.Add(
-                $"Removed: {pet.DisplayName}");
+            AddLog($"Removed: {pet.DisplayName}");
 
             UpdateSelectedPetInfo();
             UpdateAbilityButtons();
         }
 
+        // Adds the newest log message at the top
+        private void AddLog(string message)
+        {
+            LogListBox.Items.Insert(0, message);
+
+            if (LogListBox.Items.Count > 0)
+            {
+                LogListBox.ScrollIntoView(
+                    LogListBox.Items[0]);
+            }
+        }
     }
 }
