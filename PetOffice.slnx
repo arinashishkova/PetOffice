@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="PetOffice.Core/PetOffice.Core.csproj" />
   <Project Path="PetOffice.WpfApp/PetOffice.WpfApp.csproj" />
 </Solution>
