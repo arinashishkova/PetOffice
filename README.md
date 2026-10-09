@@ -89,7 +89,7 @@ Projekti tegemisel kasutati AI-d C# ja WPF-i kontseptsioonide ning GitHubi töö
 
 Lahendust kontrolliti Visual Studios ning rakenduse põhifunktsioone testiti käsitsi.
 
-## 🛠️ Tehnoloogiad
+## 🛠️ Tehnoloogiad 
 
 - C#
 - .NET 10
