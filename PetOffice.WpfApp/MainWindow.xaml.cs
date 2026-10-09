@@ -19,6 +19,7 @@ namespace PetOffice.WpfApp
             PetTypeComboBox.Items.Add("CatManager");
             PetTypeComboBox.Items.Add("DogIntern");
             PetTypeComboBox.Items.Add("HamsterIT");
+            PetTypeComboBox.Items.Add("ParrotReceptionist");
 
             PetTypeComboBox.SelectedIndex = 0;
 
@@ -50,6 +51,9 @@ namespace PetOffice.WpfApp
 
                     case "HamsterIT":
                         pet = new HamsterIT(name);
+                        break;
+                    case "ParrotReceptionist":
+                        pet = new ParrotReceptionist(name);
                         break;
 
                     default:
