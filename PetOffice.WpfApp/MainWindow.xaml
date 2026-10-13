@@ -12,7 +12,6 @@
 
     <Window.Resources>
 
-        <!-- CARD -->
         <Style x:Key="CardStyle" TargetType="Border">
             <Setter Property="BorderBrush" Value="#DFE3E6"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -20,8 +19,6 @@
             <Setter Property="Padding" Value="20"/>
         </Style>
 
-
-        <!-- TEXT INPUT -->
         <Style x:Key="InputTextBoxStyle" TargetType="TextBox">
             <Setter Property="Height" Value="36"/>
             <Setter Property="Padding" Value="9,5"/>
@@ -31,8 +28,6 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
-
-        <!-- COMBOBOX -->
         <Style x:Key="InputComboBoxStyle" TargetType="ComboBox">
             <Setter Property="Height" Value="36"/>
             <Setter Property="Padding" Value="7,4"/>
@@ -42,8 +37,6 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
-
-        <!-- BASIC BUTTON -->
         <Style x:Key="ActionButtonStyle" TargetType="Button">
             <Setter Property="Height" Value="42"/>
             <Setter Property="Padding" Value="12,6"/>
@@ -91,43 +84,15 @@
             </Setter>
         </Style>
 
-        <!-- Rounded energy progress bar -->
         <Style x:Key="EnergyProgressBarStyle"
-       TargetType="ProgressBar">
+               TargetType="ProgressBar">
 
             <Setter Property="Height" Value="22"/>
             <Setter Property="Background" Value="#E7E3EA"/>
             <Setter Property="Foreground" Value="#F3B978"/>
 
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="ProgressBar">
-
-                        <Grid>
-
-                            <!-- Background -->
-                            <Border x:Name="PART_Track"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10"/>
-
-                            <!-- Filled energy -->
-                            <Border x:Name="PART_Indicator"
-                            Background="{TemplateBinding Foreground}"
-                            CornerRadius="10"
-                            HorizontalAlignment="Left"/>
-
-                        </Grid>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
         </Style>
 
-
-        <!-- ADD -->
         <Style x:Key="AddButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
@@ -135,8 +100,6 @@
             <Setter Property="BorderBrush" Value="#9FC6C0"/>
         </Style>
 
-
-        <!-- WORK -->
         <Style x:Key="WorkButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
@@ -144,8 +107,6 @@
             <Setter Property="BorderBrush" Value="#BDD9EC"/>
         </Style>
 
-
-        <!-- CRAZY -->
         <Style x:Key="CrazyButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
@@ -153,8 +114,6 @@
             <Setter Property="BorderBrush" Value="#E8BFD1"/>
         </Style>
 
-
-        <!-- COMMUNICATE -->
         <Style x:Key="CommunicateButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
@@ -162,8 +121,6 @@
             <Setter Property="BorderBrush" Value="#CEC5EA"/>
         </Style>
 
-
-        <!-- COFFEE -->
         <Style x:Key="CoffeeButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
@@ -171,8 +128,6 @@
             <Setter Property="BorderBrush" Value="#F0CDA8"/>
         </Style>
 
-
-        <!-- FIX -->
         <Style x:Key="FixButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
@@ -180,8 +135,6 @@
             <Setter Property="BorderBrush" Value="#BFDCC8"/>
         </Style>
 
-
-        <!-- REMOVE -->
         <Style x:Key="RemoveButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
@@ -203,6 +156,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
 
@@ -214,7 +168,6 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-
 
                 <StackPanel VerticalAlignment="Center">
 
@@ -230,27 +183,50 @@
 
                 </StackPanel>
 
-
                 <StackPanel Grid.Column="1"
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center">
+            Orientation="Horizontal"
+            VerticalAlignment="Center">
 
                     <Image Source="Assets/cat.png"
-                           Width="58"
-                           Height="58"
-                           Stretch="Uniform"
-                           Margin="0,0,10,0"/>
+           Width="48"
+           Height="48"
+           Stretch="Uniform"
+           Margin="0,0,8,0"/>
 
                     <Image Source="Assets/dog.png"
-                           Width="58"
-                           Height="58"
-                           Stretch="Uniform"
-                           Margin="0,0,10,0"/>
+           Width="48"
+           Height="48"
+           Stretch="Uniform"
+           Margin="0,0,8,0"/>
 
                     <Image Source="Assets/hamster.png"
-                           Width="58"
-                           Height="58"
-                           Stretch="Uniform"/>
+           Width="48"
+           Height="48"
+           Stretch="Uniform"
+           Margin="0,0,8,0"/>
+
+                    <Image Source="Assets/parrot.png"
+           Width="48"
+           Height="48"
+           Stretch="Uniform"
+           Margin="0,0,8,0"/>
+
+                    <Image Source="Assets/rabbit.png"
+           Width="48"
+           Height="48"
+           Stretch="Uniform"
+           Margin="0,0,8,0"/>
+
+                    <Image Source="Assets/owl.png"
+           Width="48"
+           Height="48"
+           Stretch="Uniform"
+           Margin="0,0,8,0"/>
+
+                    <Image Source="Assets/raccoon.png"
+           Width="48"
+           Height="48"
+           Stretch="Uniform"/>
 
                 </StackPanel>
 
@@ -282,7 +258,6 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-
                         <StackPanel Grid.Row="0"
                                     Orientation="Horizontal"
                                     Margin="0,0,0,18">
@@ -301,7 +276,7 @@
                         </StackPanel>
 
 
-                        <!-- TYPE -->
+                        <!-- REPOSITORY -->
                         <Grid Grid.Row="1"
                               Margin="0,0,0,12">
 
@@ -315,14 +290,17 @@
                                        Foreground="#59666D"/>
 
                             <Border Grid.Column="1"
-                                Height="38"
-                                Background="#D9FFFFFF"
-                                BorderBrush="#D7CFC7"
-                                BorderThickness="1"
-                                CornerRadius="8">
+                                    Height="38"
+                                    Background="#D9FFFFFF"
+                                    BorderBrush="#D7CFC7"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
 
-                                <ComboBox x:Name="PetTypeComboBox"
-              Style="{StaticResource InputComboBoxStyle}"/>
+                                <ComboBox
+                                    Style="{StaticResource InputComboBoxStyle}"
+                                    ItemsSource="{Binding RepositoryNames}"
+                                    SelectedItem="{Binding SelectedRepository,
+                                                           Mode=TwoWay}"/>
 
                             </Border>
 
@@ -354,25 +332,27 @@
                             </StackPanel>
 
                             <Border Grid.Column="1"
-        Height="38"
-        Background="#D9FFFFFF"
-        BorderBrush="#D7CFC7"
-        BorderThickness="1"
-        CornerRadius="8">
+                                    Height="38"
+                                    Background="#D9FFFFFF"
+                                    BorderBrush="#D7CFC7"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
 
-                                <TextBox x:Name="NameTextBox"
-             Style="{StaticResource InputTextBoxStyle}"/>
+                                <TextBox
+                                    Style="{StaticResource InputTextBoxStyle}"
+                                    Text="{Binding NewPetName,
+                                                   Mode=TwoWay,
+                                                   UpdateSourceTrigger=PropertyChanged}"/>
 
                             </Border>
 
                         </Grid>
 
 
-                        <!-- ADD BUTTON -->
-                        <Button x:Name="AddButton"
-                                Grid.Row="3"
+                        <!-- ADD -->
+                        <Button Grid.Row="3"
                                 Style="{StaticResource AddButtonStyle}"
-                                Click="AddButton_Click">
+                                Command="{Binding AddCommand}">
 
                             <StackPanel Orientation="Horizontal">
 
@@ -423,21 +403,22 @@
 
                         </StackPanel>
 
-
                         <Border Grid.Row="1"
-        Background="#CCFFFFFF"
-        BorderBrush="#CCDCE7"
-        BorderThickness="1"
-        CornerRadius="9"
-        Padding="2">
+                                Background="#CCFFFFFF"
+                                BorderBrush="#CCDCE7"
+                                BorderThickness="1"
+                                CornerRadius="9"
+                                Padding="2">
 
-                            <ListBox x:Name="PetsListBox"
-             DisplayMemberPath="DisplayName"
-             SelectionChanged="PetsListBox_SelectionChanged"
-             FontSize="14"
-             Padding="6"
-             Background="Transparent"
-             BorderThickness="0"/>
+                            <ListBox
+                                ItemsSource="{Binding VisiblePets}"
+                                SelectedItem="{Binding SelectedPet,
+                                                       Mode=TwoWay}"
+                                DisplayMemberPath="DisplayName"
+                                FontSize="14"
+                                Padding="6"
+                                Background="Transparent"
+                                BorderThickness="0"/>
 
                         </Border>
 
@@ -465,7 +446,6 @@
                     </Grid.RowDefinitions>
 
 
-                    <!-- HEADER -->
                     <Grid Grid.Row="0"
                           Margin="0,0,0,12">
 
@@ -473,7 +453,6 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-
 
                         <StackPanel Orientation="Horizontal">
 
@@ -490,12 +469,10 @@
 
                         </StackPanel>
 
-
-                        <Button x:Name="RemoveButton"
-                                Grid.Column="1"
+                        <Button Grid.Column="1"
                                 Width="130"
                                 Style="{StaticResource RemoveButtonStyle}"
-                                Click="RemoveButton_Click">
+                                Command="{Binding RemoveCommand}">
 
                             <StackPanel Orientation="Horizontal">
 
@@ -515,16 +492,15 @@
 
 
                     <!-- NAME -->
-                    <TextBlock x:Name="SelectedPetTextBlock"
-                               Grid.Row="1"
-                               Text="No pet selected"
+                    <TextBlock Grid.Row="1"
+                               Text="{Binding SelectedPetDisplayName}"
                                FontSize="18"
                                FontWeight="SemiBold"
                                Foreground="#477D9D"
                                Margin="0,0,0,15"/>
 
 
-                    <!-- ENERGY -->
+                    <!-- STATE -->
                     <Grid Grid.Row="2"
                           Margin="0,0,0,18">
 
@@ -534,7 +510,6 @@
                             <ColumnDefinition Width="85"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
 
                         <StackPanel Grid.Column="0"
                                     Orientation="Horizontal">
@@ -549,36 +524,42 @@
 
                         </StackPanel>
 
-
-                        <ProgressBar x:Name="EnergyProgressBar"
-             Grid.Column="1"
-             Minimum="0"
-             Maximum="100"
-             Value="0"
-             Margin="0,0,12,0"
-             Style="{StaticResource EnergyProgressBarStyle}"/>
-
+                        <ProgressBar Grid.Column="1"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 Value="{Binding SelectedPetEnergy, Mode=OneWay}"
+                                 Margin="0,0,12,0"
+                                 Style="{StaticResource EnergyProgressBarStyle}"/>
 
                         <Border Grid.Column="2"
-        Background="#99FFFFFF"
-        CornerRadius="8"
-        Padding="8,4"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Center">
+                                Background="#99FFFFFF"
+                                CornerRadius="8"
+                                Padding="8,4"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
 
-                            <TextBlock x:Name="EnergyTextBlock"
-               Text="0 / 100"
-               VerticalAlignment="Center"/>
+                            <TextBlock
+                                Text="{Binding SelectedPetEnergyText}"
+                                VerticalAlignment="Center"/>
 
                         </Border>
 
+                        <StackPanel Grid.Column="3"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center">
 
-                        <TextBlock x:Name="TasksTextBlock"
-                                   Grid.Column="3"
-                                   Text="Tasks completed: 0"
-                                   HorizontalAlignment="Right"
-                                   VerticalAlignment="Center"
-                                   Foreground="#667085"/>
+                            <TextBlock
+                                Text="{Binding SelectedPetTasksText}"
+                                HorizontalAlignment="Right"
+                                Foreground="#667085"/>
+
+                            <TextBlock
+                                Text="{Binding SelectedPetReactionsText}"
+                                HorizontalAlignment="Right"
+                                Foreground="#667085"
+                                Margin="0,3,0,0"/>
+
+                        </StackPanel>
 
                     </Grid>
 
@@ -593,11 +574,9 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-
-                        <Button x:Name="WorkButton"
-                                Grid.Column="0"
+                        <Button Grid.Column="0"
                                 Style="{StaticResource WorkButtonStyle}"
-                                Click="WorkButton_Click">
+                                Command="{Binding WorkCommand}">
 
                             <StackPanel Orientation="Horizontal">
 
@@ -613,11 +592,9 @@
 
                         </Button>
 
-
-                        <Button x:Name="CrazyButton"
-                                Grid.Column="2"
+                        <Button Grid.Column="2"
                                 Style="{StaticResource CrazyButtonStyle}"
-                                Click="CrazyButton_Click">
+                                Command="{Binding CrazyCommand}">
 
                             <StackPanel Orientation="Horizontal">
 
@@ -647,11 +624,9 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-
-                        <Button x:Name="CommunicateButton"
-                                Grid.Column="0"
+                        <Button Grid.Column="0"
                                 Style="{StaticResource CommunicateButtonStyle}"
-                                Click="CommunicateButton_Click">
+                                Command="{Binding CommunicateCommand}">
 
                             <StackPanel Orientation="Horizontal">
 
@@ -667,11 +642,9 @@
 
                         </Button>
 
-
-                        <Button x:Name="CoffeeButton"
-                                Grid.Column="2"
+                        <Button Grid.Column="2"
                                 Style="{StaticResource CoffeeButtonStyle}"
-                                Click="CoffeeButton_Click">
+                                Command="{Binding CoffeeCommand}">
 
                             <StackPanel Orientation="Horizontal">
 
@@ -687,11 +660,9 @@
 
                         </Button>
 
-
-                        <Button x:Name="FixButton"
-                                Grid.Column="4"
+                        <Button Grid.Column="4"
                                 Style="{StaticResource FixButtonStyle}"
-                                Click="FixButton_Click">
+                                Command="{Binding FixCommand}">
 
                             <StackPanel Orientation="Horizontal">
 
@@ -714,8 +685,113 @@
             </Border>
 
 
-            <!-- ACTIVITY LOG -->
+            <!-- LINQ -->
             <Border Grid.Row="3"
+                    Style="{StaticResource CardStyle}"
+                    Background="#FFF8EC"
+                    Margin="0,0,0,16">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Text="Search, sort and summary"
+                               FontSize="17"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,12"/>
+
+                    <Grid Grid.Row="1">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <!-- WHERE -->
+                        <StackPanel Grid.Column="0">
+
+                            <TextBlock Text="Search by name"
+                                       Foreground="#59666D"
+                                       Margin="0,0,0,5"/>
+
+                            <Border Background="#D9FFFFFF"
+                                    BorderBrush="#D7CFC7"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+
+                                <TextBox
+                                    Style="{StaticResource InputTextBoxStyle}"
+                                    Text="{Binding SearchText,
+                                                   Mode=TwoWay,
+                                                   UpdateSourceTrigger=PropertyChanged}"/>
+
+                            </Border>
+
+                        </StackPanel>
+
+
+                        <!-- ORDER BY -->
+                        <StackPanel Grid.Column="2">
+
+                            <TextBlock Text="Sort"
+                                       Foreground="#59666D"
+                                       Margin="0,0,0,5"/>
+
+                            <Border Background="#D9FFFFFF"
+                                    BorderBrush="#D7CFC7"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+
+                                <ComboBox
+                                    Style="{StaticResource InputComboBoxStyle}"
+                                    ItemsSource="{Binding SortOptions}"
+                                    SelectedItem="{Binding SelectedSortOption,
+                                                           Mode=TwoWay}"/>
+
+                            </Border>
+
+                        </StackPanel>
+
+
+                        <!-- GROUP BY -->
+                        <StackPanel Grid.Column="4">
+
+                            <TextBlock Text="Summary by type"
+                                       Foreground="#59666D"
+                                       Margin="0,0,0,5"/>
+
+                            <Border Background="#D9FFFFFF"
+                                    BorderBrush="#D7CFC7"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="6">
+
+                                <ListBox ItemsSource="{Binding Summary}"
+                                         Height="80"
+                                         Background="Transparent"
+                                         BorderThickness="0"/>
+
+                            </Border>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </Grid>
+
+            </Border>
+
+
+            <!-- ACTIVITY LOG -->
+            <Border Grid.Row="4"
                     Style="{StaticResource CardStyle}"
                     Background="#EFF8F2"
                     Margin="0,0,0,20">
@@ -724,9 +800,8 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="135"/>
+                        <RowDefinition Height="150"/>
                     </Grid.RowDefinitions>
-
 
                     <StackPanel Grid.Row="0"
                                 Orientation="Horizontal"
@@ -743,9 +818,7 @@
                                    FontWeight="SemiBold"
                                    VerticalAlignment="Center"/>
 
-
                     </StackPanel>
-
 
                     <Border Grid.Row="1"
                             Background="#CCFFFFFF"
@@ -754,7 +827,7 @@
                             CornerRadius="9"
                             Padding="2">
 
-                        <ListBox x:Name="LogListBox"
+                        <ListBox ItemsSource="{Binding Log}"
                                  FontSize="13"
                                  Padding="7"
                                  Background="Transparent"
