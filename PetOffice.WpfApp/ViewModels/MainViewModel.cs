@@ -12,7 +12,9 @@ namespace PetOffice.WpfApp.ViewModels
         private readonly Repository<DogIntern> dogRepository = new();
         private readonly Repository<HamsterIT> hamsterRepository = new();
         private readonly Repository<ParrotReceptionist> parrotRepository = new();
-
+        private readonly Repository<RabbitAccountant> rabbitRepository = new();
+        private readonly Repository<RaccoonBarista> raccoonRepository = new();
+        private readonly Repository<OwlSysAdmin> owlRepository = new();
         private string selectedRepository = "CatManager";
         private OfficePet? selectedPet;
         private string newPetName = "";
@@ -25,7 +27,10 @@ namespace PetOffice.WpfApp.ViewModels
                 "CatManager",
                 "DogIntern",
                 "HamsterIT",
-                "ParrotReceptionist"
+                "ParrotReceptionist",
+                "RabbitAccountant",
+                "RaccoonBarista",
+                "OwlSysAdmin"
             };
 
         public ObservableCollection<string> SortOptions { get; }
@@ -202,6 +207,13 @@ namespace PetOffice.WpfApp.ViewModels
             dogRepository.ReactionOccurred += Repository_ReactionOccurred;
             hamsterRepository.ReactionOccurred += Repository_ReactionOccurred;
             parrotRepository.ReactionOccurred += Repository_ReactionOccurred;
+            rabbitRepository.ReactionOccurred += Repository_ReactionOccurred;
+            raccoonRepository.ReactionOccurred += Repository_ReactionOccurred;
+            owlRepository.ReactionOccurred += Repository_ReactionOccurred;
+
+            rabbitRepository.Add(new RabbitAccountant("Bunny"));
+            raccoonRepository.Add(new RaccoonBarista("Rocky"));
+            owlRepository.Add(new OwlSysAdmin("Hoot"));
 
             RefreshVisiblePets();
             RefreshSummary();
@@ -260,6 +272,29 @@ namespace PetOffice.WpfApp.ViewModels
                         parrotRepository.Add(parrot);
                         pet = parrot;
                         break;
+                    case "RabbitAccountant":
+                        RabbitAccountant rabbit =
+                            new RabbitAccountant(NewPetName);
+
+                        rabbitRepository.Add(rabbit);
+                        pet = rabbit;
+                        break;
+
+                    case "RaccoonBarista":
+                        RaccoonBarista raccoon =
+                            new RaccoonBarista(NewPetName);
+
+                        raccoonRepository.Add(raccoon);
+                        pet = raccoon;
+                        break;
+
+                    case "OwlSysAdmin":
+                        OwlSysAdmin owl =
+                            new OwlSysAdmin(NewPetName);
+
+                        owlRepository.Add(owl);
+                        pet = owl;
+                        break;
 
                     default:
                         return;
@@ -304,6 +339,15 @@ namespace PetOffice.WpfApp.ViewModels
 
                 ParrotReceptionist parrot =>
                     parrotRepository.Remove(parrot),
+
+                RabbitAccountant rabbit =>
+                    rabbitRepository.Remove(rabbit),
+
+                RaccoonBarista raccoon =>
+                    raccoonRepository.Remove(raccoon),
+
+                OwlSysAdmin owl =>
+                    owlRepository.Remove(owl),
 
                 _ => false
             };
@@ -370,6 +414,15 @@ namespace PetOffice.WpfApp.ViewModels
 
                     ParrotReceptionist parrot =>
                         parrotRepository.PerformCrazyAction(parrot),
+
+                    RabbitAccountant rabbit =>
+                        rabbitRepository.PerformCrazyAction(rabbit),
+
+                    RaccoonBarista raccoon =>
+                        raccoonRepository.PerformCrazyAction(raccoon),
+
+                    OwlSysAdmin owl =>
+                        owlRepository.PerformCrazyAction(owl),
 
                     _ => ""
                 };
@@ -529,9 +582,18 @@ namespace PetOffice.WpfApp.ViewModels
                     hamsterRepository.GetAll())
 
                 .Concat(
-                    parrotRepository.GetAll());
-        }
+                    parrotRepository.GetAll())
 
+                .Concat(
+                    rabbitRepository.GetAll())
+
+                .Concat(
+                    raccoonRepository.GetAll())
+
+                .Concat(
+                    owlRepository.GetAll());
+        }
+        
         private void RefreshSummary()
         {
             Summary.Clear();
