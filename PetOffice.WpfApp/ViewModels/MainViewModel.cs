@@ -584,9 +584,6 @@ namespace PetOffice.WpfApp.ViewModels
                 .Concat(
                     parrotRepository.GetAll())
 
-                 .Concat(
-                    parrotRepository.GetAll())
-
                 .Concat(
                     rabbitRepository.GetAll())
 
