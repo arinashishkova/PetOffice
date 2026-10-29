@@ -5,7 +5,7 @@ using PetOffice.Core.Repositories;
 
 namespace PetOffice.WpfApp.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public partial class MainViewModel : ViewModelBase
     {
         // repositories for each pet type
         private readonly Repository<CatManager> catRepository = new();
@@ -52,6 +52,7 @@ namespace PetOffice.WpfApp.ViewModels
         // groupby result
         public ObservableCollection<string> Summary { get; }
             = new();
+
 
         public RelayCommand AddCommand { get; }
         public RelayCommand RemoveCommand { get; }
@@ -156,6 +157,7 @@ namespace PetOffice.WpfApp.ViewModels
             }
         }
 
+
         // selected pet state
         public string SelectedPetDisplayName =>
             SelectedPet?.DisplayName ?? "No pet selected";
@@ -202,6 +204,9 @@ namespace PetOffice.WpfApp.ViewModels
                 FixComputer,
                 () => SelectedPet is ITechSupport);
 
+            InitializeAnalysis();
+
+
             // listen for reaction messages
             catRepository.ReactionOccurred += Repository_ReactionOccurred;
             dogRepository.ReactionOccurred += Repository_ReactionOccurred;
@@ -217,6 +222,7 @@ namespace PetOffice.WpfApp.ViewModels
 
             RefreshVisiblePets();
             RefreshSummary();
+            RefreshAnalysisPets();
         }
 
         private void Repository_ReactionOccurred(
@@ -306,6 +312,7 @@ namespace PetOffice.WpfApp.ViewModels
 
                 RefreshVisiblePets();
                 RefreshSummary();
+                RefreshAnalysisPets();
 
                 SelectedPet = pet;
 
@@ -365,6 +372,7 @@ namespace PetOffice.WpfApp.ViewModels
 
             RefreshVisiblePets();
             RefreshSummary();
+            RefreshAnalysisPets();
         }
 
         private void Work()
@@ -593,7 +601,7 @@ namespace PetOffice.WpfApp.ViewModels
                 .Concat(
                     owlRepository.GetAll());
         }
-        
+
         private void RefreshSummary()
         {
             Summary.Clear();
@@ -644,5 +652,6 @@ namespace PetOffice.WpfApp.ViewModels
             CoffeeCommand.RaiseCanExecuteChanged();
             FixCommand.RaiseCanExecuteChanged();
         }
+
     }
 }

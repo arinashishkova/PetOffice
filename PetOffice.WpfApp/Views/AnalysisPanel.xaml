@@ -1,0 +1,393 @@
+﻿<UserControl x:Class="PetOffice.WpfApp.Views.AnalysisPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             MinWidth="760">
+
+    <UserControl.Resources>
+
+        <Style x:Key="AnalysisButtonStyle"
+               TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#344054"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.78"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.35"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RunButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource AnalysisButtonStyle}">
+            <Setter Property="Background" Value="#D9E7FA"/>
+            <Setter Property="BorderBrush" Value="#B9CFEA"/>
+        </Style>
+
+        <Style x:Key="CancelButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource AnalysisButtonStyle}">
+            <Setter Property="Background" Value="#FBE0DE"/>
+            <Setter Property="BorderBrush" Value="#F0C3BF"/>
+            <Setter Property="Foreground" Value="#A94F49"/>
+        </Style>
+
+        <Style x:Key="SummaryBoxStyle"
+               TargetType="Border">
+            <Setter Property="Background" Value="#BFFFFFFF"/>
+            <Setter Property="BorderBrush" Value="#D7DCE8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="10,8"/>
+        </Style>
+
+    </UserControl.Resources>
+
+
+    <Border Background="#EEF2FF"
+            BorderBrush="#D9DFEF"
+            BorderThickness="1"
+            CornerRadius="12"
+            Padding="20">
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <!-- HEADER -->
+            <StackPanel Grid.Row="0"
+                        Margin="0,0,0,16">
+
+                <TextBlock Text="CPU analysis"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Foreground="#344054"/>
+
+                <TextBlock Text="Compare sequential and parallel calculations using the same pet snapshots."
+                           Margin="0,4,0,0"
+                           FontSize="12"
+                           Foreground="#667085"/>
+
+            </StackPanel>
+
+
+            <!-- INPUT -->
+            <Grid Grid.Row="1"
+                  Margin="0,0,0,16">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="18"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+
+                <!-- PET SELECTION -->
+                <StackPanel Grid.Column="0">
+
+                    <TextBlock Text="Choose at least 3 pets"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,7"/>
+
+                    <Border Background="#CCFFFFFF"
+                            BorderBrush="#D7DCE8"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="10">
+
+                        <ScrollViewer Height="135"
+                                      VerticalScrollBarVisibility="Auto">
+
+                            <ItemsControl ItemsSource="{Binding AnalysisPets}">
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <CheckBox Content="{Binding DisplayName}"
+                                                  IsChecked="{Binding IsSelected,
+                                                                      Mode=TwoWay}"
+                                                  Margin="2,4"
+                                                  FontSize="13"/>
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+
+                            </ItemsControl>
+
+                        </ScrollViewer>
+
+                    </Border>
+
+                </StackPanel>
+
+
+                <!-- WORKLOAD AND COMMANDS -->
+                <StackPanel Grid.Column="2">
+
+                    <TextBlock Text="Workload"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,7"/>
+
+                    <Border Height="38"
+                            Background="#CCFFFFFF"
+                            BorderBrush="#D7DCE8"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Margin="0,0,0,12">
+
+                        <ComboBox ItemsSource="{Binding WorkloadOptions}"
+                                  SelectedItem="{Binding SelectedWorkload,
+                                                         Mode=TwoWay}"
+                                  BorderThickness="0"
+                                  Background="Transparent"
+                                  Padding="8,4"
+                                  VerticalContentAlignment="Center"/>
+
+                    </Border>
+
+
+                    <Button Style="{StaticResource RunButtonStyle}"
+                            Command="{Binding RunAnalysisCommand}"
+                            Margin="0,0,0,8">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Image Source="/PetOffice.WpfApp;component/Assets/action.png"
+                                   Width="18"
+                                   Height="18"
+                                   Margin="0,0,7,0"/>
+
+                            <TextBlock Text="Compare modes"
+                                       VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+
+                    <Button Style="{StaticResource CancelButtonStyle}"
+                            Command="{Binding CancelAnalysisCommand}">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Image Source="/PetOffice.WpfApp;component/Assets/remove.png"
+                                   Width="17"
+                                   Height="17"
+                                   Margin="0,0,7,0"/>
+
+                            <TextBlock Text="Cancel"
+                                       VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+
+                    <TextBlock Text="Sequential runs first, then parallel uses the same snapshot input."
+                               Margin="0,10,0,0"
+                               TextWrapping="Wrap"
+                               FontSize="11"
+                               Foreground="#667085"/>
+
+                </StackPanel>
+
+            </Grid>
+
+
+            <!-- TOTAL TIMES -->
+            <Grid Grid.Row="2"
+                  Margin="0,0,0,16">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <Border Grid.Column="0"
+                        Style="{StaticResource SummaryBoxStyle}">
+
+                    <TextBlock Text="{Binding SequentialTotalTimeText}"
+                               FontWeight="SemiBold"
+                               TextWrapping="Wrap"/>
+
+                </Border>
+
+
+                <Border Grid.Column="2"
+                        Style="{StaticResource SummaryBoxStyle}">
+
+                    <TextBlock Text="{Binding ParallelTotalTimeText}"
+                               FontWeight="SemiBold"
+                               TextWrapping="Wrap"/>
+
+                </Border>
+
+
+                <Border Grid.Column="4"
+                        Style="{StaticResource SummaryBoxStyle}">
+
+                    <TextBlock Text="{Binding ResultsComparisonText}"
+                               FontWeight="SemiBold"
+                               TextWrapping="Wrap"/>
+
+                </Border>
+
+            </Grid>
+
+
+            <!-- REPORTS -->
+            <Grid Grid.Row="3">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <!-- SEQUENTIAL REPORT -->
+                <StackPanel Grid.Column="0">
+
+                    <TextBlock Text="Sequential report"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,7"/>
+
+                    <DataGrid ItemsSource="{Binding SequentialResults}"
+                              Height="220"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal"
+                              BorderBrush="#D7DCE8"
+                              BorderThickness="1"
+                              Background="White"
+                              RowBackground="White"
+                              AlternatingRowBackground="#F8F9FC">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="Pet"
+                                                Binding="{Binding PetName}"
+                                                Width="*"/>
+
+                            <DataGridTextColumn Header="Status"
+                                                Binding="{Binding Status}"
+                                                Width="0.8*"/>
+
+                            <DataGridTextColumn Header="Result / error"
+                                                Binding="{Binding ResultText}"
+                                                Width="1.6*"/>
+
+                            <DataGridTextColumn Header="ms"
+                                                Binding="{Binding Duration.TotalMilliseconds,
+                                                                  StringFormat={}{0:F0}}"
+                                                Width="0.6*"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </StackPanel>
+
+
+                <!-- PARALLEL REPORT -->
+                <StackPanel Grid.Column="2">
+
+                    <TextBlock Text="Parallel report"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,7"/>
+
+                    <DataGrid ItemsSource="{Binding ParallelResults}"
+                              Height="220"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal"
+                              BorderBrush="#D7DCE8"
+                              BorderThickness="1"
+                              Background="White"
+                              RowBackground="White"
+                              AlternatingRowBackground="#F8F9FC">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="Pet"
+                                                Binding="{Binding PetName}"
+                                                Width="*"/>
+
+                            <DataGridTextColumn Header="Status"
+                                                Binding="{Binding Status}"
+                                                Width="0.8*"/>
+
+                            <DataGridTextColumn Header="Result / error"
+                                                Binding="{Binding ResultText}"
+                                                Width="1.6*"/>
+
+                            <DataGridTextColumn Header="ms"
+                                                Binding="{Binding Duration.TotalMilliseconds,
+                                                                  StringFormat={}{0:F0}}"
+                                                Width="0.6*"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+    </Border>
+
+</UserControl>
