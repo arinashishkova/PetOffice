@@ -60,8 +60,4 @@
     <Resource Include="Assets\work.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
-
 </Project>
