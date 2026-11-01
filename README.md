@@ -1,8 +1,8 @@
 # 🐾 PetOffice
 
-PetOffice on humoorikas WPF-rakendus, kus erinevad kontoriloomad töötavad samas kontoris, kuid käituvad erinevalt ja kasutavad oma erivõimeid.
+PetOffice on WPF-rakendus, kus erinevad kontoriloomad töötavad samas kontoris, kasutavad oma erivõimeid ja reageerivad teiste loomade tegevustele.
 
-Projekt kasutab pärilust, liideseid, polümorfismi ja ühist objektide kollektsiooni.
+Projekt kasutab pärilust, liideseid, polümorfismi, geneerilist repositooriumi, sündmusi, LINQ-i, MVVM-i ja asünkroonset programmeerimist.
 
 ## 🚀 Käivitamine
 
@@ -10,70 +10,70 @@ Projekt kasutab pärilust, liideseid, polümorfismi ja ühist objektide kollekts
 2. Ava `PetOffice.slnx` Visual Studios.
 3. Käivita `PetOffice.WpfApp`.
 
-## 🧩 Klassid ja liidesed
-
-Baasklass:
-
-- `OfficePet`
-
-Alamklassid:
-
-- 🐱 `CatManager`
-- 🐶 `DogIntern`
-- 🐹 `HamsterIT`
-- 🦜 `ParrotReceptionist`
-
-Liidesed:
-
-- 💬 `ICommunicate`
-- ☕ `IMakeCoffee`
-- 🛠️ `ITechSupport`
-
-`DogIntern` kasutab kahte liidest: `ICommunicate` ja `IMakeCoffee`.
-
-Kõiki objekte hoitakse ühises `ObservableCollection<OfficePet>` kollektsioonis.
-
-## ⚡ Oleku reeglid ja CrazyAction
-
-Igal loomal on nimi, energia ja lõpetatud ülesannete arv.
-
-Energia algväärtus on 100. Tegevused vähendavad või taastavad energiat ning vigase tegevuse korral objekti olekut ei muudeta.
-
-Igal alamklassil on oma `Work()` ja `CrazyAction()`:
-
-- `CatManager` korraldab koosolekuid või puhkab, kui energiat on vähe.
-- `DogIntern` proovib teha kõik ülesanded korraga.
-- `HamsterIT` parandab serverit oma erilisel viisil.
-- `ParrotReceptionist` kordab kontorivestlusi või puhkab, kui energiat on vähe.
-
-## 🖥️ WPF kasutajaliides
+## 🧩 Põhifunktsioonid
 
 Rakenduses saab:
 
 - lisada, valida ja eemaldada kontoriloomi;
-- kasutada `Work` ja `Crazy Action` tegevusi;
-- kasutada liidestest sõltuvaid tegevusi;
-- jälgida energiat ja lõpetatud ülesandeid;
-- vaadata tegevuste logi.
+- kasutada `Work`, `CrazyAction` ja liidestest sõltuvaid tegevusi;
+- jälgida energiat, ülesandeid ja reaktsioone;
+- otsida ja sorteerida loomi;
+- vaadata kokkuvõtet ja tegevuste logi.
 
-Iseseisvalt õpitud WPF element on `ProgressBar`, mida kasutatakse valitud looma energia kuvamiseks. See sobib energia näitamiseks, sest väärtus muutub vahemikus 0–100.
+Loomi hoitakse geneerilistes `Repository<T>` repositooriumides.  
+`GetAll()` tagastab read-only vaate.
 
-## ✅ Kontrollitud kasutusjuhud
+## 🧮 CPU Analysis
 
-1. Õige nimega looma saab lisada nimekirja.
-2. Tühja nimega looma ei lisata ja kuvatakse veateade.
-3. `DogIntern` saab kasutada `Communicate` ja `Make coffee` tegevusi.
-4. `HamsterIT` saab kasutada `Fix computer` tegevust.
-5. `CrazyAction` muudab looma energiat või ülesannete arvu.
-6. Ebapiisava energia korral kuvatakse veateade ja olek ei rikne.
-7. Valitud looma saab eemaldada.
-8. `ParrotReceptionist` saab töötada, suhelda ja kasutada oma `CrazyAction()` meetodit.
+`CPU Analysis` vahelehel saab valida vähemalt 3 looma ja võrrelda kahte arvutusrežiimi:
+
+- **Sequential** – objektid arvutatakse ükshaaval;
+- **Parallel** – arvutused käivitatakse `Task.Run()` abil ja oodatakse `Task.WhenAll()`-iga.
+
+Mõlemas režiimis kasutatakse samu snapshot-andmeid.
+
+Arvutuste aega mõõdetakse `Stopwatch` abil.
+
+Raportis kuvatakse:
+
+- looma nimi;
+- staatus;
+- tulemus või veateade;
+- arvutuse kestus;
+- Sequential ja Parallel koguaeg.
+
+Võimalikud staatused:
+
+- `Success`
+- `Error`
+- `Cancelled`
+
+Kõik arvutused kasutavad ühist `CancellationToken`-it ning töötava analüüsi saab `Cancel` nupuga katkestada.
+
+Ühe objekti viga ei katkesta teiste objektide arvutusi.
+
+CPU Analysis kasutamine:
+
+1. Vali vähemalt 3 looma.
+2. Vali `Small`, `Medium` või `Large`.
+3. Vajuta `Compare modes`, et käivitada Sequential ja Parallel arvutused.
+4. Töötava arvutuse saab peatada `Cancel` nupuga.
+
+## ✅ Kontrollitud
+
+Kontrollitud on:
+
+1. Sequential ja Parallel arvutused.
+2. Mõlema režiimi tulemuste võrdlus.
+3. Ühe objekti `Error`, samal ajal kui teised jätkavad.
+4. Arvutuse katkestamine `Cancel` nupuga.
+5. Kasutajaliides jääb arvutuse ajal kasutatavaks.
 
 ## 🤝 Git-koostöö
 
 Kaasüliõpilane: **Anna Levchenko**
 
-Anna lisas projekti uue `ParrotReceptionist` alamklassi eraldi branch'is.
+Anna lisas projekti `ParrotReceptionist` alamklassi eraldi branch'is.
 
 Issue:  
 https://github.com/arinashishkova/PetOffice/issues/1
@@ -81,18 +81,18 @@ https://github.com/arinashishkova/PetOffice/issues/1
 Pull Request:  
 https://github.com/arinashishkova/PetOffice/pull/2
 
-Pull Request kontrolliti ja kiideti enne merge'i heaks.
-
 ## 🤖 AI kasutamine
 
-Projekti tegemisel kasutati AI-d C# ja WPF-i kontseptsioonide ning GitHubi töövoo selgitamiseks, koodivigade leidmiseks ja parandamiseks ning README koostamise abistamiseks.
+Projekti tegemisel kasutati **ChatGPT-d** C#, WPF-i, MVVM-i, asünkroonse programmeerimise ja GitHubi töövoo selgitamiseks, koodivigade leidmise ja parandamise abistamiseks ning README koostamise toetamiseks.
 
-Lahendust kontrolliti Visual Studios ning rakenduse põhifunktsioone testiti käsitsi.
-
-## 🛠️ Tehnoloogiad 
+Lahendust kontrolliti Visual Studios ja funktsionaalsust testiti käsitsi.
+## 🛠️ Tehnoloogiad
 
 - C#
 - .NET 10
 - WPF
+- MVVM
+- LINQ
+- async / await
 - Git
 - GitHub

@@ -61,7 +61,7 @@ namespace PetOffice.Core.Repositories
 
         public IEnumerable<T> GetAll()
         {
-            return items;
+            return items.AsReadOnly();
         }
 
         public T? Find(Func<T, bool> predicate)
