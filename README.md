@@ -52,6 +52,13 @@ Kõik arvutused kasutavad ühist `CancellationToken`-it ning töötava analüüs
 
 Ühe objekti viga ei katkesta teiste objektide arvutusi.
 
+CPU Analysis kasutamine:
+
+1. Vali vähemalt 3 looma.
+2. Vali `Small`, `Medium` või `Large`.
+3. Vajuta `Compare modes`, et käivitada Sequential ja Parallel arvutused.
+4. Töötava arvutuse saab peatada `Cancel` nupuga.
+
 ## ✅ Kontrollitud
 
 Kontrollitud on:
@@ -76,7 +83,7 @@ https://github.com/arinashishkova/PetOffice/pull/2
 
 ## 🤖 AI kasutamine
 
-Projekti tegemisel kasutati **ChatGPT** C#, WPF-i, MVVM-i, asünkroonse programmeerimise ja GitHubi töövoo selgitamiseks, koodivigade leidmise ja parandamise abistamiseks ning README koostamise toetamiseks.
+Projekti tegemisel kasutati **ChatGPT-d** C#, WPF-i, MVVM-i, asünkroonse programmeerimise ja GitHubi töövoo selgitamiseks, koodivigade leidmise ja parandamise abistamiseks ning README koostamise toetamiseks.
 
 Lahendust kontrolliti Visual Studios ja funktsionaalsust testiti käsitsi.
 ## 🛠️ Tehnoloogiad
