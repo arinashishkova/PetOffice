@@ -7,6 +7,7 @@
 
         <Style x:Key="AnalysisButtonStyle"
                TargetType="Button">
+
             <Setter Property="Height" Value="40"/>
             <Setter Property="Padding" Value="14,6"/>
             <Setter Property="FontSize" Value="13"/>
@@ -16,8 +17,11 @@
             <Setter Property="Cursor" Value="Hand"/>
 
             <Setter Property="Template">
+
                 <Setter.Value>
+
                     <ControlTemplate TargetType="Button">
+
                         <Border x:Name="ButtonBorder"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -32,45 +36,66 @@
                         </Border>
 
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+
                                 <Setter TargetName="ButtonBorder"
                                         Property="Opacity"
                                         Value="0.78"/>
+
                             </Trigger>
 
-                            <Trigger Property="IsEnabled" Value="False">
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+
                                 <Setter TargetName="ButtonBorder"
                                         Property="Opacity"
                                         Value="0.35"/>
+
                             </Trigger>
+
                         </ControlTemplate.Triggers>
+
                     </ControlTemplate>
+
                 </Setter.Value>
+
             </Setter>
+
         </Style>
+
 
         <Style x:Key="RunButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource AnalysisButtonStyle}">
+
             <Setter Property="Background" Value="#D9E7FA"/>
             <Setter Property="BorderBrush" Value="#B9CFEA"/>
+
         </Style>
+
 
         <Style x:Key="CancelButtonStyle"
                TargetType="Button"
                BasedOn="{StaticResource AnalysisButtonStyle}">
+
             <Setter Property="Background" Value="#FBE0DE"/>
             <Setter Property="BorderBrush" Value="#F0C3BF"/>
             <Setter Property="Foreground" Value="#A94F49"/>
+
         </Style>
+
 
         <Style x:Key="SummaryBoxStyle"
                TargetType="Border">
+
             <Setter Property="Background" Value="#BFFFFFFF"/>
             <Setter Property="BorderBrush" Value="#D7DCE8"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="CornerRadius" Value="8"/>
             <Setter Property="Padding" Value="10,8"/>
+
         </Style>
 
     </UserControl.Resources>
@@ -139,15 +164,16 @@
                             <ItemsControl ItemsSource="{Binding AnalysisPets}">
 
                                 <ItemsControl.ItemTemplate>
+
                                     <DataTemplate>
 
                                         <CheckBox Content="{Binding DisplayName}"
-                                                  IsChecked="{Binding IsSelected,
-                                                                      Mode=TwoWay}"
+                                                  IsChecked="{Binding IsSelected, Mode=TwoWay}"
                                                   Margin="2,4"
                                                   FontSize="13"/>
 
                                     </DataTemplate>
+
                                 </ItemsControl.ItemTemplate>
 
                             </ItemsControl>
@@ -174,8 +200,7 @@
                             Margin="0,0,0,12">
 
                         <ComboBox ItemsSource="{Binding WorkloadOptions}"
-                                  SelectedItem="{Binding SelectedWorkload,
-                                                         Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedWorkload, Mode=TwoWay}"
                                   BorderThickness="0"
                                   Background="Transparent"
                                   Padding="8,4"
@@ -296,38 +321,51 @@
                                Margin="0,0,0,7"/>
 
                     <DataGrid ItemsSource="{Binding SequentialResults}"
-                              Height="220"
-                              AutoGenerateColumns="False"
-                              IsReadOnly="True"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeRows="False"
-                              HeadersVisibility="Column"
-                              GridLinesVisibility="Horizontal"
-                              BorderBrush="#D7DCE8"
-                              BorderThickness="1"
-                              Background="White"
-                              RowBackground="White"
-                              AlternatingRowBackground="#F8F9FC">
+          Height="220"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          CanUserAddRows="False"
+          CanUserDeleteRows="False"
+          CanUserResizeRows="False"
+          HeadersVisibility="Column"
+          GridLinesVisibility="Horizontal"
+          BorderBrush="#D7DCE8"
+          BorderThickness="1"
+          Background="White"
+          RowBackground="White"
+          AlternatingRowBackground="#F8F9FC">
 
                         <DataGrid.Columns>
 
                             <DataGridTextColumn Header="Pet"
                                                 Binding="{Binding PetName}"
-                                                Width="*"/>
+                                                Width="0.9*"/>
 
                             <DataGridTextColumn Header="Status"
                                                 Binding="{Binding Status}"
-                                                Width="0.8*"/>
+                                                Width="0.75*"/>
 
-                            <DataGridTextColumn Header="Result / error"
-                                                Binding="{Binding ResultText}"
-                                                Width="1.6*"/>
+                            <DataGridTemplateColumn Header="Result / error"
+                                                    Width="2.1*">
+
+                                <DataGridTemplateColumn.CellTemplate>
+
+                                    <DataTemplate>
+
+                                        <TextBlock Text="{Binding ResultText}"
+                                                   TextWrapping="Wrap"
+                                                   VerticalAlignment="Center"
+                                                   Margin="3,2"/>
+
+                                    </DataTemplate>
+
+                                </DataGridTemplateColumn.CellTemplate>
+
+                            </DataGridTemplateColumn>
 
                             <DataGridTextColumn Header="ms"
-                                                Binding="{Binding Duration.TotalMilliseconds,
-                                                                  StringFormat={}{0:F0}}"
-                                                Width="0.6*"/>
+                                                Binding="{Binding Duration.TotalMilliseconds, StringFormat={}{0:F0}}"
+                                                Width="0.45*"/>
 
                         </DataGrid.Columns>
 
@@ -345,38 +383,51 @@
                                Margin="0,0,0,7"/>
 
                     <DataGrid ItemsSource="{Binding ParallelResults}"
-                              Height="220"
-                              AutoGenerateColumns="False"
-                              IsReadOnly="True"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeRows="False"
-                              HeadersVisibility="Column"
-                              GridLinesVisibility="Horizontal"
-                              BorderBrush="#D7DCE8"
-                              BorderThickness="1"
-                              Background="White"
-                              RowBackground="White"
-                              AlternatingRowBackground="#F8F9FC">
+          Height="220"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          CanUserAddRows="False"
+          CanUserDeleteRows="False"
+          CanUserResizeRows="False"
+          HeadersVisibility="Column"
+          GridLinesVisibility="Horizontal"
+          BorderBrush="#D7DCE8"
+          BorderThickness="1"
+          Background="White"
+          RowBackground="White"
+          AlternatingRowBackground="#F8F9FC">
 
                         <DataGrid.Columns>
 
                             <DataGridTextColumn Header="Pet"
                                                 Binding="{Binding PetName}"
-                                                Width="*"/>
+                                                Width="0.9*"/>
 
                             <DataGridTextColumn Header="Status"
                                                 Binding="{Binding Status}"
-                                                Width="0.8*"/>
+                                                Width="0.75*"/>
 
-                            <DataGridTextColumn Header="Result / error"
-                                                Binding="{Binding ResultText}"
-                                                Width="1.6*"/>
+                            <DataGridTemplateColumn Header="Result / error"
+                                                    Width="2.1*">
+
+                                <DataGridTemplateColumn.CellTemplate>
+
+                                    <DataTemplate>
+
+                                        <TextBlock Text="{Binding ResultText}"
+                                                   TextWrapping="Wrap"
+                                                   VerticalAlignment="Center"
+                                                   Margin="3,2"/>
+
+                                    </DataTemplate>
+
+                                </DataGridTemplateColumn.CellTemplate>
+
+                            </DataGridTemplateColumn>
 
                             <DataGridTextColumn Header="ms"
-                                                Binding="{Binding Duration.TotalMilliseconds,
-                                                                  StringFormat={}{0:F0}}"
-                                                Width="0.6*"/>
+                                                Binding="{Binding Duration.TotalMilliseconds, StringFormat={}{0:F0}}"
+                                                Width="0.45*"/>
 
                         </DataGrid.Columns>
 
