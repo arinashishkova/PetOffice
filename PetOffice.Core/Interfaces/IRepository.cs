@@ -11,5 +11,7 @@ namespace PetOffice.Core.Interfaces
         IEnumerable<T> GetAll();
 
         T? Find(Func<T, bool> predicate);
+
+        void ReplaceAll(IEnumerable<T> newItems);
     }
 }

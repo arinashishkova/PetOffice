@@ -22,15 +22,14 @@ namespace PetOffice.Core.Repositories
 
             items.Add(item);
 
-            // subscribe new pet to repository events
-            ItemAdded += item.HandlePetAdded;
-            ItemRemoved += item.HandlePetRemoved;
-            CrazyActionPerformed += item.HandleCrazyAction;
+            Subscribe(item);
 
             OfficePetEventArgs eventArgs =
                 new OfficePetEventArgs(item);
 
-            ItemAdded?.Invoke(this, eventArgs);
+            ItemAdded?.Invoke(
+                this,
+                eventArgs);
 
             PublishReactions(eventArgs);
         }
@@ -44,15 +43,14 @@ namespace PetOffice.Core.Repositories
                 return false;
             }
 
-            // removed pet stops listening
-            ItemAdded -= item.HandlePetAdded;
-            ItemRemoved -= item.HandlePetRemoved;
-            CrazyActionPerformed -= item.HandleCrazyAction;
+            Unsubscribe(item);
 
             OfficePetEventArgs eventArgs =
                 new OfficePetEventArgs(item);
 
-            ItemRemoved?.Invoke(this, eventArgs);
+            ItemRemoved?.Invoke(
+                this,
+                eventArgs);
 
             PublishReactions(eventArgs);
 
@@ -64,12 +62,48 @@ namespace PetOffice.Core.Repositories
             return items.AsReadOnly();
         }
 
-        public T? Find(Func<T, bool> predicate)
+        public T? Find(
+            Func<T, bool> predicate)
         {
-            return items.FirstOrDefault(predicate);
+            return items.FirstOrDefault(
+                predicate);
         }
 
-        public string PerformCrazyAction(T item)
+        public void ReplaceAll(
+            IEnumerable<T> newItems)
+        {
+            ArgumentNullException.ThrowIfNull(
+                newItems);
+
+            List<T> replacement =
+                newItems.ToList();
+
+            if (replacement.Any(
+                item => item is null))
+            {
+                throw new ArgumentException(
+                    "Repository cannot contain null items.",
+                    nameof(newItems));
+            }
+
+            // remove old event subscriptions
+            foreach (T item in items)
+            {
+                Unsubscribe(item);
+            }
+
+            items.Clear();
+
+            // restore pets without raising add events
+            foreach (T item in replacement)
+            {
+                items.Add(item);
+                Subscribe(item);
+            }
+        }
+
+        public string PerformCrazyAction(
+            T item)
         {
             ArgumentNullException.ThrowIfNull(item);
 
@@ -79,23 +113,42 @@ namespace PetOffice.Core.Repositories
                     "The pet is not in this repository.");
             }
 
-            string message = item.CrazyAction();
+            string message =
+                item.CrazyAction();
 
             OfficePetEventArgs eventArgs =
                 new OfficePetEventArgs(item);
 
-            CrazyActionPerformed?.Invoke(this, eventArgs);
+            CrazyActionPerformed?.Invoke(
+                this,
+                eventArgs);
 
             PublishReactions(eventArgs);
 
             return message;
         }
 
-        // publish all collected reactions
+        private void Subscribe(T item)
+        {
+            ItemAdded += item.HandlePetAdded;
+            ItemRemoved += item.HandlePetRemoved;
+            CrazyActionPerformed +=
+                item.HandleCrazyAction;
+        }
+
+        private void Unsubscribe(T item)
+        {
+            ItemAdded -= item.HandlePetAdded;
+            ItemRemoved -= item.HandlePetRemoved;
+            CrazyActionPerformed -=
+                item.HandleCrazyAction;
+        }
+
         private void PublishReactions(
             OfficePetEventArgs eventArgs)
         {
-            foreach (string message in eventArgs.Reactions)
+            foreach (string message
+                     in eventArgs.Reactions)
             {
                 ReactionOccurred?.Invoke(
                     this,

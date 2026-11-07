@@ -1,27 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 
 namespace PetOffice.Core.Models
 {
     public abstract class OfficePet
     {
+        public Guid Id { get; private set; }
         public string Name { get; }
         public int Energy { get; private set; }
         public int TasksCompleted { get; private set; }
 
         // reaction state
         public int ReactionsCount { get; private set; }
-        public string DisplayName => $"{Name} - {GetType().Name}";
+
+        public string DisplayName =>
+            $"{Name} - {GetType().Name}";
 
         protected OfficePet(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentException("Name is required.");
+                throw new ArgumentException(
+                    "Name is required.");
             }
 
+            Id = Guid.NewGuid();
             Name = name.Trim();
             Energy = 100;
             TasksCompleted = 0;
@@ -31,6 +33,46 @@ namespace PetOffice.Core.Models
         public abstract string Work();
 
         public abstract string CrazyAction();
+
+        // restores saved state after loading
+        internal void RestoreState(
+            Guid id,
+            int energy,
+            int tasksCompleted,
+            int reactionsCount)
+        {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException(
+                    "Pet ID is required.");
+            }
+
+            if (energy < 0 || energy > 100)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(energy),
+                    "Energy must be between 0 and 100.");
+            }
+
+            if (tasksCompleted < 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(tasksCompleted),
+                    "Tasks completed cannot be negative.");
+            }
+
+            if (reactionsCount < 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(reactionsCount),
+                    "Reactions count cannot be negative.");
+            }
+
+            Id = id;
+            Energy = energy;
+            TasksCompleted = tasksCompleted;
+            ReactionsCount = reactionsCount;
+        }
 
         protected void SpendEnergy(int amount)
         {
@@ -59,7 +101,9 @@ namespace PetOffice.Core.Models
                     "Energy amount must be greater than 0.");
             }
 
-            Energy = Math.Min(100, Energy + amount);
+            Energy = Math.Min(
+                100,
+                Energy + amount);
         }
 
         protected void CompleteTask()
@@ -71,7 +115,6 @@ namespace PetOffice.Core.Models
             object? sender,
             OfficePetEventArgs e)
         {
-            // ignore own event
             if (ReferenceEquals(this, e.Source))
             {
                 return;
