@@ -7,6 +7,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -60,8 +61,45 @@
             </StackPanel>
         </Border>
 
-        <!-- Status -->
+        <!-- XML -->
         <Border Grid.Row="2"
+                Padding="18"
+                Margin="0,0,0,14"
+                Background="White"
+                BorderBrush="#DFE3E6"
+                BorderThickness="1"
+                CornerRadius="12">
+
+            <StackPanel>
+                <TextBlock Text="XML"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,5"/>
+
+                <TextBlock Text="Save the complete office state to an XML file or restore it later."
+                           Foreground="#6B7280"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,14"/>
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Button Content="Save XML"
+                            Command="{Binding SaveXmlCommand}"
+                            MinWidth="120"
+                            Padding="14,8"
+                            Margin="0,0,10,0"/>
+
+                    <Button Content="Load XML"
+                            Command="{Binding LoadXmlCommand}"
+                            MinWidth="120"
+                            Padding="14,8"/>
+
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Status -->
+        <Border Grid.Row="3"
                 Padding="16"
                 Background="#F4F6FA"
                 BorderBrush="#DFE3E6"
