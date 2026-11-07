@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Microsoft.Extensions.DependencyInjection;
 using PetOffice.Core.Persistence;
 using PetOffice.Core.Persistence.Dto;
 using PetOffice.WpfApp.Services;
@@ -8,13 +9,11 @@ namespace PetOffice.WpfApp.ViewModels
 {
     public partial class MainViewModel
     {
-        private readonly IWorldStorage jsonStorage =
-            new JsonWorldStorage();
-        private readonly IWorldStorage xmlStorage =
-            new XmlWorldStorage();
+        private readonly IWorldStorage jsonStorage;
 
-        private readonly IFileDialogService fileDialogService =
-            new WpfFileDialogService();
+        private readonly IWorldStorage xmlStorage;
+
+        private readonly IFileDialogService fileDialogService;
 
         private string storageStatus =
             "No storage operation yet.";

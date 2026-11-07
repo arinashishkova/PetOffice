@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using Microsoft.Extensions.DependencyInjection;
 using PetOffice.Core.Interfaces;
 using PetOffice.Core.Models;
+using PetOffice.Core.Persistence;
 using PetOffice.Core.Repositories;
+using PetOffice.WpfApp.Services;
 
 namespace PetOffice.WpfApp.ViewModels
 {
@@ -174,8 +177,19 @@ namespace PetOffice.WpfApp.ViewModels
         public string SelectedPetReactionsText =>
             $"Reactions: {SelectedPet?.ReactionsCount ?? 0}";
 
-        public MainViewModel()
+        public MainViewModel(
+           [FromKeyedServices("json")]
+            IWorldStorage jsonStorage,
+
+           [FromKeyedServices("xml")]
+            IWorldStorage xmlStorage,
+
+           IFileDialogService fileDialogService)
         {
+            this.jsonStorage = jsonStorage;
+            this.xmlStorage = xmlStorage;
+            this.fileDialogService = fileDialogService;
+
             AddCommand = new RelayCommand(
                 AddPet,
                 CanAddPet);
@@ -207,7 +221,6 @@ namespace PetOffice.WpfApp.ViewModels
             InitializeAnalysis();
             InitializeStorage();
 
-
             // listen for reaction messages
             catRepository.ReactionOccurred += Repository_ReactionOccurred;
             dogRepository.ReactionOccurred += Repository_ReactionOccurred;
@@ -217,9 +230,14 @@ namespace PetOffice.WpfApp.ViewModels
             raccoonRepository.ReactionOccurred += Repository_ReactionOccurred;
             owlRepository.ReactionOccurred += Repository_ReactionOccurred;
 
-            rabbitRepository.Add(new RabbitAccountant("Bunny"));
-            raccoonRepository.Add(new RaccoonBarista("Rocky"));
-            owlRepository.Add(new OwlSysAdmin("Hoot"));
+            rabbitRepository.Add(
+                new RabbitAccountant("Bunny"));
+
+            raccoonRepository.Add(
+                new RaccoonBarista("Rocky"));
+
+            owlRepository.Add(
+                new OwlSysAdmin("Hoot"));
 
             RefreshVisiblePets();
             RefreshSummary();
