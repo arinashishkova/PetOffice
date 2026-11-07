@@ -60,4 +60,10 @@
     <Resource Include="Assets\work.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Services\Storage\XmlWorldStorage.cs">
+      <Generator>MSBuild:Compile</Generator>
+    </Compile>
+  </ItemGroup>
+
 </Project>

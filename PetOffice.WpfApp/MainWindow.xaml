@@ -184,6 +184,18 @@
 
             </TabItem>
 
+            <TabItem Header="Storage"
+         Style="{StaticResource RoundedTabItemStyle}">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+
+                    <views:StoragePanel Margin="18"/>
+
+                </ScrollViewer>
+
+            </TabItem>
+
         </TabControl>
 
     </Grid>

@@ -205,6 +205,7 @@ namespace PetOffice.WpfApp.ViewModels
                 () => SelectedPet is ITechSupport);
 
             InitializeAnalysis();
+            InitializeStorage();
 
 
             // listen for reaction messages
