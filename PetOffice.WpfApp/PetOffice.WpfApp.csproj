@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
   </ItemGroup>
 
@@ -62,6 +63,12 @@
     <Resource Include="Assets\service.png" />
     <Resource Include="Assets\speech-bubble.png" />
     <Resource Include="Assets\work.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Services\Storage\LocalDbWorldStorage.cs">
+      <Generator>MSBuild:Compile</Generator>
+    </Compile>
   </ItemGroup>
 
 </Project>

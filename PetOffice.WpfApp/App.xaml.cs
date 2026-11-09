@@ -42,6 +42,10 @@ namespace PetOffice.WpfApp
                 IWorldStorage,
                 XmlWorldStorage>("xml");
 
+            services.AddKeyedSingleton<
+    IWorldStorage,
+    LocalDbWorldStorage>("localdb");
+
             services.AddSingleton<
                 IFileDialogService,
                 WpfFileDialogService>();

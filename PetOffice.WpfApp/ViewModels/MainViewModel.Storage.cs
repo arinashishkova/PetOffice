@@ -13,6 +13,8 @@ namespace PetOffice.WpfApp.ViewModels
 
         private readonly IWorldStorage xmlStorage;
 
+        private readonly IWorldStorage localDbStorage;
+
         private readonly IFileDialogService fileDialogService;
 
         private string storageStatus =
@@ -25,6 +27,10 @@ namespace PetOffice.WpfApp.ViewModels
         public AsyncCommand SaveXmlCommand { get; private set; } = null!;
 
         public AsyncCommand LoadXmlCommand { get; private set; } = null!;
+
+        public AsyncCommand SaveLocalDbCommand { get; private set; } = null!;
+
+        public AsyncCommand LoadLocalDbCommand { get; private set; } = null!;
 
         public string StorageStatus
         {
@@ -56,6 +62,12 @@ namespace PetOffice.WpfApp.ViewModels
 
             LoadXmlCommand =
                 new AsyncCommand(LoadXmlAsync);
+
+            SaveLocalDbCommand =
+                new AsyncCommand(SaveLocalDbAsync);
+
+            LoadLocalDbCommand =
+                new AsyncCommand(LoadLocalDbAsync);
         }
 
         private async Task SaveJsonAsync()
