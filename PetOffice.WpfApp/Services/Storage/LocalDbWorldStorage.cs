@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using PetOffice.Core.Persistence;
 using PetOffice.Core.Persistence.Dto;
+using System.Data;
+using System.IO;
 
 namespace PetOffice.WpfApp.Services.Storage
 {
@@ -27,6 +29,7 @@ namespace PetOffice.WpfApp.Services.Storage
             CancellationToken token = default)
         {
             ArgumentNullException.ThrowIfNull(world);
+            ArgumentNullException.ThrowIfNull(world.Pets);
 
             await EnsureDatabaseAsync(token);
 
@@ -46,12 +49,41 @@ namespace PetOffice.WpfApp.Services.Storage
                     transaction,
                     token);
 
+                Dictionary<string, int> groupIds =
+                    new(StringComparer.Ordinal);
+
+                IEnumerable<string> groupNames =
+                    world.Pets
+                        .Select(pet => pet.RepositoryName)
+                        .Distinct(StringComparer.Ordinal);
+
+                foreach (string groupName in groupNames)
+                {
+                    int groupId =
+                        await InsertGroupAsync(
+                            connection,
+                            transaction,
+                            groupName,
+                            token);
+
+                    groupIds[groupName] = groupId;
+                }
+
                 foreach (PetDto pet in world.Pets)
                 {
+                    if (!groupIds.TryGetValue(
+                            pet.RepositoryName,
+                            out int groupId))
+                    {
+                        throw new InvalidDataException(
+                            $"Group '{pet.RepositoryName}' was not created.");
+                    }
+
                     await InsertPetAsync(
                         connection,
                         transaction,
                         pet,
+                        groupId,
                         token);
                 }
 
@@ -81,15 +113,17 @@ namespace PetOffice.WpfApp.Services.Storage
 
             const string sql = """
                 SELECT
-                    Id,
-                    Type,
-                    Name,
-                    Energy,
-                    TasksCompleted,
-                    ReactionsCount,
-                    RepositoryName
-                FROM Pets
-                ORDER BY Name;
+                    p.Id,
+                    p.Type,
+                    p.Name,
+                    p.Energy,
+                    p.TasksCompleted,
+                    p.ReactionsCount,
+                    g.Name
+                FROM Pets AS p
+                INNER JOIN PetGroups AS g
+                    ON p.GroupId = g.Id
+                ORDER BY p.Name;
                 """;
 
             await using SqlCommand loadCommand =
@@ -119,55 +153,259 @@ namespace PetOffice.WpfApp.Services.Storage
         private static async Task EnsureDatabaseAsync(
             CancellationToken token)
         {
-            await using (
-                SqlConnection masterConnection =
-                    new(MasterConnectionString))
+            await EnsureDatabaseExistsAsync(token);
+
+            await using SqlConnection connection =
+                new(DatabaseConnectionString);
+
+            await connection.OpenAsync(token);
+
+            const string schemaSql = """
+                IF OBJECT_ID('dbo.PetGroups', 'U') IS NULL
+                BEGIN
+                    CREATE TABLE dbo.PetGroups
+                    (
+                        Id INT IDENTITY(1,1) NOT NULL
+                            CONSTRAINT PK_PetGroups PRIMARY KEY,
+
+                        Name NVARCHAR(100) NOT NULL
+                            CONSTRAINT UQ_PetGroups_Name UNIQUE
+                    );
+                END;
+
+                IF OBJECT_ID('dbo.Pets', 'U') IS NULL
+                BEGIN
+                    CREATE TABLE dbo.Pets
+                    (
+                        Id UNIQUEIDENTIFIER NOT NULL
+                            CONSTRAINT PK_Pets PRIMARY KEY,
+
+                        Type NVARCHAR(100) NOT NULL,
+
+                        Name NVARCHAR(100) NOT NULL,
+
+                        Energy INT NOT NULL,
+
+                        TasksCompleted INT NOT NULL,
+
+                        ReactionsCount INT NOT NULL,
+
+                        GroupId INT NOT NULL,
+
+                        CONSTRAINT FK_Pets_PetGroups
+                            FOREIGN KEY (GroupId)
+                            REFERENCES dbo.PetGroups(Id)
+                    );
+                END;
+                """;
+
+            await using SqlCommand schemaCommand =
+                new(schemaSql, connection);
+
+            await schemaCommand
+                .ExecuteNonQueryAsync(token);
+
+            await MigrateOldSchemaAsync(
+                connection,
+                token);
+
+            await EnsureForeignKeyAsync(
+                connection,
+                token);
+        }
+
+        private static async Task EnsureDatabaseExistsAsync(
+            CancellationToken token)
+        {
+            await using SqlConnection masterConnection =
+                new(MasterConnectionString);
+
+            await masterConnection.OpenAsync(token);
+
+            const string sql = """
+                IF DB_ID('PetOfficeDb') IS NULL
+                BEGIN
+                    CREATE DATABASE PetOfficeDb;
+                END;
+                """;
+
+            await using SqlCommand createDatabaseCommand =
+                new(sql, masterConnection);
+
+            await createDatabaseCommand
+                .ExecuteNonQueryAsync(token);
+        }
+
+        private static async Task MigrateOldSchemaAsync(
+            SqlConnection connection,
+            CancellationToken token)
+        {
+            const string groupIdCheckSql = """
+        SELECT COUNT(*)
+        FROM sys.columns
+        WHERE object_id = OBJECT_ID('dbo.Pets')
+          AND name = 'GroupId';
+        """;
+
+            await using SqlCommand groupIdCheckCommand =
+                new(groupIdCheckSql, connection);
+
+            int groupIdExists =
+                Convert.ToInt32(
+                    await groupIdCheckCommand
+                        .ExecuteScalarAsync(token));
+
+            // New schema is already in use.
+            if (groupIdExists > 0)
             {
-                await masterConnection.OpenAsync(token);
+                return;
+            }
 
-                const string createDatabaseSql = """
-                    IF DB_ID('PetOfficeDb') IS NULL
-                    BEGIN
-                        CREATE DATABASE PetOfficeDb;
-                    END
-                    """;
+            const string repositoryCheckSql = """
+        SELECT COUNT(*)
+        FROM sys.columns
+        WHERE object_id = OBJECT_ID('dbo.Pets')
+          AND name = 'RepositoryName';
+        """;
 
-                await using SqlCommand createDatabaseCommand =
-                    new(
-                        createDatabaseSql,
-                        masterConnection);
+            await using SqlCommand repositoryCheckCommand =
+                new(repositoryCheckSql, connection);
 
-                await createDatabaseCommand
+            int repositoryNameExists =
+                Convert.ToInt32(
+                    await repositoryCheckCommand
+                        .ExecuteScalarAsync(token));
+
+            if (repositoryNameExists == 0)
+            {
+                throw new InvalidDataException(
+                    "The Pets table has an incompatible schema.");
+            }
+
+            // Copy old repository names into the new group table.
+            const string insertGroupsSql = """
+        INSERT INTO dbo.PetGroups (Name)
+        SELECT DISTINCT p.RepositoryName
+        FROM dbo.Pets AS p
+        WHERE NOT EXISTS
+        (
+            SELECT 1
+            FROM dbo.PetGroups AS g
+            WHERE g.Name = p.RepositoryName
+        );
+        """;
+
+            await using (
+                SqlCommand insertGroupsCommand =
+                    new(insertGroupsSql, connection))
+            {
+                await insertGroupsCommand
                     .ExecuteNonQueryAsync(token);
             }
 
-            await using SqlConnection databaseConnection =
-                new(DatabaseConnectionString);
+            // Add the new column first.
+            const string addGroupIdSql = """
+        ALTER TABLE dbo.Pets
+        ADD GroupId INT NULL;
+        """;
 
-            await databaseConnection.OpenAsync(token);
+            await using (
+                SqlCommand addGroupIdCommand =
+                    new(addGroupIdSql, connection))
+            {
+                await addGroupIdCommand
+                    .ExecuteNonQueryAsync(token);
 
-            const string createTableSql = """
-                IF OBJECT_ID('Pets', 'U') IS NULL
+            // This must be a separate command.
+            }
+            const string updateGroupIdSql = """
+        UPDATE p
+        SET p.GroupId = g.Id
+        FROM dbo.Pets AS p
+        INNER JOIN dbo.PetGroups AS g
+            ON g.Name = p.RepositoryName;
+        """;
+
+            await using (
+                SqlCommand updateGroupIdCommand =
+                    new(updateGroupIdSql, connection))
+            {
+                await updateGroupIdCommand
+                    .ExecuteNonQueryAsync(token);
+            }
+
+            const string invalidRowsSql = """
+        SELECT COUNT(*)
+        FROM dbo.Pets
+        WHERE GroupId IS NULL;
+        """;
+
+            await using SqlCommand invalidRowsCommand =
+                new(invalidRowsSql, connection);
+
+            int invalidRows =
+                Convert.ToInt32(
+                    await invalidRowsCommand
+                        .ExecuteScalarAsync(token));
+
+            if (invalidRows > 0)
+            {
+                throw new InvalidDataException(
+                    "Some pets could not be assigned to a group.");
+            }
+
+            const string makeGroupIdRequiredSql = """
+        ALTER TABLE dbo.Pets
+        ALTER COLUMN GroupId INT NOT NULL;
+        """;
+
+            await using (
+                SqlCommand makeGroupIdRequiredCommand =
+                    new(makeGroupIdRequiredSql, connection))
+            {
+                await makeGroupIdRequiredCommand
+                    .ExecuteNonQueryAsync(token);
+            }
+
+            const string removeOldColumnSql = """
+        ALTER TABLE dbo.Pets
+        DROP COLUMN RepositoryName;
+        """;
+
+            await using (
+                SqlCommand removeOldColumnCommand =
+                    new(removeOldColumnSql, connection))
+            {
+                await removeOldColumnCommand
+                    .ExecuteNonQueryAsync(token);
+            }
+        }
+
+        private static async Task EnsureForeignKeyAsync(
+            SqlConnection connection,
+            CancellationToken token)
+        {
+            const string sql = """
+                IF OBJECT_ID('dbo.Pets', 'U') IS NOT NULL
+                   AND COL_LENGTH('dbo.Pets', 'GroupId') IS NOT NULL
+                   AND NOT EXISTS
+                   (
+                       SELECT 1
+                       FROM sys.foreign_keys
+                       WHERE name = 'FK_Pets_PetGroups'
+                   )
                 BEGIN
-                    CREATE TABLE Pets
-                    (
-                        Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
-                        Type NVARCHAR(100) NOT NULL,
-                        Name NVARCHAR(100) NOT NULL,
-                        Energy INT NOT NULL,
-                        TasksCompleted INT NOT NULL,
-                        ReactionsCount INT NOT NULL,
-                        RepositoryName NVARCHAR(100) NOT NULL
-                    );
-                END
+                    ALTER TABLE dbo.Pets
+                    ADD CONSTRAINT FK_Pets_PetGroups
+                        FOREIGN KEY (GroupId)
+                        REFERENCES dbo.PetGroups(Id);
+                END;
                 """;
 
-            await using SqlCommand createTableCommand =
-                new(
-                    createTableSql,
-                    databaseConnection);
+            await using SqlCommand foreignKeyCommand =
+                new(sql, connection);
 
-            await createTableCommand
+            await foreignKeyCommand
                 .ExecuteNonQueryAsync(token);
         }
 
@@ -176,8 +414,10 @@ namespace PetOffice.WpfApp.Services.Storage
             SqlTransaction transaction,
             CancellationToken token)
         {
-            const string sql =
-                "DELETE FROM Pets;";
+            const string sql = """
+                DELETE FROM dbo.Pets;
+                DELETE FROM dbo.PetGroups;
+                """;
 
             await using SqlCommand clearCommand =
                 new(
@@ -189,14 +429,59 @@ namespace PetOffice.WpfApp.Services.Storage
                 .ExecuteNonQueryAsync(token);
         }
 
+        private static async Task<int> InsertGroupAsync(
+            SqlConnection connection,
+            SqlTransaction transaction,
+            string groupName,
+            CancellationToken token)
+        {
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                throw new InvalidDataException(
+                    "Pet group name cannot be empty.");
+            }
+
+            const string sql = """
+                INSERT INTO dbo.PetGroups
+                    (Name)
+                OUTPUT INSERTED.Id
+                VALUES
+                    (@Name);
+                """;
+
+            await using SqlCommand insertGroupCommand =
+                new(
+                    sql,
+                    connection,
+                    transaction);
+
+            insertGroupCommand.Parameters.Add(
+                "@Name",
+                SqlDbType.NVarChar,
+                100).Value = groupName;
+
+            object? result =
+                await insertGroupCommand
+                    .ExecuteScalarAsync(token);
+
+            if (result is null)
+            {
+                throw new InvalidDataException(
+                    $"Could not create group '{groupName}'.");
+            }
+
+            return Convert.ToInt32(result);
+        }
+
         private static async Task InsertPetAsync(
             SqlConnection connection,
             SqlTransaction transaction,
             PetDto pet,
+            int groupId,
             CancellationToken token)
         {
             const string sql = """
-                INSERT INTO Pets
+                INSERT INTO dbo.Pets
                 (
                     Id,
                     Type,
@@ -204,7 +489,7 @@ namespace PetOffice.WpfApp.Services.Storage
                     Energy,
                     TasksCompleted,
                     ReactionsCount,
-                    RepositoryName
+                    GroupId
                 )
                 VALUES
                 (
@@ -214,45 +499,54 @@ namespace PetOffice.WpfApp.Services.Storage
                     @Energy,
                     @TasksCompleted,
                     @ReactionsCount,
-                    @RepositoryName
+                    @GroupId
                 );
                 """;
 
-            await using SqlCommand insertCommand =
+            await using SqlCommand insertPetCommand =
                 new(
                     sql,
                     connection,
                     transaction);
 
-            insertCommand.Parameters.AddWithValue(
+            insertPetCommand.Parameters.Add(
                 "@Id",
-                pet.Id);
+                SqlDbType.UniqueIdentifier).Value =
+                    pet.Id;
 
-            insertCommand.Parameters.AddWithValue(
+            insertPetCommand.Parameters.Add(
                 "@Type",
-                pet.Type);
+                SqlDbType.NVarChar,
+                100).Value =
+                    pet.Type;
 
-            insertCommand.Parameters.AddWithValue(
+            insertPetCommand.Parameters.Add(
                 "@Name",
-                pet.Name);
+                SqlDbType.NVarChar,
+                100).Value =
+                    pet.Name;
 
-            insertCommand.Parameters.AddWithValue(
+            insertPetCommand.Parameters.Add(
                 "@Energy",
-                pet.Energy);
+                SqlDbType.Int).Value =
+                    pet.Energy;
 
-            insertCommand.Parameters.AddWithValue(
+            insertPetCommand.Parameters.Add(
                 "@TasksCompleted",
-                pet.TasksCompleted);
+                SqlDbType.Int).Value =
+                    pet.TasksCompleted;
 
-            insertCommand.Parameters.AddWithValue(
+            insertPetCommand.Parameters.Add(
                 "@ReactionsCount",
-                pet.ReactionsCount);
+                SqlDbType.Int).Value =
+                    pet.ReactionsCount;
 
-            insertCommand.Parameters.AddWithValue(
-                "@RepositoryName",
-                pet.RepositoryName);
+            insertPetCommand.Parameters.Add(
+                "@GroupId",
+                SqlDbType.Int).Value =
+                    groupId;
 
-            await insertCommand
+            await insertPetCommand
                 .ExecuteNonQueryAsync(token);
         }
     }
