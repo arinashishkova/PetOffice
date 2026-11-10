@@ -8,6 +8,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -45,7 +46,6 @@
                            Margin="0,0,0,14"/>
 
                 <StackPanel Orientation="Horizontal">
-
                     <Button Content="Save JSON"
                             Command="{Binding SaveJsonCommand}"
                             MinWidth="120"
@@ -56,7 +56,6 @@
                             Command="{Binding LoadJsonCommand}"
                             MinWidth="120"
                             Padding="14,8"/>
-
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -82,7 +81,6 @@
                            Margin="0,0,0,14"/>
 
                 <StackPanel Orientation="Horizontal">
-
                     <Button Content="Save XML"
                             Command="{Binding SaveXmlCommand}"
                             MinWidth="120"
@@ -93,13 +91,47 @@
                             Command="{Binding LoadXmlCommand}"
                             MinWidth="120"
                             Padding="14,8"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
 
+        <!-- LocalDB -->
+        <Border Grid.Row="3"
+                Padding="18"
+                Margin="0,0,0,14"
+                Background="White"
+                BorderBrush="#DFE3E6"
+                BorderThickness="1"
+                CornerRadius="12">
+
+            <StackPanel>
+                <TextBlock Text="LocalDB"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,5"/>
+
+                <TextBlock Text="Save or restore the complete office state using SQL Server LocalDB."
+                           Foreground="#6B7280"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,14"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Save to LocalDB"
+                            Command="{Binding SaveLocalDbCommand}"
+                            MinWidth="140"
+                            Padding="14,8"
+                            Margin="0,0,10,0"/>
+
+                    <Button Content="Load from LocalDB"
+                            Command="{Binding LoadLocalDbCommand}"
+                            MinWidth="140"
+                            Padding="14,8"/>
                 </StackPanel>
             </StackPanel>
         </Border>
 
         <!-- Status -->
-        <Border Grid.Row="3"
+        <Border Grid.Row="4"
                 Padding="16"
                 Background="#F4F6FA"
                 BorderBrush="#DFE3E6"

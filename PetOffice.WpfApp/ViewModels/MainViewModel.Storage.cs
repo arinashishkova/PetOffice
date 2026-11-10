@@ -1,9 +1,8 @@
 ﻿using System.IO;
-using Microsoft.Extensions.DependencyInjection;
 using PetOffice.Core.Persistence;
 using PetOffice.Core.Persistence.Dto;
 using PetOffice.WpfApp.Services;
-using PetOffice.WpfApp.Services.Storage;
+
 
 namespace PetOffice.WpfApp.ViewModels
 {
@@ -197,6 +196,47 @@ namespace PetOffice.WpfApp.ViewModels
             {
                 StorageStatus =
                     $"XML load failed: {ex.Message}";
+            }
+        }
+
+        private async Task SaveLocalDbAsync()
+        {
+            try
+            {
+                WorldDto world =
+                    CreateWorldDto();
+
+                await localDbStorage.SaveAsync(
+                    world,
+                    string.Empty);
+
+                StorageStatus =
+                    "LocalDB saved successfully.";
+            }
+            catch (Exception ex)
+            {
+                StorageStatus =
+                    $"LocalDB save failed: {ex.Message}";
+            }
+        }
+
+        private async Task LoadLocalDbAsync()
+        {
+            try
+            {
+                WorldDto world =
+                    await localDbStorage.LoadAsync(
+                        string.Empty);
+
+                ApplyWorldDto(world);
+
+                StorageStatus =
+                    "LocalDB loaded successfully.";
+            }
+            catch (Exception ex)
+            {
+                StorageStatus =
+                    $"LocalDB load failed: {ex.Message}";
             }
         }
 

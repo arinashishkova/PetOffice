@@ -65,10 +65,4 @@
     <Resource Include="Assets\work.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Services\Storage\LocalDbWorldStorage.cs">
-      <Generator>MSBuild:Compile</Generator>
-    </Compile>
-  </ItemGroup>
-
 </Project>

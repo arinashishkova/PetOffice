@@ -178,16 +178,20 @@ namespace PetOffice.WpfApp.ViewModels
             $"Reactions: {SelectedPet?.ReactionsCount ?? 0}";
 
         public MainViewModel(
-           [FromKeyedServices("json")]
-            IWorldStorage jsonStorage,
+            [FromKeyedServices("json")]
+    IWorldStorage jsonStorage,
 
-           [FromKeyedServices("xml")]
-            IWorldStorage xmlStorage,
+            [FromKeyedServices("xml")]
+    IWorldStorage xmlStorage,
 
-           IFileDialogService fileDialogService)
+            [FromKeyedServices("localdb")]
+    IWorldStorage localDbStorage,
+
+            IFileDialogService fileDialogService)
         {
             this.jsonStorage = jsonStorage;
             this.xmlStorage = xmlStorage;
+            this.localDbStorage = localDbStorage;
             this.fileDialogService = fileDialogService;
 
             AddCommand = new RelayCommand(
