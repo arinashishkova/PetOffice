@@ -54,7 +54,7 @@ namespace PetOffice.WpfApp.ViewModels
             = new();
 
 
-        public ObservableCollection<string> Log { get; }
+        public LogEntryCollection Log { get; }
             = new();
 
 

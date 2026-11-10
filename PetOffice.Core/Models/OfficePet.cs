@@ -5,17 +5,23 @@ namespace PetOffice.Core.Models
     public abstract class OfficePet
     {
         public Guid Id { get; private set; }
+
         public string Name { get; }
+
         public int Energy { get; private set; }
+
         public int TasksCompleted { get; private set; }
 
         // reaction state
         public int ReactionsCount { get; private set; }
 
+
         public string DisplayName =>
             $"{Name} - {GetType().Name}";
 
-        protected OfficePet(string name)
+
+        protected OfficePet(
+            string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -30,9 +36,11 @@ namespace PetOffice.Core.Models
             ReactionsCount = 0;
         }
 
+
         public abstract string Work();
 
         public abstract string CrazyAction();
+
 
         // restores saved state after loading
         internal void RestoreState(
@@ -74,7 +82,9 @@ namespace PetOffice.Core.Models
             ReactionsCount = reactionsCount;
         }
 
-        protected void SpendEnergy(int amount)
+
+        protected void SpendEnergy(
+            int amount)
         {
             if (amount <= 0)
             {
@@ -92,7 +102,9 @@ namespace PetOffice.Core.Models
             Energy -= amount;
         }
 
-        protected void RestoreEnergy(int amount)
+
+        protected void RestoreEnergy(
+            int amount)
         {
             if (amount <= 0)
             {
@@ -105,31 +117,46 @@ namespace PetOffice.Core.Models
                 100,
                 Energy + amount);
         }
+
+
         public string RestoreToFullEnergy()
         {
             if (Energy >= 100)
             {
-                return $"{DisplayName} already has full energy.";
+                return
+                    $"{DisplayName} already has full energy.";
             }
 
             int restoredAmount =
                 100 - Energy;
 
-            RestoreEnergy(restoredAmount);
+            RestoreEnergy(
+                restoredAmount);
 
-            return $"{DisplayName} restored energy to 100.";
+            return GetRestoreEnergyMessage();
         }
+
+
+        protected virtual string GetRestoreEnergyMessage()
+        {
+            return
+                $"{DisplayName} took a break and restored energy to 100.";
+        }
+
 
         protected void CompleteTask()
         {
             TasksCompleted++;
         }
 
+
         internal void HandlePetAdded(
             object? sender,
             OfficePetEventArgs e)
         {
-            if (ReferenceEquals(this, e.Source))
+            if (ReferenceEquals(
+                    this,
+                    e.Source))
             {
                 return;
             }
@@ -140,11 +167,14 @@ namespace PetOffice.Core.Models
                 $"{DisplayName} welcomes {e.Source.DisplayName}.");
         }
 
+
         internal void HandlePetRemoved(
             object? sender,
             OfficePetEventArgs e)
         {
-            if (ReferenceEquals(this, e.Source))
+            if (ReferenceEquals(
+                    this,
+                    e.Source))
             {
                 return;
             }
@@ -155,11 +185,14 @@ namespace PetOffice.Core.Models
                 $"{DisplayName} says goodbye to {e.Source.DisplayName}.");
         }
 
+
         internal void HandleCrazyAction(
             object? sender,
             OfficePetEventArgs e)
         {
-            if (ReferenceEquals(this, e.Source))
+            if (ReferenceEquals(
+                    this,
+                    e.Source))
             {
                 return;
             }

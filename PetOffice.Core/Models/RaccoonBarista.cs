@@ -38,5 +38,11 @@ namespace PetOffice.Core.Models
 
             return $"{Name} made a coffee with a suspicious amount of foam.";
         }
+
+        protected override string GetRestoreEnergyMessage()
+        {
+            return
+                $"{Name} took a coffee-and-snack break and restored energy to 100.";
+        }
     }
 }

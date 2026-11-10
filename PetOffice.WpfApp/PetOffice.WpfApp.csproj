@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Assets\action.png" />
     <None Remove="Assets\add.png" />
+    <None Remove="Assets\add_back_watermark.png" />
     <None Remove="Assets\badge.png" />
     <None Remove="Assets\cat.png" />
     <None Remove="Assets\coffee-cup.png" />
@@ -20,6 +21,7 @@
     <None Remove="Assets\fix.png" />
     <None Remove="Assets\hamster.png" />
     <None Remove="Assets\log.png" />
+    <None Remove="Assets\log_back_watermark.png" />
     <None Remove="Assets\owl.png" />
     <None Remove="Assets\parrot.png" />
     <None Remove="Assets\paw.png" />
@@ -30,12 +32,15 @@
     <None Remove="Assets\racoon.png" />
     <None Remove="Assets\remove.png" />
     <None Remove="Assets\restore.png" />
+    <None Remove="Assets\selected_back_watermarkpng.png" />
     <None Remove="Assets\service.png" />
     <None Remove="Assets\speech-bubble.png" />
     <None Remove="Assets\work.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\add_back_watermark.png" />
+    <Resource Include="Assets\log_back_watermark.png" />
     <Resource Include="Assets\restore.png" />
   </ItemGroup>
 
@@ -67,6 +72,7 @@
     <Resource Include="Assets\rabbit.png" />
     <Resource Include="Assets\raccoon.png" />
     <Resource Include="Assets\remove.png" />
+    <Resource Include="Assets\selected_back_watermarkpng.png" />
     <Resource Include="Assets\service.png" />
     <Resource Include="Assets\speech-bubble.png" />
     <Resource Include="Assets\work.png" />

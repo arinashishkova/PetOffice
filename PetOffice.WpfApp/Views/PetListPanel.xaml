@@ -365,6 +365,26 @@
 
                         </Grid>
 
+                        <!--
+                        Scrollbar still reserves its width,
+                        but becomes invisible when scrolling
+                        is not required.
+                        -->
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="Maximum"
+                                     Value="0">
+
+                                <Setter Property="Opacity"
+                                        Value="0"/>
+
+                                <Setter Property="IsHitTestVisible"
+                                        Value="False"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
                     </ControlTemplate>
 
                 </Setter.Value>
@@ -916,7 +936,6 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <!-- SEARCH -->
                     <StackPanel Grid.Column="0">
 
                         <TextBlock Text="Search"
@@ -941,7 +960,6 @@
                     </StackPanel>
 
 
-                    <!-- SORT -->
                     <StackPanel Grid.Column="2">
 
                         <TextBlock Text="Sort"
@@ -1039,7 +1057,7 @@
                         Background="Transparent"
                         BorderThickness="0"
                         Padding="0"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Visible"
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                         <ListBox.Resources>

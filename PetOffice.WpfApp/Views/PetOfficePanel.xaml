@@ -5,53 +5,138 @@
 
     <UserControl.Resources>
 
+        <!-- GENERAL CARD -->
         <Style x:Key="CardStyle"
                TargetType="Border">
+
             <Setter Property="BorderBrush"
                     Value="#DFE3E6"/>
+
             <Setter Property="BorderThickness"
                     Value="1"/>
+
             <Setter Property="CornerRadius"
                     Value="12"/>
+
             <Setter Property="Padding"
                     Value="20"/>
+
         </Style>
 
 
+        <!-- INPUT -->
         <Style x:Key="InputTextBoxStyle"
                TargetType="TextBox">
+
             <Setter Property="Height"
                     Value="36"/>
+
             <Setter Property="Padding"
                     Value="9,5"/>
+
             <Setter Property="FontSize"
                     Value="14"/>
+
             <Setter Property="Background"
                     Value="Transparent"/>
+
             <Setter Property="BorderThickness"
                     Value="0"/>
+
             <Setter Property="VerticalContentAlignment"
                     Value="Center"/>
+
         </Style>
 
 
         <Style x:Key="InputComboBoxStyle"
                TargetType="ComboBox">
+
             <Setter Property="Height"
                     Value="36"/>
+
             <Setter Property="Padding"
                     Value="7,4"/>
+
             <Setter Property="FontSize"
                     Value="14"/>
+
             <Setter Property="Background"
                     Value="Transparent"/>
+
             <Setter Property="BorderThickness"
                     Value="0"/>
+
             <Setter Property="VerticalContentAlignment"
                     Value="Center"/>
+
         </Style>
 
 
+        <!-- LOG ITEM -->
+        <Style x:Key="LogListItemStyle"
+               TargetType="ListBoxItem">
+
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Stretch"/>
+
+            <Setter Property="Background"
+                    Value="Transparent"/>
+
+            <Setter Property="BorderThickness"
+                    Value="0"/>
+
+            <Setter Property="Padding"
+                    Value="0"/>
+
+            <Setter Property="Margin"
+                    Value="0,2"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="ListBoxItem">
+
+                        <Border x:Name="ItemBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="6,3">
+
+                            <ContentPresenter/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+
+                                <Setter TargetName="ItemBorder"
+                                        Property="Background"
+                                        Value="#EEF8F0"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+
+                                <Setter TargetName="ItemBorder"
+                                        Property="Background"
+                                        Value="#DFF1E6"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+
+        <!-- ADD BUTTON -->
         <Style x:Key="AddButtonStyle"
                TargetType="Button">
 
@@ -104,16 +189,149 @@
 
                             <Trigger Property="IsMouseOver"
                                      Value="True">
+
                                 <Setter TargetName="ButtonBorder"
                                         Property="Opacity"
                                         Value="0.78"/>
+
                             </Trigger>
 
                             <Trigger Property="IsEnabled"
                                      Value="False">
+
                                 <Setter TargetName="ButtonBorder"
                                         Property="Opacity"
                                         Value="0.35"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+
+        <!-- ADD CARD WATERMARK -->
+        <ImageBrush x:Key="AddWatermarkBrush"
+                    ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
+                    TileMode="Tile"
+                    Viewport="0,0,145,145"
+                    ViewportUnits="Absolute"
+                    Stretch="Uniform"
+                    Opacity="0.025"/>
+
+
+        <!-- LOG CARD WATERMARK -->
+        <ImageBrush x:Key="LogWatermarkBrush"
+                    ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
+                    TileMode="Tile"
+                    Viewport="0,0,165,165"
+                    ViewportUnits="Absolute"
+                    Stretch="Uniform"
+                    Opacity="0.022"/>
+
+
+        <!-- SAME SCROLLBAR AS PET LIST -->
+        <Style x:Key="ThinScrollBarStyle"
+               TargetType="ScrollBar">
+
+            <Setter Property="Width"
+                    Value="8"/>
+
+            <Setter Property="Margin"
+                    Value="7,5,2,5"/>
+
+            <Setter Property="Background"
+                    Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="ScrollBar">
+
+                        <Grid Width="8"
+                              Background="Transparent">
+
+                            <Track x:Name="PART_Track"
+                                   Orientation="{TemplateBinding Orientation}"
+                                   Maximum="{TemplateBinding Maximum}"
+                                   Minimum="{TemplateBinding Minimum}"
+                                   Value="{TemplateBinding Value}"
+                                   ViewportSize="{TemplateBinding ViewportSize}"
+                                   IsDirectionReversed="True"
+                                   Focusable="False">
+
+                                <Track.DecreaseRepeatButton>
+
+                                    <RepeatButton
+                                        Command="{x:Static ScrollBar.PageUpCommand}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Opacity="0"
+                                        Focusable="False"/>
+
+                                </Track.DecreaseRepeatButton>
+
+
+                                <Track.Thumb>
+
+                                    <Thumb Width="6"
+                                           MinHeight="28"
+                                           Background="#B8C2CB">
+
+                                        <Thumb.Template>
+
+                                            <ControlTemplate TargetType="Thumb">
+
+                                                <Border
+                                                    Background="{TemplateBinding Background}"
+                                                    CornerRadius="3"/>
+
+                                            </ControlTemplate>
+
+                                        </Thumb.Template>
+
+                                    </Thumb>
+
+                                </Track.Thumb>
+
+
+                                <Track.IncreaseRepeatButton>
+
+                                    <RepeatButton
+                                        Command="{x:Static ScrollBar.PageDownCommand}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Opacity="0"
+                                        Focusable="False"/>
+
+                                </Track.IncreaseRepeatButton>
+
+                            </Track>
+
+                        </Grid>
+
+
+                        <!--
+                        the scrollbar keeps its place,
+                        but becomes invisible when scrolling
+                        is not required
+                        -->
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="Maximum"
+                                     Value="0">
+
+                                <Setter Property="Opacity"
+                                        Value="0"/>
+
+                                <Setter Property="IsHitTestVisible"
+                                        Value="False"/>
+
                             </Trigger>
 
                         </ControlTemplate.Triggers>
@@ -214,15 +432,9 @@
             <Grid Grid.Row="1">
 
                 <Grid.ColumnDefinitions>
-
-                    <!-- exactly half -->
                     <ColumnDefinition Width="*"/>
-
                     <ColumnDefinition Width="18"/>
-
-                    <!-- exactly half -->
                     <ColumnDefinition Width="*"/>
-
                 </Grid.ColumnDefinitions>
 
 
@@ -243,128 +455,138 @@
 
                         <Grid>
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                            <!-- ADD WATERMARK -->
+                            <Rectangle Fill="{StaticResource AddWatermarkBrush}"
+                                       IsHitTestVisible="False"/>
 
 
-                            <!-- HEADER -->
-                            <StackPanel Grid.Row="0"
-                                        Orientation="Horizontal"
-                                        Margin="0,0,0,18">
+                            <!-- CONTENT -->
+                            <Grid>
 
-                                <Image Source="/PetOffice.WpfApp;component/Assets/add.png"
-                                       Width="27"
-                                       Height="27"
-                                       Stretch="Uniform"
-                                       Margin="0,0,10,0"/>
-
-                                <TextBlock Text="Add office pet"
-                                           FontSize="18"
-                                           FontWeight="SemiBold"
-                                           Foreground="#344054"
-                                           VerticalAlignment="Center"/>
-
-                            </StackPanel>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
 
-                            <!-- TYPE -->
-                            <Grid Grid.Row="1"
-                                  Margin="0,0,0,12">
+                                <!-- HEADER -->
+                                <StackPanel Grid.Row="0"
+                                            Orientation="Horizontal"
+                                            Margin="0,0,0,18">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="82"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                                    <Image Source="/PetOffice.WpfApp;component/Assets/add.png"
+                                           Width="27"
+                                           Height="27"
+                                           Stretch="Uniform"
+                                           Margin="0,0,10,0"/>
 
+                                    <TextBlock Text="Add office pet"
+                                               FontSize="18"
+                                               FontWeight="SemiBold"
+                                               Foreground="#344054"
+                                               VerticalAlignment="Center"/>
 
-                                <TextBlock Text="Type"
-                                           Foreground="#59666D"
-                                           VerticalAlignment="Center"/>
-
-
-                                <Border Grid.Column="1"
-                                        Height="38"
-                                        Background="#D9FFFFFF"
-                                        BorderBrush="#D7CFC7"
-                                        BorderThickness="1"
-                                        CornerRadius="8">
-
-                                    <ComboBox
-                                        Style="{StaticResource InputComboBoxStyle}"
-                                        ItemsSource="{Binding RepositoryNames}"
-                                        SelectedItem="{Binding SelectedRepository,
-                                                               Mode=TwoWay}"/>
-
-                                </Border>
-
-                            </Grid>
+                                </StackPanel>
 
 
-                            <!-- NAME -->
-                            <Grid Grid.Row="2"
-                                  Margin="0,0,0,14">
+                                <!-- TYPE -->
+                                <Grid Grid.Row="1"
+                                      Margin="0,0,0,12">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="82"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="82"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
 
-                                <StackPanel Orientation="Horizontal"
-                                            VerticalAlignment="Center">
-
-                                    <Image Source="/PetOffice.WpfApp;component/Assets/pet_name.png"
-                                           Width="18"
-                                           Height="18"
-                                           Margin="0,0,6,0"/>
-
-                                    <TextBlock Text="Name"
+                                    <TextBlock Text="Type"
                                                Foreground="#59666D"
                                                VerticalAlignment="Center"/>
 
-                                </StackPanel>
+
+                                    <Border Grid.Column="1"
+                                            Height="38"
+                                            Background="#D9FFFFFF"
+                                            BorderBrush="#D7CFC7"
+                                            BorderThickness="1"
+                                            CornerRadius="8">
+
+                                        <ComboBox
+                                            Style="{StaticResource InputComboBoxStyle}"
+                                            ItemsSource="{Binding RepositoryNames}"
+                                            SelectedItem="{Binding SelectedRepository,
+                                                                   Mode=TwoWay}"/>
+
+                                    </Border>
+
+                                </Grid>
 
 
-                                <Border Grid.Column="1"
-                                        Height="38"
-                                        Background="#D9FFFFFF"
-                                        BorderBrush="#D7CFC7"
-                                        BorderThickness="1"
-                                        CornerRadius="8">
+                                <!-- NAME -->
+                                <Grid Grid.Row="2"
+                                      Margin="0,0,0,14">
 
-                                    <TextBox
-                                        Style="{StaticResource InputTextBoxStyle}"
-                                        Text="{Binding NewPetName,
-                                                       Mode=TwoWay,
-                                                       UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="82"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                </Border>
+
+                                    <StackPanel Orientation="Horizontal"
+                                                VerticalAlignment="Center">
+
+                                        <Image Source="/PetOffice.WpfApp;component/Assets/pet_name.png"
+                                               Width="18"
+                                               Height="18"
+                                               Margin="0,0,6,0"/>
+
+                                        <TextBlock Text="Name"
+                                                   Foreground="#59666D"
+                                                   VerticalAlignment="Center"/>
+
+                                    </StackPanel>
+
+
+                                    <Border Grid.Column="1"
+                                            Height="38"
+                                            Background="#D9FFFFFF"
+                                            BorderBrush="#D7CFC7"
+                                            BorderThickness="1"
+                                            CornerRadius="8">
+
+                                        <TextBox
+                                            Style="{StaticResource InputTextBoxStyle}"
+                                            Text="{Binding NewPetName,
+                                                           Mode=TwoWay,
+                                                           UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    </Border>
+
+                                </Grid>
+
+
+                                <!-- ADD BUTTON -->
+                                <Button Grid.Row="3"
+                                        Style="{StaticResource AddButtonStyle}"
+                                        Command="{Binding AddCommand}">
+
+                                    <StackPanel Orientation="Horizontal">
+
+                                        <Image Source="/PetOffice.WpfApp;component/Assets/add.png"
+                                               Width="19"
+                                               Height="19"
+                                               Margin="0,0,7,0"/>
+
+                                        <TextBlock Text="Add pet"
+                                                   VerticalAlignment="Center"/>
+
+                                    </StackPanel>
+
+                                </Button>
 
                             </Grid>
-
-
-                            <!-- ADD BUTTON -->
-                            <Button Grid.Row="3"
-                                    Style="{StaticResource AddButtonStyle}"
-                                    Command="{Binding AddCommand}">
-
-                                <StackPanel Orientation="Horizontal">
-
-                                    <Image Source="/PetOffice.WpfApp;component/Assets/add.png"
-                                           Width="19"
-                                           Height="19"
-                                           Margin="0,0,7,0"/>
-
-                                    <TextBlock Text="Add pet"
-                                               VerticalAlignment="Center"/>
-
-                                </StackPanel>
-
-                            </Button>
 
                         </Grid>
 
@@ -385,7 +607,7 @@
             </Grid>
 
 
-            <!-- ACTIVITY LOG - FULL WIDTH -->
+            <!-- ACTIVITY LOG -->
             <Border Grid.Row="3"
                     Style="{StaticResource CardStyle}"
                     Background="#EFF8F2"
@@ -393,47 +615,100 @@
 
                 <Grid>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="170"/>
-                    </Grid.RowDefinitions>
+                    <!-- LOG WATERMARK -->
+                    <Rectangle Fill="{StaticResource LogWatermarkBrush}"
+                               IsHitTestVisible="False"/>
 
 
-                    <StackPanel Grid.Row="0"
-                                Orientation="Horizontal"
-                                Margin="0,0,0,10">
+                    <!-- LOG CONTENT -->
+                    <Grid>
 
-                        <Image Source="/PetOffice.WpfApp;component/Assets/log.png"
-                               Width="25"
-                               Height="25"
-                               Stretch="Uniform"
-                               Margin="0,0,9,0"/>
-
-                        <TextBlock Text="Activity log"
-                                   FontSize="17"
-                                   FontWeight="SemiBold"
-                                   Foreground="#344054"
-                                   VerticalAlignment="Center"/>
-
-                    </StackPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="170"/>
+                        </Grid.RowDefinitions>
 
 
-                    <Border Grid.Row="1"
-                            Background="#CCFFFFFF"
-                            BorderBrush="#CFE0D4"
-                            BorderThickness="1"
-                            CornerRadius="9"
-                            Padding="8">
+                        <StackPanel Grid.Row="0"
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,10">
 
-                        <ListBox ItemsSource="{Binding Log}"
-                                 FontSize="13"
-                                 Padding="4"
-                                 Background="Transparent"
-                                 BorderThickness="0"
-                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+                            <Image Source="/PetOffice.WpfApp;component/Assets/log.png"
+                                   Width="25"
+                                   Height="25"
+                                   Stretch="Uniform"
+                                   Margin="0,0,9,0"/>
 
-                    </Border>
+                            <TextBlock Text="Activity log"
+                                       FontSize="17"
+                                       FontWeight="SemiBold"
+                                       Foreground="#344054"
+                                       VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+
+                        <Border Grid.Row="1"
+                                Background="#E8FFFFFF"
+                                BorderBrush="#CFE0D4"
+                                BorderThickness="1"
+                                CornerRadius="9"
+                                Padding="8">
+
+                            <ListBox ItemsSource="{Binding Log}"
+                                     ItemContainerStyle="{StaticResource LogListItemStyle}"
+                                     FontSize="13"
+                                     Padding="4"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                                <ListBox.Resources>
+
+                                    <Style TargetType="ScrollBar"
+                                           BasedOn="{StaticResource ThinScrollBarStyle}"/>
+
+                                </ListBox.Resources>
+
+
+                                <!-- MESSAGE + TIME -->
+                                <ListBox.ItemTemplate>
+
+                                    <DataTemplate>
+
+                                        <Grid Margin="2,2">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+
+                                            <TextBlock Text="{Binding Message}"
+                                                       Foreground="#4F5F58"
+                                                       TextWrapping="Wrap"
+                                                       VerticalAlignment="Center"/>
+
+
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding TimeText}"
+                                                       FontSize="11"
+                                                       Foreground="#9AA6A0"
+                                                       Margin="18,0,5,0"
+                                                       VerticalAlignment="Center"/>
+
+                                        </Grid>
+
+                                    </DataTemplate>
+
+                                </ListBox.ItemTemplate>
+
+                            </ListBox>
+
+                        </Border>
+
+                    </Grid>
 
                 </Grid>
 

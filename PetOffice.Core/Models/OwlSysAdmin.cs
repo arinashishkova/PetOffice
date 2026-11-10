@@ -31,5 +31,10 @@ namespace PetOffice.Core.Models
 
             return $"{Name} fixed the computer by turning it off and on again.";
         }
+        protected override string GetRestoreEnergyMessage()
+        {
+            return
+                $"{Name} closed its eyes for a quiet power nap and restored energy to 100.";
+        }
     }
 }

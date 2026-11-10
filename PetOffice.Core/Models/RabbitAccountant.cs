@@ -30,5 +30,11 @@ namespace PetOffice.Core.Models
 
             return $"{Name} sent a report with 47 tabs to the whole office.";
         }
+        protected override string GetRestoreEnergyMessage()
+        {
+            return
+                $"{Name} snacked on carrots, stretched out for a break, and restored energy to 100.";
+        }
+
     }
 }

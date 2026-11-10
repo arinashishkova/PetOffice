@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:PetOffice.WpfApp.Views"
         Title="Pet Office"
-        Height="820"
-        Width="1050"
+        Width="1180"
+        SizeToContent="Height"
         MinHeight="650"
         MinWidth="900"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
         Background="#F8F6F4"
         Icon="Assets/petoffice_icon.ico">
 
@@ -41,10 +42,6 @@
 
                     <ControlTemplate TargetType="TabItem">
 
-                        <!--
-                        Spacing is inside the template,
-                        so TabPanel does not cut the corners.
-                        -->
                         <Grid Margin="4,3,4,3">
 
                             <Border x:Name="TabBorder"
@@ -125,13 +122,12 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <!-- Tab buttons -->
+
                             <TabPanel Grid.Row="0"
                                       IsItemsHost="True"
                                       Background="Transparent"/>
 
 
-                            <!-- Selected page -->
                             <Border Grid.Row="2"
                                     Background="#FFFDFC"
                                     BorderBrush="#DFE3E6"
@@ -184,11 +180,14 @@
 
             </TabItem>
 
-            <TabItem Header="Storage"
-         Style="{StaticResource RoundedTabItemStyle}">
 
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
+            <TabItem
+                Header="Storage"
+                Style="{StaticResource RoundedTabItemStyle}">
+
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Disabled">
 
                     <views:StoragePanel Margin="18"/>
 
