@@ -23,7 +23,7 @@
 
                     <ControlTemplate TargetType="ProgressBar">
 
-                        <Grid>
+                        <Grid x:Name="PART_Track">
 
                             <Border Background="{TemplateBinding Background}"
                             CornerRadius="9"/>

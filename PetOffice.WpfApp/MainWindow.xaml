@@ -15,6 +15,60 @@
 
     <Window.Resources>
 
+        <!-- MAIN BACKGROUND DOT PATTERN -->
+        <DrawingBrush x:Key="MainDotBackgroundBrush"
+              TileMode="Tile"
+              Viewport="0,0,30,30"
+              ViewportUnits="Absolute"
+              Stretch="None">
+
+            <DrawingBrush.Drawing>
+
+                <DrawingGroup>
+
+                    <!-- base background -->
+                    <GeometryDrawing Brush="#FFFDFC">
+
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,30,30"/>
+                        </GeometryDrawing.Geometry>
+
+                    </GeometryDrawing>
+
+
+                    <!-- small dot -->
+                    <GeometryDrawing Brush="#16958D86">
+
+                        <GeometryDrawing.Geometry>
+
+                            <EllipseGeometry Center="7,7"
+                                     RadiusX="1.1"
+                                     RadiusY="1.1"/>
+
+                        </GeometryDrawing.Geometry>
+
+                    </GeometryDrawing>
+
+
+                    <!-- second shifted dot -->
+                    <GeometryDrawing Brush="#16958D86">
+
+                        <GeometryDrawing.Geometry>
+
+                            <EllipseGeometry Center="22,22"
+                                     RadiusX="1.1"
+                                     RadiusY="1.1"/>
+
+                        </GeometryDrawing.Geometry>
+
+                    </GeometryDrawing>
+
+                </DrawingGroup>
+
+            </DrawingBrush.Drawing>
+
+        </DrawingBrush>
+
         <!-- Rounded tab button -->
         <Style x:Key="RoundedTabItemStyle"
                TargetType="TabItem">
@@ -130,7 +184,7 @@
 
 
                             <Border Grid.Row="2"
-                                    Background="#FFFDFC"
+                                    Background="{StaticResource MainDotBackgroundBrush}"
                                     BorderBrush="#DFE3E6"
                                     BorderThickness="1"
                                     CornerRadius="14">

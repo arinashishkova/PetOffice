@@ -416,7 +416,7 @@
         <!-- LOG CARD WATERMARK -->
         <DrawingBrush x:Key="LogWatermarkBrush"
               TileMode="Tile"
-              Viewport="0,0,165,115"
+              Viewport="0,0,115,80"
               ViewportUnits="Absolute"
               Stretch="None">
 
@@ -426,11 +426,11 @@
 
                     <ImageDrawing
                 ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
-                Rect="16,12,24,24"/>
+                Rect="10,7,18,18"/>
 
                     <ImageDrawing
                 ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
-                Rect="98,66,24,24"/>
+                Rect="65,43,18,18"/>
 
                 </DrawingGroup>
 
