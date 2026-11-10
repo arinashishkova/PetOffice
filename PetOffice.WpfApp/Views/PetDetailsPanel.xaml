@@ -308,7 +308,8 @@
                         <ProgressBar Grid.Column="1"
                                      Minimum="0"
                                      Maximum="100"
-                                     Value="{Binding SelectedPetEnergy}"
+                                     Value="{Binding SelectedPetEnergy,
+                                                     Mode=OneWay}"
                                      Height="18"
                                      Margin="0,0,10,0"
                                      Background="#E7E3EA"

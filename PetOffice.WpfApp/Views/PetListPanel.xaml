@@ -285,6 +285,94 @@
         </Style>
 
 
+        <!-- THIN VERTICAL SCROLLBAR -->
+        <Style x:Key="ThinScrollBarStyle"
+               TargetType="ScrollBar">
+
+            <Setter Property="Width"
+                    Value="8"/>
+
+            <Setter Property="Margin"
+                    Value="7,5,2,5"/>
+
+            <Setter Property="Background"
+                    Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="ScrollBar">
+
+                        <Grid Width="8"
+                              Background="Transparent">
+
+                            <Track x:Name="PART_Track"
+                                   Orientation="{TemplateBinding Orientation}"
+                                   Maximum="{TemplateBinding Maximum}"
+                                   Minimum="{TemplateBinding Minimum}"
+                                   Value="{TemplateBinding Value}"
+                                   ViewportSize="{TemplateBinding ViewportSize}"
+                                   IsDirectionReversed="True"
+                                   Focusable="False">
+
+                                <Track.DecreaseRepeatButton>
+
+                                    <RepeatButton
+                                        Command="{x:Static ScrollBar.PageUpCommand}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Opacity="0"
+                                        Focusable="False"/>
+
+                                </Track.DecreaseRepeatButton>
+
+
+                                <Track.Thumb>
+
+                                    <Thumb Width="6"
+                                           MinHeight="28"
+                                           Background="#B8C2CB">
+
+                                        <Thumb.Template>
+
+                                            <ControlTemplate TargetType="Thumb">
+
+                                                <Border
+                                                    Background="{TemplateBinding Background}"
+                                                    CornerRadius="3"/>
+
+                                            </ControlTemplate>
+
+                                        </Thumb.Template>
+
+                                    </Thumb>
+
+                                </Track.Thumb>
+
+
+                                <Track.IncreaseRepeatButton>
+
+                                    <RepeatButton
+                                        Command="{x:Static ScrollBar.PageDownCommand}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Opacity="0"
+                                        Focusable="False"/>
+
+                                </Track.IncreaseRepeatButton>
+
+                            </Track>
+
+                        </Grid>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+
         <!-- PET LIST ITEM -->
         <Style x:Key="PetListItemStyle"
                TargetType="ListBoxItem">
@@ -827,6 +915,8 @@
                         <ColumnDefinition Width="190"/>
                     </Grid.ColumnDefinitions>
 
+
+                    <!-- SEARCH -->
                     <StackPanel Grid.Column="0">
 
                         <TextBlock Text="Search"
@@ -851,6 +941,7 @@
                     </StackPanel>
 
 
+                    <!-- SORT -->
                     <StackPanel Grid.Column="2">
 
                         <TextBlock Text="Sort"
@@ -930,7 +1021,7 @@
                 </Grid>
 
 
-                <!-- FIXED HEIGHT PET LIST -->
+                <!-- PET LIST -->
                 <Border Grid.Row="3"
                         Background="#F4FFFFFF"
                         BorderBrush="#CCDCE7"
@@ -938,7 +1029,7 @@
                         CornerRadius="10"
                         Padding="8"
                         MinHeight="190"
-                        MaxHeight="300">
+                        MaxHeight="360">
 
                     <ListBox
                         ItemsSource="{Binding FilteredPetsView}"
@@ -948,9 +1039,17 @@
                         Background="Transparent"
                         BorderThickness="0"
                         Padding="0"
-                        Margin="0,0,6,0"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                        <ListBox.Resources>
+
+                            <Style TargetType="ScrollBar"
+                                   BasedOn="{StaticResource ThinScrollBarStyle}"/>
+
+                        </ListBox.Resources>
+
+                    </ListBox>
 
                 </Border>
 

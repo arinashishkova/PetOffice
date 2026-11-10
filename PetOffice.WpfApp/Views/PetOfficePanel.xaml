@@ -5,75 +5,53 @@
 
     <UserControl.Resources>
 
-        <!-- GENERAL CARD -->
         <Style x:Key="CardStyle"
                TargetType="Border">
-
             <Setter Property="BorderBrush"
                     Value="#DFE3E6"/>
-
             <Setter Property="BorderThickness"
                     Value="1"/>
-
             <Setter Property="CornerRadius"
                     Value="12"/>
-
             <Setter Property="Padding"
                     Value="20"/>
-
         </Style>
 
 
-        <!-- INPUT -->
         <Style x:Key="InputTextBoxStyle"
                TargetType="TextBox">
-
             <Setter Property="Height"
                     Value="36"/>
-
             <Setter Property="Padding"
                     Value="9,5"/>
-
             <Setter Property="FontSize"
                     Value="14"/>
-
             <Setter Property="Background"
                     Value="Transparent"/>
-
             <Setter Property="BorderThickness"
                     Value="0"/>
-
             <Setter Property="VerticalContentAlignment"
                     Value="Center"/>
-
         </Style>
 
 
         <Style x:Key="InputComboBoxStyle"
                TargetType="ComboBox">
-
             <Setter Property="Height"
                     Value="36"/>
-
             <Setter Property="Padding"
                     Value="7,4"/>
-
             <Setter Property="FontSize"
                     Value="14"/>
-
             <Setter Property="Background"
                     Value="Transparent"/>
-
             <Setter Property="BorderThickness"
                     Value="0"/>
-
             <Setter Property="VerticalContentAlignment"
                     Value="Center"/>
-
         </Style>
 
 
-        <!-- ADD BUTTON -->
         <Style x:Key="AddButtonStyle"
                TargetType="Button">
 
@@ -105,7 +83,6 @@
                     Value="Hand"/>
 
             <Setter Property="Template">
-
                 <Setter.Value>
 
                     <ControlTemplate TargetType="Button">
@@ -127,20 +104,16 @@
 
                             <Trigger Property="IsMouseOver"
                                      Value="True">
-
                                 <Setter TargetName="ButtonBorder"
                                         Property="Opacity"
                                         Value="0.78"/>
-
                             </Trigger>
 
                             <Trigger Property="IsEnabled"
                                      Value="False">
-
                                 <Setter TargetName="ButtonBorder"
                                         Property="Opacity"
                                         Value="0.35"/>
-
                             </Trigger>
 
                         </ControlTemplate.Triggers>
@@ -148,7 +121,6 @@
                     </ControlTemplate>
 
                 </Setter.Value>
-
             </Setter>
 
         </Style>
@@ -163,6 +135,8 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="18"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
@@ -236,31 +210,36 @@
             </Grid>
 
 
-            <!-- MAIN DASHBOARD -->
+            <!-- TOP WORKSPACE -->
             <Grid Grid.Row="1">
 
                 <Grid.ColumnDefinitions>
 
-                    <!-- responsive left column -->
-                    <ColumnDefinition Width="0.8*"/>
+                    <!-- exactly half -->
+                    <ColumnDefinition Width="*"/>
 
                     <ColumnDefinition Width="18"/>
 
-                    <!-- larger responsive right column -->
-                    <ColumnDefinition Width="1.35*"/>
+                    <!-- exactly half -->
+                    <ColumnDefinition Width="*"/>
 
                 </Grid.ColumnDefinitions>
 
 
-                <!-- LEFT COLUMN -->
-                <StackPanel Grid.Column="0"
-                            VerticalAlignment="Top">
+                <!-- LEFT HALF -->
+                <Grid Grid.Column="0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
 
                     <!-- ADD OFFICE PET -->
-                    <Border Style="{StaticResource CardStyle}"
-                            Background="#FFF4E8"
-                            Margin="0,0,0,18">
+                    <Border Grid.Row="0"
+                            Style="{StaticResource CardStyle}"
+                            Background="#FFF4E8">
 
                         <Grid>
 
@@ -297,13 +276,15 @@
                                   Margin="0,0,0,12">
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="76"/>
+                                    <ColumnDefinition Width="82"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
+
 
                                 <TextBlock Text="Type"
                                            Foreground="#59666D"
                                            VerticalAlignment="Center"/>
+
 
                                 <Border Grid.Column="1"
                                         Height="38"
@@ -328,7 +309,7 @@
                                   Margin="0,0,0,14">
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="76"/>
+                                    <ColumnDefinition Width="82"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
@@ -366,7 +347,7 @@
                             </Grid>
 
 
-                            <!-- ADD -->
+                            <!-- ADD BUTTON -->
                             <Button Grid.Row="3"
                                     Style="{StaticResource AddButtonStyle}"
                                     Command="{Binding AddCommand}">
@@ -391,82 +372,72 @@
 
 
                     <!-- SELECTED PET -->
-                    <views:PetDetailsPanel/>
+                    <views:PetDetailsPanel Grid.Row="2"
+                                           VerticalAlignment="Stretch"/>
 
-                </StackPanel>
+                </Grid>
 
 
-                <!-- RIGHT COLUMN -->
-                <Grid Grid.Column="2">
+                <!-- RIGHT HALF -->
+                <views:PetListPanel Grid.Column="2"
+                                    VerticalAlignment="Stretch"/>
+
+            </Grid>
+
+
+            <!-- ACTIVITY LOG - FULL WIDTH -->
+            <Border Grid.Row="3"
+                    Style="{StaticResource CardStyle}"
+                    Background="#EFF8F2"
+                    Margin="0,0,0,20">
+
+                <Grid>
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="18"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="170"/>
                     </Grid.RowDefinitions>
 
 
-                    <!-- PET LIST -->
-                    <views:PetListPanel Grid.Row="0"
-                                        VerticalAlignment="Top"/>
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal"
+                                Margin="0,0,0,10">
+
+                        <Image Source="/PetOffice.WpfApp;component/Assets/log.png"
+                               Width="25"
+                               Height="25"
+                               Stretch="Uniform"
+                               Margin="0,0,9,0"/>
+
+                        <TextBlock Text="Activity log"
+                                   FontSize="17"
+                                   FontWeight="SemiBold"
+                                   Foreground="#344054"
+                                   VerticalAlignment="Center"/>
+
+                    </StackPanel>
 
 
-                    <!-- ACTIVITY LOG -->
-                    <Border Grid.Row="2"
-                            Style="{StaticResource CardStyle}"
-                            Background="#EFF8F2"
-                            Margin="0,0,0,20">
+                    <Border Grid.Row="1"
+                            Background="#CCFFFFFF"
+                            BorderBrush="#CFE0D4"
+                            BorderThickness="1"
+                            CornerRadius="9"
+                            Padding="8">
 
-                        <Grid>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="160"/>
-                            </Grid.RowDefinitions>
-
-
-                            <StackPanel Grid.Row="0"
-                                        Orientation="Horizontal"
-                                        Margin="0,0,0,10">
-
-                                <Image Source="/PetOffice.WpfApp;component/Assets/log.png"
-                                       Width="25"
-                                       Height="25"
-                                       Stretch="Uniform"
-                                       Margin="0,0,9,0"/>
-
-                                <TextBlock Text="Activity log"
-                                           FontSize="17"
-                                           FontWeight="SemiBold"
-                                           Foreground="#344054"
-                                           VerticalAlignment="Center"/>
-
-                            </StackPanel>
-
-
-                            <Border Grid.Row="1"
-                                    Background="#CCFFFFFF"
-                                    BorderBrush="#CFE0D4"
-                                    BorderThickness="1"
-                                    CornerRadius="9"
-                                    Padding="5">
-
-                                <ListBox ItemsSource="{Binding Log}"
-                                         FontSize="13"
-                                         Padding="5"
-                                         Background="Transparent"
-                                         BorderThickness="0"
-                                         ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-
-                            </Border>
-
-                        </Grid>
+                        <ListBox ItemsSource="{Binding Log}"
+                                 FontSize="13"
+                                 Padding="4"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
 
                     </Border>
 
                 </Grid>
 
-            </Grid>
+            </Border>
 
         </Grid>
 
