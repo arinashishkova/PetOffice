@@ -2,7 +2,89 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <UserControl.Resources>
+
+        <!-- =====================================================
+             STORAGE CARD
+             ===================================================== -->
+
+        <Style x:Key="StorageCardStyle"
+               TargetType="Border"
+               BasedOn="{StaticResource CardStyle}">
+
+            <Setter Property="Background"
+                    Value="#F9FBFD"/>
+
+            <Setter Property="Padding"
+                    Value="18"/>
+
+            <Setter Property="Margin"
+                    Value="0,0,0,14"/>
+
+        </Style>
+
+
+        <!-- =====================================================
+             STORAGE BUTTON
+             ===================================================== -->
+
+        <Style x:Key="StorageButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource BaseRoundedButtonStyle}">
+
+            <Setter Property="Height"
+                    Value="40"/>
+
+            <Setter Property="MinWidth"
+                    Value="132"/>
+
+            <Setter Property="Padding"
+                    Value="14,7"/>
+
+            <Setter Property="FontSize"
+                    Value="13"/>
+
+        </Style>
+
+
+        <!-- SAVE -->
+        <Style x:Key="StorageSaveButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource StorageButtonStyle}">
+
+            <Setter Property="Background"
+                    Value="#E4F2E8"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#BDD8C4"/>
+
+            <Setter Property="Foreground"
+                    Value="#3E6B4A"/>
+
+        </Style>
+
+
+        <!-- LOAD -->
+        <Style x:Key="StorageLoadButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource StorageButtonStyle}">
+
+            <Setter Property="Background"
+                    Value="#E8EEF8"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#C8D3E6"/>
+
+            <Setter Property="Foreground"
+                    Value="#475A78"/>
+
+        </Style>
+
+    </UserControl.Resources>
+
+
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -12,141 +94,372 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <StackPanel Grid.Row="0"
-                    Margin="0,0,0,20">
 
-            <TextBlock Text="World Storage"
-                       FontSize="26"
-                       FontWeight="SemiBold"/>
+        <!-- =====================================================
+             HEADER
+             ===================================================== -->
 
-            <TextBlock Text="Save and restore the current Pet Office world."
-                       Margin="0,5,0,0"
-                       Foreground="#6B7280"/>
-        </StackPanel>
+        <Grid Grid.Row="0"
+      Margin="0,0,0,20">
 
-        <!-- JSON -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+
+                <TextBlock Text="World Storage"
+                   FontSize="26"
+                   FontWeight="SemiBold"
+                   Foreground="{StaticResource TextPrimaryBrush}"/>
+
+                <TextBlock Text="Save and restore the current Pet Office world."
+                   Margin="0,5,0,0"
+                   Foreground="{StaticResource TextSecondaryBrush}"/>
+
+            </StackPanel>
+
+            <Border Grid.Column="1"
+            Width="42"
+            Height="42"
+            Padding="3"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top">
+
+                <Image Source="/PetOffice.WpfApp;component/Assets/storage_storage.png"
+               Stretch="Uniform"/>
+
+            </Border>
+
+        </Grid>
+
+
+        <!-- =====================================================
+             JSON
+             ===================================================== -->
+
         <Border Grid.Row="1"
-                Padding="18"
-                Margin="0,0,0,14"
-                Background="White"
-                BorderBrush="#DFE3E6"
-                BorderThickness="1"
-                CornerRadius="12">
+                Style="{StaticResource StorageCardStyle}"
+                Background="#FFF7EC">
 
-            <StackPanel>
-                <TextBlock Text="JSON"
-                           FontSize="18"
-                           FontWeight="SemiBold"
-                           Margin="0,0,0,5"/>
+            <Grid>
 
-                <TextBlock Text="Save the complete office state to a JSON file or restore it later."
-                           Foreground="#6B7280"
-                           TextWrapping="Wrap"
-                           Margin="0,0,0,14"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="72"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Save JSON"
-                            Command="{Binding SaveJsonCommand}"
-                            MinWidth="120"
-                            Padding="14,8"
-                            Margin="0,0,10,0"/>
 
-                    <Button Content="Load JSON"
-                            Command="{Binding LoadJsonCommand}"
-                            MinWidth="120"
-                            Padding="14,8"/>
+                <!-- ICON -->
+                <Border Width="54"
+                        Height="54"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        CornerRadius="12">
+
+                    <Image Source="/PetOffice.WpfApp;component/Assets/storage_json.png"
+                           Width="42"
+                           Height="42"
+                           Stretch="Uniform"/>
+
+                </Border>
+
+
+                <!-- CONTENT -->
+                <StackPanel Grid.Column="1">
+
+                    <TextBlock Text="JSON"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Margin="0,0,0,5"/>
+
+
+                    <TextBlock Text="Save the complete office state to a JSON file or restore it later."
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,14"/>
+
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Button Style="{StaticResource StorageSaveButtonStyle}"
+                                Command="{Binding SaveJsonCommand}"
+                                Margin="0,0,10,0">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Image Source="/PetOffice.WpfApp;component/Assets/storage_save.png"
+                                       Width="18"
+                                       Height="18"
+                                       Margin="0,0,7,0"/>
+
+                                <TextBlock Text="Save JSON"
+                                           VerticalAlignment="Center"/>
+
+                            </StackPanel>
+
+                        </Button>
+
+
+                        <Button Style="{StaticResource StorageLoadButtonStyle}"
+                                Command="{Binding LoadJsonCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Image Source="/PetOffice.WpfApp;component/Assets/storage_load.png"
+                                       Width="18"
+                                       Height="18"
+                                       Margin="0,0,7,0"/>
+
+                                <TextBlock Text="Load JSON"
+                                           VerticalAlignment="Center"/>
+
+                            </StackPanel>
+
+                        </Button>
+
+                    </StackPanel>
+
                 </StackPanel>
-            </StackPanel>
+
+            </Grid>
+
         </Border>
 
-        <!-- XML -->
+
+        <!-- =====================================================
+             XML
+             ===================================================== -->
+
         <Border Grid.Row="2"
-                Padding="18"
-                Margin="0,0,0,14"
-                Background="White"
-                BorderBrush="#DFE3E6"
-                BorderThickness="1"
-                CornerRadius="12">
+                Style="{StaticResource StorageCardStyle}"
+                Background="#F4F1FF">
 
-            <StackPanel>
-                <TextBlock Text="XML"
-                           FontSize="18"
-                           FontWeight="SemiBold"
-                           Margin="0,0,0,5"/>
+            <Grid>
 
-                <TextBlock Text="Save the complete office state to an XML file or restore it later."
-                           Foreground="#6B7280"
-                           TextWrapping="Wrap"
-                           Margin="0,0,0,14"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="72"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Save XML"
-                            Command="{Binding SaveXmlCommand}"
-                            MinWidth="120"
-                            Padding="14,8"
-                            Margin="0,0,10,0"/>
 
-                    <Button Content="Load XML"
-                            Command="{Binding LoadXmlCommand}"
-                            MinWidth="120"
-                            Padding="14,8"/>
+                <!-- ICON -->
+                <Border Width="54"
+                        Height="54"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        CornerRadius="12">
+
+                    <Image Source="/PetOffice.WpfApp;component/Assets/storage_xml.png"
+                           Width="42"
+                           Height="42"
+                           Stretch="Uniform"/>
+
+                </Border>
+
+
+                <!-- CONTENT -->
+                <StackPanel Grid.Column="1">
+
+                    <TextBlock Text="XML"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Margin="0,0,0,5"/>
+
+
+                    <TextBlock Text="Save the complete office state to an XML file or restore it later."
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,14"/>
+
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Button Style="{StaticResource StorageSaveButtonStyle}"
+                                Command="{Binding SaveXmlCommand}"
+                                Margin="0,0,10,0">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Image Source="/PetOffice.WpfApp;component/Assets/storage_save.png"
+                                       Width="18"
+                                       Height="18"
+                                       Margin="0,0,7,0"/>
+
+                                <TextBlock Text="Save XML"
+                                           VerticalAlignment="Center"/>
+
+                            </StackPanel>
+
+                        </Button>
+
+
+                        <Button Style="{StaticResource StorageLoadButtonStyle}"
+                                Command="{Binding LoadXmlCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Image Source="/PetOffice.WpfApp;component/Assets/storage_load.png"
+                                       Width="18"
+                                       Height="18"
+                                       Margin="0,0,7,0"/>
+
+                                <TextBlock Text="Load XML"
+                                           VerticalAlignment="Center"/>
+
+                            </StackPanel>
+
+                        </Button>
+
+                    </StackPanel>
+
                 </StackPanel>
-            </StackPanel>
+
+            </Grid>
+
         </Border>
 
-        <!-- LocalDB -->
+
+        <!-- =====================================================
+             LOCALDB
+             ===================================================== -->
+
         <Border Grid.Row="3"
-                Padding="18"
-                Margin="0,0,0,14"
-                Background="White"
-                BorderBrush="#DFE3E6"
-                BorderThickness="1"
-                CornerRadius="12">
+                Style="{StaticResource StorageCardStyle}"
+                Background="#EEF7FA">
 
-            <StackPanel>
-                <TextBlock Text="LocalDB"
-                           FontSize="18"
-                           FontWeight="SemiBold"
-                           Margin="0,0,0,5"/>
+            <Grid>
 
-                <TextBlock Text="Save or restore the complete office state using SQL Server LocalDB."
-                           Foreground="#6B7280"
-                           TextWrapping="Wrap"
-                           Margin="0,0,0,14"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="72"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Save to LocalDB"
-                            Command="{Binding SaveLocalDbCommand}"
-                            MinWidth="140"
-                            Padding="14,8"
-                            Margin="0,0,10,0"/>
 
-                    <Button Content="Load from LocalDB"
-                            Command="{Binding LoadLocalDbCommand}"
-                            MinWidth="140"
-                            Padding="14,8"/>
+                <!-- ICON -->
+                <Border Width="54"
+                        Height="54"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        CornerRadius="12">
+
+                    <Image Source="/PetOffice.WpfApp;component/Assets/storage_localdb.png"
+                           Width="42"
+                           Height="42"
+                           Stretch="Uniform"/>
+
+                </Border>
+
+
+                <!-- CONTENT -->
+                <StackPanel Grid.Column="1">
+
+                    <TextBlock Text="LocalDB"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Margin="0,0,0,5"/>
+
+
+                    <TextBlock Text="Save or restore the complete office state using SQL Server LocalDB."
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,14"/>
+
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Button Style="{StaticResource StorageSaveButtonStyle}"
+                                Command="{Binding SaveLocalDbCommand}"
+                                MinWidth="160"
+                                Margin="0,0,10,0">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Image Source="/PetOffice.WpfApp;component/Assets/storage_save.png"
+                                       Width="18"
+                                       Height="18"
+                                       Margin="0,0,7,0"/>
+
+                                <TextBlock Text="Save to LocalDB"
+                                           VerticalAlignment="Center"/>
+
+                            </StackPanel>
+
+                        </Button>
+
+
+                        <Button Style="{StaticResource StorageLoadButtonStyle}"
+                                Command="{Binding LoadLocalDbCommand}"
+                                MinWidth="170">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Image Source="/PetOffice.WpfApp;component/Assets/storage_load.png"
+                                       Width="18"
+                                       Height="18"
+                                       Margin="0,0,7,0"/>
+
+                                <TextBlock Text="Load from LocalDB"
+                                           VerticalAlignment="Center"/>
+
+                            </StackPanel>
+
+                        </Button>
+
+                    </StackPanel>
+
                 </StackPanel>
-            </StackPanel>
+
+            </Grid>
+
         </Border>
 
-        <!-- Status -->
+
+        <!-- =====================================================
+             STATUS
+             ===================================================== -->
+
         <Border Grid.Row="4"
-                Padding="16"
-                Background="#F4F6FA"
-                BorderBrush="#DFE3E6"
-                BorderThickness="1"
-                CornerRadius="10">
+        Padding="16"
+        Background="#F4F6FA"
+        BorderBrush="{StaticResource AppBorderBrush}"
+        BorderThickness="1"
+        CornerRadius="10">
 
             <StackPanel>
-                <TextBlock Text="Status"
-                           FontWeight="SemiBold"
-                           Margin="0,0,0,5"/>
+
+                <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,8">
+
+                    <Border Width="28"
+                    Height="28"
+                    Padding="1"
+                    Margin="0,0,8,0">
+
+                        <Image Source="/PetOffice.WpfApp;component/Assets/storage_status.png"
+                       Stretch="Uniform"/>
+
+                    </Border>
+
+                    <TextBlock Text="Status"
+                       VerticalAlignment="Center"
+                       FontWeight="SemiBold"
+                       Foreground="{StaticResource TextPrimaryBrush}"/>
+
+                </StackPanel>
 
                 <TextBlock Text="{Binding StorageStatus}"
-                           TextWrapping="Wrap"/>
+                   Foreground="{StaticResource TextSecondaryBrush}"
+                   TextWrapping="Wrap"/>
+
             </StackPanel>
+
         </Border>
 
     </Grid>
+
 </UserControl>

@@ -15,6 +15,10 @@
     <None Remove="Assets\badge.png" />
     <None Remove="Assets\cat.png" />
     <None Remove="Assets\coffee-cup.png" />
+    <None Remove="Assets\cpu_back_watermark.png" />
+    <None Remove="Assets\cpu_large.png" />
+    <None Remove="Assets\cpu_medium.png" />
+    <None Remove="Assets\cpu_small.png" />
     <None Remove="Assets\dog.png" />
     <None Remove="Assets\easter-bunny.png" />
     <None Remove="Assets\energy.png" />
@@ -35,11 +39,22 @@
     <None Remove="Assets\selected_back_watermarkpng.png" />
     <None Remove="Assets\service.png" />
     <None Remove="Assets\speech-bubble.png" />
+    <None Remove="Assets\storage_json.png" />
+    <None Remove="Assets\storage_load.png" />
+    <None Remove="Assets\storage_localdb.png" />
+    <None Remove="Assets\storage_save.png" />
+    <None Remove="Assets\storage_status.png" />
+    <None Remove="Assets\storage_storage.png" />
+    <None Remove="Assets\storage_xml.png" />
     <None Remove="Assets\work.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Assets\add_back_watermark.png" />
+    <Resource Include="Assets\cpu_back_watermark.png" />
+    <Resource Include="Assets\cpu_large.png" />
+    <Resource Include="Assets\cpu_medium.png" />
+    <Resource Include="Assets\cpu_small.png" />
     <Resource Include="Assets\log_back_watermark.png" />
     <Resource Include="Assets\restore.png" />
   </ItemGroup>
@@ -75,6 +90,13 @@
     <Resource Include="Assets\selected_back_watermarkpng.png" />
     <Resource Include="Assets\service.png" />
     <Resource Include="Assets\speech-bubble.png" />
+    <Resource Include="Assets\storage_json.png" />
+    <Resource Include="Assets\storage_load.png" />
+    <Resource Include="Assets\storage_localdb.png" />
+    <Resource Include="Assets\storage_save.png" />
+    <Resource Include="Assets\storage_status.png" />
+    <Resource Include="Assets\storage_storage.png" />
+    <Resource Include="Assets\storage_xml.png" />
     <Resource Include="Assets\work.png" />
   </ItemGroup>
 
