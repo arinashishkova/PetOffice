@@ -123,6 +123,36 @@
 
 
     <!-- =========================================================
+     CPU ANALYSIS
+     ========================================================= -->
+
+    <DrawingBrush x:Key="CpuWatermarkBrush"
+              TileMode="Tile"
+              Viewport="0,0,140,100"
+              ViewportUnits="Absolute"
+              Stretch="None"
+              Opacity="0.075">
+
+        <DrawingBrush.Drawing>
+
+            <DrawingGroup>
+
+                <ImageDrawing
+                ImageSource="/PetOffice.WpfApp;component/Assets/cpu_back_watermark.png"
+                Rect="12,10,35,35"/>
+
+                <ImageDrawing
+                ImageSource="/PetOffice.WpfApp;component/Assets/cpu_back_watermark.png"
+                Rect="82,57,35,35"/>
+
+            </DrawingGroup>
+
+        </DrawingBrush.Drawing>
+
+    </DrawingBrush>
+
+
+    <!-- =========================================================
          MAIN WINDOW DOTS
          ========================================================= -->
 

@@ -5,53 +5,109 @@
 
     <UserControl.Resources>
 
-        <Style x:Key="AnalysisButtonStyle"
-               TargetType="Button">
+        <!-- =====================================================
+             PET SELECTOR
+             ===================================================== -->
 
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Padding" Value="14,6"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="#344054"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Cursor" Value="Hand"/>
+        <Style x:Key="PetAnalysisToggleStyle"
+               TargetType="ToggleButton">
+
+            <Setter Property="MinWidth"
+                    Value="165"/>
+
+            <Setter Property="Height"
+                    Value="54"/>
+
+            <Setter Property="Margin"
+                    Value="0,0,8,8"/>
+
+            <Setter Property="Padding"
+                    Value="8,5"/>
+
+            <Setter Property="Background"
+                    Value="#DFFFFFFF"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#D5DCE8"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+
+            <Setter Property="Foreground"
+                    Value="{StaticResource TextPrimaryBrush}"/>
+
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+
+            <Setter Property="FocusVisualStyle"
+                    Value="{x:Null}"/>
 
             <Setter Property="Template">
 
                 <Setter.Value>
 
-                    <ControlTemplate TargetType="Button">
+                    <ControlTemplate TargetType="ToggleButton">
 
-                        <Border x:Name="ButtonBorder"
+                        <Border x:Name="ItemBorder"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="8"
+                                CornerRadius="9"
                                 Padding="{TemplateBinding Padding}">
 
-                            <ContentPresenter
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <ContentPresenter
+                                    VerticalAlignment="Center"/>
+
+
+                                <TextBlock x:Name="CheckMark"
+                                           Grid.Column="1"
+                                           Text="✓"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           Foreground="#4A7A5A"
+                                           VerticalAlignment="Center"
+                                           Margin="8,0,2,0"
+                                           Visibility="Collapsed"/>
+
+                            </Grid>
 
                         </Border>
+
 
                         <ControlTemplate.Triggers>
 
                             <Trigger Property="IsMouseOver"
                                      Value="True">
 
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Opacity"
-                                        Value="0.78"/>
+                                <Setter TargetName="ItemBorder"
+                                        Property="Background"
+                                        Value="#F5F8FC"/>
 
                             </Trigger>
 
-                            <Trigger Property="IsEnabled"
-                                     Value="False">
 
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Opacity"
-                                        Value="0.35"/>
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+
+                                <Setter TargetName="ItemBorder"
+                                        Property="Background"
+                                        Value="#DDECF7"/>
+
+                                <Setter TargetName="ItemBorder"
+                                        Property="BorderBrush"
+                                        Value="#9FC4DD"/>
+
+                                <Setter TargetName="CheckMark"
+                                        Property="Visibility"
+                                        Value="Visible"/>
 
                             </Trigger>
 
@@ -66,374 +122,1011 @@
         </Style>
 
 
-        <Style x:Key="RunButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource AnalysisButtonStyle}">
+        <!-- =====================================================
+             WORKLOAD BUTTON
+             ===================================================== -->
 
-            <Setter Property="Background" Value="#D9E7FA"/>
-            <Setter Property="BorderBrush" Value="#B9CFEA"/>
+        <Style x:Key="WorkloadButtonStyle"
+               TargetType="Button">
+
+            <Setter Property="Height"
+                    Value="76"/>
+
+            <Setter Property="Background"
+                    Value="#EFFFFFFF"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#D5DCE8"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+
+            <Setter Property="Foreground"
+                    Value="{StaticResource TextPrimaryBrush}"/>
+
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+
+            <Setter Property="FocusVisualStyle"
+                    Value="{x:Null}"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="Button">
+
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10"
+                                Padding="8">
+
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+
+                        </Border>
+
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.82"/>
+
+                            </Trigger>
+
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.45"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
 
         </Style>
 
 
-        <Style x:Key="CancelButtonStyle"
+        <!-- SMALL -->
+        <Style x:Key="SmallWorkloadButtonStyle"
                TargetType="Button"
-               BasedOn="{StaticResource AnalysisButtonStyle}">
+               BasedOn="{StaticResource WorkloadButtonStyle}">
 
-            <Setter Property="Background" Value="#FBE0DE"/>
-            <Setter Property="BorderBrush" Value="#F0C3BF"/>
-            <Setter Property="Foreground" Value="#A94F49"/>
+            <Style.Triggers>
+
+                <DataTrigger Binding="{Binding SelectedWorkload}"
+                             Value="Small">
+
+                    <Setter Property="Background"
+                            Value="#E0F6EA"/>
+
+                    <Setter Property="BorderBrush"
+                            Value="#7BC69D"/>
+
+                    <Setter Property="BorderThickness"
+                            Value="2"/>
+
+                </DataTrigger>
+
+            </Style.Triggers>
 
         </Style>
 
 
-        <Style x:Key="SummaryBoxStyle"
+        <!-- MEDIUM -->
+        <Style x:Key="MediumWorkloadButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource WorkloadButtonStyle}">
+
+            <Style.Triggers>
+
+                <DataTrigger Binding="{Binding SelectedWorkload}"
+                             Value="Medium">
+
+                    <Setter Property="Background"
+                            Value="#FFF3DE"/>
+
+                    <Setter Property="BorderBrush"
+                            Value="#E4BB74"/>
+
+                    <Setter Property="BorderThickness"
+                            Value="2"/>
+
+                </DataTrigger>
+
+            </Style.Triggers>
+
+        </Style>
+
+
+        <!-- LARGE -->
+        <Style x:Key="LargeWorkloadButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource WorkloadButtonStyle}">
+
+            <Style.Triggers>
+
+                <DataTrigger Binding="{Binding SelectedWorkload}"
+                             Value="Large">
+
+                    <Setter Property="Background"
+                            Value="#FDE5E2"/>
+
+                    <Setter Property="BorderBrush"
+                            Value="#DF8D84"/>
+
+                    <Setter Property="BorderThickness"
+                            Value="2"/>
+
+                </DataTrigger>
+
+            </Style.Triggers>
+
+        </Style>
+
+
+        <!-- =====================================================
+             ACTION BUTTONS
+             ===================================================== -->
+
+        <Style x:Key="RunAnalysisButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource BaseRoundedButtonStyle}">
+
+            <Setter Property="Height"
+                    Value="44"/>
+
+            <Setter Property="Background"
+                    Value="#D9E7FA"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#B9CFEA"/>
+
+            <Setter Property="FontSize"
+                    Value="13"/>
+
+        </Style>
+
+
+        <Style x:Key="CancelAnalysisButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource BaseRoundedButtonStyle}">
+
+            <Setter Property="Height"
+                    Value="44"/>
+
+            <Setter Property="Background"
+                    Value="#FBE0DE"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#F0C3BF"/>
+
+            <Setter Property="Foreground"
+                    Value="#A94F49"/>
+
+            <Setter Property="FontSize"
+                    Value="13"/>
+
+        </Style>
+
+
+        <!-- =====================================================
+             SUMMARY CARDS
+             ===================================================== -->
+
+        <Style x:Key="AnalysisSummaryStyle"
                TargetType="Border">
 
-            <Setter Property="Background" Value="#BFFFFFFF"/>
-            <Setter Property="BorderBrush" Value="#D7DCE8"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Background"
+                    Value="#DFFFFFFF"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#D7DCE8"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+
+            <Setter Property="CornerRadius"
+                    Value="10"/>
+
+            <Setter Property="Padding"
+                    Value="14,12"/>
+
+        </Style>
+
+
+        <!-- =====================================================
+             DATA GRID
+             ===================================================== -->
+
+        <Style x:Key="AnalysisDataGridStyle"
+               TargetType="DataGrid">
+
+            <Setter Property="AutoGenerateColumns"
+                    Value="False"/>
+
+            <Setter Property="IsReadOnly"
+                    Value="True"/>
+
+            <Setter Property="CanUserAddRows"
+                    Value="False"/>
+
+            <Setter Property="CanUserDeleteRows"
+                    Value="False"/>
+
+            <Setter Property="CanUserResizeRows"
+                    Value="False"/>
+
+            <Setter Property="HeadersVisibility"
+                    Value="Column"/>
+
+            <Setter Property="GridLinesVisibility"
+                    Value="Horizontal"/>
+
+            <Setter Property="HorizontalGridLinesBrush"
+                    Value="#E7EAF0"/>
+
+            <Setter Property="BorderThickness"
+                    Value="0"/>
+
+            <Setter Property="Background"
+                    Value="White"/>
+
+            <Setter Property="RowBackground"
+                    Value="White"/>
+
+            <Setter Property="AlternatingRowBackground"
+                    Value="#F8F9FC"/>
+
+            <Setter Property="RowHeaderWidth"
+                    Value="0"/>
+
+            <Setter Property="FontSize"
+                    Value="12"/>
+
+        </Style>
+
+
+        <Style x:Key="AnalysisColumnHeaderStyle"
+               TargetType="DataGridColumnHeader">
+
+            <Setter Property="Background"
+                    Value="#F0F3F8"/>
+
+            <Setter Property="Foreground"
+                    Value="{StaticResource TextPrimaryBrush}"/>
+
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+
+            <Setter Property="Padding"
+                    Value="8,7"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#DDE2EA"/>
+
+            <Setter Property="BorderThickness"
+                    Value="0,0,0,1"/>
 
         </Style>
 
     </UserControl.Resources>
 
 
-    <Border Background="#EEF2FF"
-            BorderBrush="#D9DFEF"
-            BorderThickness="1"
-            CornerRadius="12"
-            Padding="20">
+    <!-- =========================================================
+         CPU ANALYSIS CARD
+         ========================================================= -->
+
+    <Border Style="{StaticResource CardStyle}"
+            Background="#F5F6FA">
 
         <Grid>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+            <!-- BACKGROUND PATTERN -->
+            <Rectangle Fill="{StaticResource CpuWatermarkBrush}"
+                       IsHitTestVisible="False"/>
 
 
-            <!-- HEADER -->
-            <StackPanel Grid.Row="0"
-                        Margin="0,0,0,16">
+            <!-- CONTENT -->
+            <Grid>
 
-                <TextBlock Text="CPU analysis"
-                           FontSize="18"
-                           FontWeight="SemiBold"
-                           Foreground="#344054"/>
-
-                <TextBlock Text="Compare sequential and parallel calculations using the same pet snapshots."
-                           Margin="0,4,0,0"
-                           FontSize="12"
-                           Foreground="#667085"/>
-
-            </StackPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
 
-            <!-- INPUT -->
-            <Grid Grid.Row="1"
-                  Margin="0,0,0,16">
+                <!-- =================================================
+                     HEADER
+                     ================================================= -->
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="18"/>
-                    <ColumnDefinition Width="300"/>
-                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0"
+                            Margin="0,0,0,18">
 
-
-                <!-- PET SELECTION -->
-                <StackPanel Grid.Column="0">
-
-                    <TextBlock Text="Choose at least 3 pets"
+                    <TextBlock Text="CPU Analysis"
+                               FontSize="26"
                                FontWeight="SemiBold"
-                               Margin="0,0,0,7"/>
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
 
-                    <Border Background="#CCFFFFFF"
-                            BorderBrush="#D7DCE8"
-                            BorderThickness="1"
-                            CornerRadius="8"
-                            Padding="10">
-
-                        <ScrollViewer Height="135"
-                                      VerticalScrollBarVisibility="Auto">
-
-                            <ItemsControl ItemsSource="{Binding AnalysisPets}">
-
-                                <ItemsControl.ItemTemplate>
-
-                                    <DataTemplate>
-
-                                        <CheckBox Content="{Binding DisplayName}"
-                                                  IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                                  Margin="2,4"
-                                                  FontSize="13"/>
-
-                                    </DataTemplate>
-
-                                </ItemsControl.ItemTemplate>
-
-                            </ItemsControl>
-
-                        </ScrollViewer>
-
-                    </Border>
+                    <TextBlock Text="Compare sequential and parallel calculations using the same pet snapshots."
+                               Margin="0,5,0,0"
+                               FontSize="12"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
 
                 </StackPanel>
 
 
-                <!-- WORKLOAD AND COMMANDS -->
-                <StackPanel Grid.Column="2">
+                <!-- =================================================
+                     CONTROLS
+                     ================================================= -->
 
-                    <TextBlock Text="Workload"
-                               FontWeight="SemiBold"
-                               Margin="0,0,0,7"/>
+                <Grid Grid.Row="1"
+                      Margin="0,0,0,14">
 
-                    <Border Height="38"
-                            Background="#CCFFFFFF"
-                            BorderBrush="#D7DCE8"
-                            BorderThickness="1"
-                            CornerRadius="8"
-                            Margin="0,0,0,12">
-
-                        <ComboBox ItemsSource="{Binding WorkloadOptions}"
-                                  SelectedItem="{Binding SelectedWorkload, Mode=TwoWay}"
-                                  BorderThickness="0"
-                                  Background="Transparent"
-                                  Padding="8,4"
-                                  VerticalContentAlignment="Center"/>
-
-                    </Border>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="18"/>
+                        <ColumnDefinition Width="360"/>
+                    </Grid.ColumnDefinitions>
 
 
-                    <Button Style="{StaticResource RunButtonStyle}"
-                            Command="{Binding RunAnalysisCommand}"
-                            Margin="0,0,0,8">
+                    <!-- =================================================
+                         PET SELECTION
+                         ================================================= -->
 
-                        <StackPanel Orientation="Horizontal">
+                    <StackPanel Grid.Column="0">
 
-                            <Image Source="/PetOffice.WpfApp;component/Assets/action.png"
-                                   Width="18"
-                                   Height="18"
-                                   Margin="0,0,7,0"/>
+                        <TextBlock Text="Choose at least 3 pets"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0,0,0,8"/>
 
-                            <TextBlock Text="Compare modes"
-                                       VerticalAlignment="Center"/>
+
+                        <Border Background="#DFFFFFFF"
+                                BorderBrush="#D7DCE8"
+                                BorderThickness="1"
+                                CornerRadius="10"
+                                Padding="10">
+
+                            <ScrollViewer Height="190"
+                                          VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Disabled">
+
+                                <ScrollViewer.Resources>
+
+                                    <Style TargetType="ScrollBar"
+                                           BasedOn="{StaticResource ThinScrollBarStyle}"/>
+
+                                </ScrollViewer.Resources>
+
+
+                                <ItemsControl ItemsSource="{Binding AnalysisPets}">
+
+                                    <ItemsControl.ItemsPanel>
+
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+
+                                    </ItemsControl.ItemsPanel>
+
+
+                                    <ItemsControl.ItemTemplate>
+
+                                        <DataTemplate>
+
+                                            <ToggleButton
+                                                Style="{StaticResource PetAnalysisToggleStyle}"
+                                                IsChecked="{Binding IsSelected,
+                                                                    Mode=TwoWay}">
+
+                                                <StackPanel Orientation="Horizontal">
+
+                                                    <Image Source="{Binding IconPath}"
+                                                           Width="34"
+                                                           Height="34"
+                                                           Stretch="Uniform"
+                                                           Margin="0,0,9,0"
+                                                           VerticalAlignment="Center"/>
+
+
+                                                    <StackPanel VerticalAlignment="Center">
+
+                                                        <TextBlock Text="{Binding Name}"
+                                                                   FontSize="12"
+                                                                   FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+
+                                                        <TextBlock Text="{Binding Role}"
+                                                                   FontSize="10"
+                                                                   Foreground="{StaticResource TextMutedBrush}"
+                                                                   Margin="0,2,0,0"/>
+
+                                                    </StackPanel>
+
+                                                </StackPanel>
+
+                                            </ToggleButton>
+
+                                        </DataTemplate>
+
+                                    </ItemsControl.ItemTemplate>
+
+                                </ItemsControl>
+
+                            </ScrollViewer>
+
+                        </Border>
+
+
+                        <!-- Reserved warning line -->
+                        <TextBlock Text="{Binding AnalysisWarningText}"
+                                   MinHeight="19"
+                                   Margin="4,6,0,0"
+                                   FontSize="11"
+                                   FontWeight="SemiBold"
+                                   Foreground="#B85B4C"
+                                   TextWrapping="Wrap"/>
+
+                    </StackPanel>
+
+
+                    <!-- =================================================
+                         WORKLOAD
+                         ================================================= -->
+
+                    <StackPanel Grid.Column="2">
+
+                        <TextBlock Text="Workload"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0,0,0,8"/>
+
+
+                        <!-- SMALL / MEDIUM / LARGE -->
+                        <Grid Margin="0,0,0,12">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <!-- SMALL -->
+                            <Button Grid.Column="0"
+                                    Style="{StaticResource SmallWorkloadButtonStyle}"
+                                    Command="{Binding SelectWorkloadCommand}"
+                                    CommandParameter="Small">
+
+                                <StackPanel>
+
+                                    <Image Source="/PetOffice.WpfApp;component/Assets/cpu_small.png"
+                                           Width="34"
+                                           Height="34"
+                                           Stretch="Uniform"
+                                           HorizontalAlignment="Center"/>
+
+                                    <TextBlock Text="Small"
+                                               FontSize="11"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,4,0,0"/>
+
+                                </StackPanel>
+
+                            </Button>
+
+
+                            <!-- MEDIUM -->
+                            <Button Grid.Column="2"
+                                    Style="{StaticResource MediumWorkloadButtonStyle}"
+                                    Command="{Binding SelectWorkloadCommand}"
+                                    CommandParameter="Medium">
+
+                                <StackPanel>
+
+                                    <Image Source="/PetOffice.WpfApp;component/Assets/cpu_medium.png"
+                                           Width="34"
+                                           Height="34"
+                                           Stretch="Uniform"
+                                           HorizontalAlignment="Center"/>
+
+                                    <TextBlock Text="Medium"
+                                               FontSize="11"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,4,0,0"/>
+
+                                </StackPanel>
+
+                            </Button>
+
+
+                            <!-- LARGE -->
+                            <Button Grid.Column="4"
+                                    Style="{StaticResource LargeWorkloadButtonStyle}"
+                                    Command="{Binding SelectWorkloadCommand}"
+                                    CommandParameter="Large">
+
+                                <StackPanel>
+
+                                    <Image Source="/PetOffice.WpfApp;component/Assets/cpu_large.png"
+                                           Width="34"
+                                           Height="34"
+                                           Stretch="Uniform"
+                                           HorizontalAlignment="Center"/>
+
+                                    <TextBlock Text="Large"
+                                               FontSize="11"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,4,0,0"/>
+
+                                </StackPanel>
+
+                            </Button>
+
+                        </Grid>
+
+
+                        <!-- COMMANDS -->
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <Button Grid.Column="0"
+                                    Style="{StaticResource RunAnalysisButtonStyle}"
+                                    Command="{Binding RunAnalysisCommand}">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Image Source="/PetOffice.WpfApp;component/Assets/action.png"
+                                           Width="18"
+                                           Height="18"
+                                           Margin="0,0,7,0"/>
+
+                                    <TextBlock Text="Compare modes"
+                                               VerticalAlignment="Center"/>
+
+                                </StackPanel>
+
+                            </Button>
+
+
+                            <Button Grid.Column="2"
+                                    Style="{StaticResource CancelAnalysisButtonStyle}"
+                                    Command="{Binding CancelAnalysisCommand}">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Image Source="/PetOffice.WpfApp;component/Assets/remove.png"
+                                           Width="16"
+                                           Height="16"
+                                           Margin="0,0,6,0"/>
+
+                                    <TextBlock Text="Cancel"
+                                               VerticalAlignment="Center"/>
+
+                                </StackPanel>
+
+                            </Button>
+
+                        </Grid>
+
+
+                        <TextBlock
+                            Text="Sequential runs first, then parallel uses the same snapshot input."
+                            Margin="2,10,0,0"
+                            TextWrapping="Wrap"
+                            FontSize="11"
+                            Foreground="{StaticResource TextSecondaryBrush}"/>
+
+                    </StackPanel>
+
+                </Grid>
+
+
+                <!-- =================================================
+                     PERMANENT ANALYSIS STATUS
+                     ================================================= -->
+
+                <Border Grid.Row="2"
+                        Height="46"
+                        Background="#EDF1F7"
+                        BorderBrush="#D5DCE6"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Padding="11,8"
+                        Margin="0,0,0,14">
+
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="170"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <!-- STATUS TEXT -->
+                        <TextBlock Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontSize="11"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextSecondaryBrush}">
+
+                            <TextBlock.Style>
+
+                                <Style TargetType="TextBlock">
+
+                                    <Setter Property="Text"
+                                            Value="Waiting for analysis..."/>
+
+
+                                    <Style.Triggers>
+
+                                        <DataTrigger Binding="{Binding IsAnalysisRunning}"
+                                                     Value="True">
+
+                                            <Setter Property="Text"
+                                                    Value="Running analysis..."/>
+
+                                        </DataTrigger>
+
+
+                                        <DataTrigger Binding="{Binding ResultsComparisonText}"
+                                                     Value="Results comparison: match">
+
+                                            <Setter Property="Text"
+                                                    Value="Analysis completed."/>
+
+                                            <Setter Property="Foreground"
+                                                    Value="#4E7A5B"/>
+
+                                        </DataTrigger>
+
+
+                                        <DataTrigger Binding="{Binding ResultsComparisonText}"
+                                                     Value="Results comparison: different">
+
+                                            <Setter Property="Text"
+                                                    Value="Analysis completed."/>
+
+                                            <Setter Property="Foreground"
+                                                    Value="#A36B3B"/>
+
+                                        </DataTrigger>
+
+
+                                        <DataTrigger Binding="{Binding ResultsComparisonText}"
+                                                     Value="Results comparison: cancelled">
+
+                                            <Setter Property="Text"
+                                                    Value="Analysis cancelled."/>
+
+                                            <Setter Property="Foreground"
+                                                    Value="#A85D55"/>
+
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+
+                                </Style>
+
+                            </TextBlock.Style>
+
+                        </TextBlock>
+
+
+                        <!-- ROUNDED TRACK -->
+                        <Border Grid.Column="2"
+                                Height="14"
+                                Background="#DDE3EA"
+                                BorderBrush="#CBD2DC"
+                                BorderThickness="1"
+                                CornerRadius="7"
+                                Padding="1"
+                                VerticalAlignment="Center">
+
+                            <!-- ProgressBar uses Hidden instead of Collapsed.
+                                 The track therefore always keeps its size. -->
+                            <ProgressBar Height="10"
+                                         IsIndeterminate="True"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         Foreground="#4CBF70">
+
+                                <ProgressBar.Style>
+
+                                    <Style TargetType="ProgressBar">
+
+                                        <Setter Property="Visibility"
+                                                Value="Hidden"/>
+
+                                        <Style.Triggers>
+
+                                            <DataTrigger Binding="{Binding IsAnalysisRunning}"
+                                                         Value="True">
+
+                                                <Setter Property="Visibility"
+                                                        Value="Visible"/>
+
+                                            </DataTrigger>
+
+                                        </Style.Triggers>
+
+                                    </Style>
+
+                                </ProgressBar.Style>
+
+                            </ProgressBar>
+
+                        </Border>
+
+                    </Grid>
+
+                </Border>
+
+
+                <!-- =================================================
+                     SUMMARY
+                     ================================================= -->
+
+                <Grid Grid.Row="3"
+                      Margin="0,0,0,16">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <!-- SEQUENTIAL -->
+                    <Border Grid.Column="0"
+                            Style="{StaticResource AnalysisSummaryStyle}"
+                            Background="#EDF5FC">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Sequential"
+                                       FontSize="11"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       Margin="0,0,0,5"/>
+
+                            <TextBlock Text="{Binding SequentialTotalTimeText}"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       TextWrapping="Wrap"/>
 
                         </StackPanel>
 
-                    </Button>
+                    </Border>
 
 
-                    <Button Style="{StaticResource CancelButtonStyle}"
-                            Command="{Binding CancelAnalysisCommand}">
+                    <!-- PARALLEL -->
+                    <Border Grid.Column="2"
+                            Style="{StaticResource AnalysisSummaryStyle}"
+                            Background="#EDF8F1">
 
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel>
 
-                            <Image Source="/PetOffice.WpfApp;component/Assets/remove.png"
-                                   Width="17"
-                                   Height="17"
-                                   Margin="0,0,7,0"/>
+                            <TextBlock Text="Parallel"
+                                       FontSize="11"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       Margin="0,0,0,5"/>
 
-                            <TextBlock Text="Cancel"
-                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding ParallelTotalTimeText}"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       TextWrapping="Wrap"/>
 
                         </StackPanel>
 
-                    </Button>
+                    </Border>
 
 
-                    <TextBlock Text="Sequential runs first, then parallel uses the same snapshot input."
-                               Margin="0,10,0,0"
-                               TextWrapping="Wrap"
-                               FontSize="11"
-                               Foreground="#667085"/>
+                    <!-- COMPARISON -->
+                    <Border Grid.Column="4"
+                            Style="{StaticResource AnalysisSummaryStyle}"
+                            Background="#F6F0FC">
 
-                </StackPanel>
+                        <StackPanel>
 
-            </Grid>
+                            <TextBlock Text="Comparison"
+                                       FontSize="11"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       Margin="0,0,0,5"/>
 
+                            <TextBlock Text="{Binding ResultsComparisonText}"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       TextWrapping="Wrap"/>
 
-            <!-- TOTAL TIMES -->
-            <Grid Grid.Row="2"
-                  Margin="0,0,0,16">
+                        </StackPanel>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    </Border>
 
-
-                <Border Grid.Column="0"
-                        Style="{StaticResource SummaryBoxStyle}">
-
-                    <TextBlock Text="{Binding SequentialTotalTimeText}"
-                               FontWeight="SemiBold"
-                               TextWrapping="Wrap"/>
-
-                </Border>
+                </Grid>
 
 
-                <Border Grid.Column="2"
-                        Style="{StaticResource SummaryBoxStyle}">
+                <!-- =================================================
+                     REPORTS
+                     ================================================= -->
 
-                    <TextBlock Text="{Binding ParallelTotalTimeText}"
-                               FontWeight="SemiBold"
-                               TextWrapping="Wrap"/>
+                <Grid Grid.Row="4">
 
-                </Border>
-
-
-                <Border Grid.Column="4"
-                        Style="{StaticResource SummaryBoxStyle}">
-
-                    <TextBlock Text="{Binding ResultsComparisonText}"
-                               FontWeight="SemiBold"
-                               TextWrapping="Wrap"/>
-
-                </Border>
-
-            </Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
 
-            <!-- REPORTS -->
-            <Grid Grid.Row="3">
+                    <!-- SEQUENTIAL REPORT -->
+                    <StackPanel Grid.Column="0">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="16"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-
-                <!-- SEQUENTIAL REPORT -->
-                <StackPanel Grid.Column="0">
-
-                    <TextBlock Text="Sequential report"
-                               FontSize="14"
-                               FontWeight="SemiBold"
-                               Margin="0,0,0,7"/>
-
-                    <DataGrid ItemsSource="{Binding SequentialResults}"
-          Height="220"
-          AutoGenerateColumns="False"
-          IsReadOnly="True"
-          CanUserAddRows="False"
-          CanUserDeleteRows="False"
-          CanUserResizeRows="False"
-          HeadersVisibility="Column"
-          GridLinesVisibility="Horizontal"
-          BorderBrush="#D7DCE8"
-          BorderThickness="1"
-          Background="White"
-          RowBackground="White"
-          AlternatingRowBackground="#F8F9FC">
-
-                        <DataGrid.Columns>
-
-                            <DataGridTextColumn Header="Pet"
-                                                Binding="{Binding PetName}"
-                                                Width="0.9*"/>
-
-                            <DataGridTextColumn Header="Status"
-                                                Binding="{Binding Status}"
-                                                Width="0.75*"/>
-
-                            <DataGridTemplateColumn Header="Result / error"
-                                                    Width="2.1*">
-
-                                <DataGridTemplateColumn.CellTemplate>
-
-                                    <DataTemplate>
-
-                                        <TextBlock Text="{Binding ResultText}"
-                                                   TextWrapping="Wrap"
-                                                   VerticalAlignment="Center"
-                                                   Margin="3,2"/>
-
-                                    </DataTemplate>
-
-                                </DataGridTemplateColumn.CellTemplate>
-
-                            </DataGridTemplateColumn>
-
-                            <DataGridTextColumn Header="ms"
-                                                Binding="{Binding Duration.TotalMilliseconds, StringFormat={}{0:F0}}"
-                                                Width="0.45*"/>
-
-                        </DataGrid.Columns>
-
-                    </DataGrid>
-
-                </StackPanel>
+                        <TextBlock Text="Sequential report"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="2,0,0,7"/>
 
 
-                <!-- PARALLEL REPORT -->
-                <StackPanel Grid.Column="2">
+                        <Border Background="White"
+                                BorderBrush="#D7DCE8"
+                                BorderThickness="1"
+                                CornerRadius="10">
 
-                    <TextBlock Text="Parallel report"
-                               FontSize="14"
-                               FontWeight="SemiBold"
-                               Margin="0,0,0,7"/>
+                            <DataGrid
+                                ItemsSource="{Binding SequentialResults}"
+                                Style="{StaticResource AnalysisDataGridStyle}"
+                                ColumnHeaderStyle="{StaticResource AnalysisColumnHeaderStyle}"
+                                Height="230">
 
-                    <DataGrid ItemsSource="{Binding ParallelResults}"
-          Height="220"
-          AutoGenerateColumns="False"
-          IsReadOnly="True"
-          CanUserAddRows="False"
-          CanUserDeleteRows="False"
-          CanUserResizeRows="False"
-          HeadersVisibility="Column"
-          GridLinesVisibility="Horizontal"
-          BorderBrush="#D7DCE8"
-          BorderThickness="1"
-          Background="White"
-          RowBackground="White"
-          AlternatingRowBackground="#F8F9FC">
+                                <DataGrid.Columns>
 
-                        <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Header="Pet"
+                                        Binding="{Binding PetName}"
+                                        Width="0.9*"/>
 
-                            <DataGridTextColumn Header="Pet"
-                                                Binding="{Binding PetName}"
-                                                Width="0.9*"/>
+                                    <DataGridTextColumn
+                                        Header="Status"
+                                        Binding="{Binding Status}"
+                                        Width="0.75*"/>
 
-                            <DataGridTextColumn Header="Status"
-                                                Binding="{Binding Status}"
-                                                Width="0.75*"/>
+                                    <DataGridTemplateColumn
+                                        Header="Result / error"
+                                        Width="2.1*">
 
-                            <DataGridTemplateColumn Header="Result / error"
-                                                    Width="2.1*">
+                                        <DataGridTemplateColumn.CellTemplate>
 
-                                <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
 
-                                    <DataTemplate>
+                                                <TextBlock
+                                                    Text="{Binding ResultText}"
+                                                    TextWrapping="Wrap"
+                                                    VerticalAlignment="Center"
+                                                    Margin="4,3"/>
 
-                                        <TextBlock Text="{Binding ResultText}"
-                                                   TextWrapping="Wrap"
-                                                   VerticalAlignment="Center"
-                                                   Margin="3,2"/>
+                                            </DataTemplate>
 
-                                    </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
 
-                                </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
-                            </DataGridTemplateColumn>
+                                    <DataGridTextColumn
+                                        Header="ms"
+                                        Binding="{Binding Duration.TotalMilliseconds,
+                                                          StringFormat={}{0:F0}}"
+                                        Width="0.45*"/>
 
-                            <DataGridTextColumn Header="ms"
-                                                Binding="{Binding Duration.TotalMilliseconds, StringFormat={}{0:F0}}"
-                                                Width="0.45*"/>
+                                </DataGrid.Columns>
 
-                        </DataGrid.Columns>
+                            </DataGrid>
 
-                    </DataGrid>
+                        </Border>
 
-                </StackPanel>
+                    </StackPanel>
+
+
+                    <!-- PARALLEL REPORT -->
+                    <StackPanel Grid.Column="2">
+
+                        <TextBlock Text="Parallel report"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="2,0,0,7"/>
+
+
+                        <Border Background="White"
+                                BorderBrush="#D7DCE8"
+                                BorderThickness="1"
+                                CornerRadius="10">
+
+                            <DataGrid
+                                ItemsSource="{Binding ParallelResults}"
+                                Style="{StaticResource AnalysisDataGridStyle}"
+                                ColumnHeaderStyle="{StaticResource AnalysisColumnHeaderStyle}"
+                                Height="230">
+
+                                <DataGrid.Columns>
+
+                                    <DataGridTextColumn
+                                        Header="Pet"
+                                        Binding="{Binding PetName}"
+                                        Width="0.9*"/>
+
+                                    <DataGridTextColumn
+                                        Header="Status"
+                                        Binding="{Binding Status}"
+                                        Width="0.75*"/>
+
+                                    <DataGridTemplateColumn
+                                        Header="Result / error"
+                                        Width="2.1*">
+
+                                        <DataGridTemplateColumn.CellTemplate>
+
+                                            <DataTemplate>
+
+                                                <TextBlock
+                                                    Text="{Binding ResultText}"
+                                                    TextWrapping="Wrap"
+                                                    VerticalAlignment="Center"
+                                                    Margin="4,3"/>
+
+                                            </DataTemplate>
+
+                                        </DataGridTemplateColumn.CellTemplate>
+
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTextColumn
+                                        Header="ms"
+                                        Binding="{Binding Duration.TotalMilliseconds,
+                                                          StringFormat={}{0:F0}}"
+                                        Width="0.45*"/>
+
+                                </DataGrid.Columns>
+
+                            </DataGrid>
+
+                        </Border>
+
+                    </StackPanel>
+
+                </Grid>
 
             </Grid>
 
