@@ -216,23 +216,55 @@
 
 
         <!-- ADD CARD WATERMARK -->
-        <ImageBrush x:Key="AddWatermarkBrush"
-                    ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
-                    TileMode="Tile"
-                    Viewport="0,0,145,145"
-                    ViewportUnits="Absolute"
-                    Stretch="Uniform"
-                    Opacity="0.025"/>
+        <DrawingBrush x:Key="AddWatermarkBrush"
+              TileMode="Tile"
+              Viewport="0,0,150,110"
+              ViewportUnits="Absolute"
+              Stretch="None">
+
+            <DrawingBrush.Drawing>
+
+                <DrawingGroup>
+
+                    <ImageDrawing
+                ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
+                Rect="14,10,24,24"/>
+
+                    <ImageDrawing
+                ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
+                Rect="88,62,24,24"/>
+
+                </DrawingGroup>
+
+            </DrawingBrush.Drawing>
+
+        </DrawingBrush>
 
 
         <!-- LOG CARD WATERMARK -->
-        <ImageBrush x:Key="LogWatermarkBrush"
-                    ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
-                    TileMode="Tile"
-                    Viewport="0,0,165,165"
-                    ViewportUnits="Absolute"
-                    Stretch="Uniform"
-                    Opacity="0.022"/>
+        <DrawingBrush x:Key="LogWatermarkBrush"
+              TileMode="Tile"
+              Viewport="0,0,165,115"
+              ViewportUnits="Absolute"
+              Stretch="None">
+
+            <DrawingBrush.Drawing>
+
+                <DrawingGroup>
+
+                    <ImageDrawing
+                ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
+                Rect="16,12,24,24"/>
+
+                    <ImageDrawing
+                ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
+                Rect="98,66,24,24"/>
+
+                </DrawingGroup>
+
+            </DrawingBrush.Drawing>
+
+        </DrawingBrush>
 
 
         <!-- SAME SCROLLBAR AS PET LIST -->
@@ -346,20 +378,17 @@
     </UserControl.Resources>
 
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
-
         <Grid Margin="28">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="18"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="18"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
 
-            <!-- HEADER -->
+        <!-- HEADER -->
             <Grid Grid.Row="0"
                   Margin="0,0,0,20">
 
@@ -457,6 +486,7 @@
 
                             <!-- ADD WATERMARK -->
                             <Rectangle Fill="{StaticResource AddWatermarkBrush}"
+                                       Opacity="0.035"
                                        IsHitTestVisible="False"/>
 
 
@@ -608,28 +638,30 @@
 
 
             <!-- ACTIVITY LOG -->
-            <Border Grid.Row="3"
-                    Style="{StaticResource CardStyle}"
-                    Background="#EFF8F2"
-                    Margin="0,0,0,20">
+        <Border Grid.Row="3"
+                Style="{StaticResource CardStyle}"
+                Background="#EFF8F2"
+                Margin="0,0,0,20"
+                MinHeight="190">
 
-                <Grid>
+            <Grid>
 
                     <!-- LOG WATERMARK -->
                     <Rectangle Fill="{StaticResource LogWatermarkBrush}"
+                               Opacity="0.035"
                                IsHitTestVisible="False"/>
 
 
                     <!-- LOG CONTENT -->
                     <Grid>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="170"/>
-                        </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
 
-                        <StackPanel Grid.Row="0"
+                    <StackPanel Grid.Row="0"
                                     Orientation="Horizontal"
                                     Margin="0,0,0,10">
 
@@ -715,7 +747,5 @@
             </Border>
 
         </Grid>
-
-    </ScrollViewer>
 
 </UserControl>

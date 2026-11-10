@@ -184,6 +184,33 @@ namespace PetOffice.WpfApp.ViewModels
             SelectedPet?.DisplayName
             ?? "No pet selected";
 
+        public string? SelectedPetIconPath =>
+    SelectedPet switch
+    {
+        CatManager =>
+            "/PetOffice.WpfApp;component/Assets/cat.png",
+
+        DogIntern =>
+            "/PetOffice.WpfApp;component/Assets/dog.png",
+
+        HamsterIT =>
+            "/PetOffice.WpfApp;component/Assets/hamster.png",
+
+        ParrotReceptionist =>
+            "/PetOffice.WpfApp;component/Assets/parrot.png",
+
+        RabbitAccountant =>
+            "/PetOffice.WpfApp;component/Assets/rabbit.png",
+
+        RaccoonBarista =>
+            "/PetOffice.WpfApp;component/Assets/raccoon.png",
+
+        OwlSysAdmin =>
+            "/PetOffice.WpfApp;component/Assets/owl.png",
+
+        _ => null
+    };
+
 
         public int SelectedPetEnergy =>
             SelectedPet?.Energy
@@ -894,6 +921,10 @@ namespace PetOffice.WpfApp.ViewModels
             OnPropertyChanged(
                 nameof(
                     SelectedPetDisplayName));
+
+            OnPropertyChanged(
+                nameof(
+                    SelectedPetIconPath));
 
             OnPropertyChanged(
                 nameof(

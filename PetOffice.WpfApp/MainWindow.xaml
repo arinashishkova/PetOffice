@@ -10,7 +10,8 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
         Background="#F8F6F4"
-        Icon="Assets/petoffice_icon.ico">
+        Icon="Assets/petoffice_icon.ico"
+        FontFamily="Consolas">
 
     <Window.Resources>
 

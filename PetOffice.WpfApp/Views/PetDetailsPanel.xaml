@@ -1,8 +1,49 @@
 ﻿<UserControl x:Class="PetOffice.WpfApp.Views.PetDetailsPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:PetOffice.WpfApp.Converters">
 
     <UserControl.Resources>
+
+        <!-- ROUNDED ENERGY BAR -->
+        <Style x:Key="RoundedEnergyProgressBarStyle"
+       TargetType="ProgressBar">
+
+            <Setter Property="Height"
+            Value="18"/>
+
+            <Setter Property="Background"
+            Value="#E7E3EA"/>
+
+            <Setter Property="BorderThickness"
+            Value="0"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="ProgressBar">
+
+                        <Grid>
+
+                            <Border Background="{TemplateBinding Background}"
+                            CornerRadius="9"/>
+
+                            <Border x:Name="PART_Indicator"
+                            HorizontalAlignment="Left"
+                            Background="{TemplateBinding Foreground}"
+                            CornerRadius="9"/>
+
+                        </Grid>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>s
+
+        <converters:EnergyLevelBrushConverter
+    x:Key="EnergyLevelBrushConverter"/>
 
         <Style x:Key="ActionButtonStyle"
                TargetType="Button">
@@ -157,28 +198,28 @@
 
         <Grid>
 
-            <!-- very subtle background -->
+            <!-- SELECTED PET WATERMARK -->
             <Rectangle IsHitTestVisible="False"
-                       Opacity="0.015">
+           Opacity="0.035">
 
                 <Rectangle.Fill>
 
                     <DrawingBrush TileMode="Tile"
-                                  Viewport="0,0,150,120"
-                                  ViewportUnits="Absolute"
-                                  Stretch="None">
+                      Viewport="0,0,150,110"
+                      ViewportUnits="Absolute"
+                      Stretch="None">
 
                         <DrawingBrush.Drawing>
 
                             <DrawingGroup>
 
                                 <ImageDrawing
-                                    ImageSource="/PetOffice.WpfApp;component/Assets/restore.png"
-                                    Rect="15,12,25,25"/>
+                        ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
+                        Rect="14,10,24,24"/>
 
                                 <ImageDrawing
-                                    ImageSource="/PetOffice.WpfApp;component/Assets/restore.png"
-                                    Rect="95,72,25,25"/>
+                        ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
+                        Rect="88,62,24,24"/>
 
                             </DrawingGroup>
 
@@ -255,16 +296,46 @@
 
                 <!-- PET NAME -->
                 <Border Grid.Row="1"
-                        Background="#80FFFFFF"
-                        CornerRadius="8"
-                        Padding="10,8"
-                        Margin="0,0,0,14">
+        Background="#80FFFFFF"
+        CornerRadius="8"
+        Padding="10,7"
+        Margin="0,0,0,14">
 
-                    <TextBlock Text="{Binding SelectedPetDisplayName}"
-                               FontSize="17"
-                               FontWeight="SemiBold"
-                               Foreground="#477D9D"
-                               TextWrapping="Wrap"/>
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock
+            Text="{Binding SelectedPetDisplayName}"
+            FontSize="17"
+            FontWeight="SemiBold"
+            Foreground="#252A30"
+            TextWrapping="Wrap"
+            VerticalAlignment="Center"/>
+
+
+                        <Border Grid.Column="1"
+                Width="40"
+                Height="40"
+                Margin="12,0,0,0"
+                Background="#70FFFFFF"
+                CornerRadius="9">
+
+                            <Image
+                Source="{Binding SelectedPetIconPath}"
+                Width="32"
+                Height="32"
+                Stretch="Uniform"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
+
+                        </Border>
+
+                    </Grid>
 
                 </Border>
 
@@ -306,19 +377,21 @@
 
 
                         <ProgressBar Grid.Column="1"
+                                     Style="{StaticResource RoundedEnergyProgressBarStyle}"
                                      Minimum="0"
                                      Maximum="100"
                                      Value="{Binding SelectedPetEnergy,
                                                      Mode=OneWay}"
-                                     Height="18"
                                      Margin="0,0,10,0"
-                                     Background="#E7E3EA"
-                                     Foreground="#F3B978"/>
+                                     Foreground="{Binding SelectedPetEnergy,
+                                                          Converter={StaticResource EnergyLevelBrushConverter}}"/>
 
 
                         <TextBlock Grid.Column="2"
                                    Text="{Binding SelectedPetEnergyText}"
-                                   Foreground="#59666D"
+                                   Foreground="{Binding SelectedPetEnergy,
+                                                        Converter={StaticResource EnergyLevelBrushConverter}}"
+                                   FontWeight="SemiBold"
                                    VerticalAlignment="Center"/>
 
                     </Grid>
