@@ -105,6 +105,20 @@ namespace PetOffice.Core.Models
                 100,
                 Energy + amount);
         }
+        public string RestoreToFullEnergy()
+        {
+            if (Energy >= 100)
+            {
+                return $"{DisplayName} already has full energy.";
+            }
+
+            int restoredAmount =
+                100 - Energy;
+
+            RestoreEnergy(restoredAmount);
+
+            return $"{DisplayName} restored energy to 100.";
+        }
 
         protected void CompleteTask()
         {
