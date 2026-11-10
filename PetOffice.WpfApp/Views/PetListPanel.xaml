@@ -5,408 +5,10 @@
 
     <UserControl.Resources>
 
-        <!-- SEARCH -->
-        <Style x:Key="CompactTextBoxStyle"
-               TargetType="TextBox">
+        <!-- =====================================================
+             PET LIST ITEM
+             ===================================================== -->
 
-            <Setter Property="Height"
-                    Value="36"/>
-
-            <Setter Property="Padding"
-                    Value="10,4"/>
-
-            <Setter Property="FontSize"
-                    Value="13"/>
-
-            <Setter Property="Background"
-                    Value="Transparent"/>
-
-            <Setter Property="BorderThickness"
-                    Value="0"/>
-
-            <Setter Property="VerticalContentAlignment"
-                    Value="Center"/>
-
-        </Style>
-
-
-        <!-- COMBOBOX ITEM -->
-        <Style x:Key="CompactComboBoxItemStyle"
-               TargetType="ComboBoxItem">
-
-            <Setter Property="HorizontalContentAlignment"
-                    Value="Stretch"/>
-
-            <Setter Property="Padding"
-                    Value="10,7"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="ComboBoxItem">
-
-                        <Border x:Name="ItemBorder"
-                                Background="Transparent"
-                                CornerRadius="6"
-                                Padding="{TemplateBinding Padding}"
-                                Margin="4,2">
-
-                            <ContentPresenter/>
-
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsHighlighted"
-                                     Value="True">
-
-                                <Setter TargetName="ItemBorder"
-                                        Property="Background"
-                                        Value="#EEF6FB"/>
-
-                            </Trigger>
-
-                            <Trigger Property="IsSelected"
-                                     Value="True">
-
-                                <Setter TargetName="ItemBorder"
-                                        Property="Background"
-                                        Value="#DCECF7"/>
-
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
-
-
-        <!-- ROUNDED SORT COMBOBOX -->
-        <Style x:Key="CompactComboBoxStyle"
-               TargetType="ComboBox">
-
-            <Setter Property="Height"
-                    Value="38"/>
-
-            <Setter Property="FontSize"
-                    Value="13"/>
-
-            <Setter Property="Foreground"
-                    Value="#344054"/>
-
-            <Setter Property="Background"
-                    Value="#F9FCFE"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#CCDCE7"/>
-
-            <Setter Property="BorderThickness"
-                    Value="1"/>
-
-            <Setter Property="ItemContainerStyle"
-                    Value="{StaticResource CompactComboBoxItemStyle}"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="ComboBox">
-
-                        <Grid>
-
-                            <Border x:Name="MainBorder"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="8"/>
-
-                            <ContentPresenter
-                                Margin="11,0,34,0"
-                                VerticalAlignment="Center"
-                                Content="{TemplateBinding SelectionBoxItem}"
-                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
-                                IsHitTestVisible="False"/>
-
-                            <Path Width="8"
-                                  Height="5"
-                                  HorizontalAlignment="Right"
-                                  VerticalAlignment="Center"
-                                  Margin="0,0,12,0"
-                                  Stroke="#667085"
-                                  StrokeThickness="1.5"
-                                  Data="M 0 0 L 4 4 L 8 0"
-                                  IsHitTestVisible="False"/>
-
-                            <ToggleButton
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Focusable="False"
-                                    FocusVisualStyle="{x:Null}"
-                                    ClickMode="Press"
-                                    IsChecked="{Binding IsDropDownOpen,
-                                                       RelativeSource={RelativeSource TemplatedParent},
-                                                       Mode=TwoWay}">
-
-                                <ToggleButton.Template>
-
-                                    <ControlTemplate TargetType="ToggleButton">
-
-                                        <Border Background="Transparent"/>
-
-                                    </ControlTemplate>
-
-                                </ToggleButton.Template>
-
-                            </ToggleButton>
-
-                            <Popup x:Name="PART_Popup"
-                                   IsOpen="{TemplateBinding IsDropDownOpen}"
-                                   Placement="Bottom"
-                                   AllowsTransparency="True"
-                                   Focusable="False"
-                                   PopupAnimation="Fade">
-
-                                <Border Background="White"
-                                        BorderBrush="#CCDCE7"
-                                        BorderThickness="1"
-                                        CornerRadius="8"
-                                        Margin="0,4,0,0"
-                                        MinWidth="{TemplateBinding ActualWidth}">
-
-                                    <ScrollViewer MaxHeight="220"
-                                                  VerticalScrollBarVisibility="Auto">
-
-                                        <ItemsPresenter/>
-
-                                    </ScrollViewer>
-
-                                </Border>
-
-                            </Popup>
-
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsDropDownOpen"
-                                     Value="True">
-
-                                <Setter TargetName="MainBorder"
-                                        Property="BorderBrush"
-                                        Value="#8AB8D4"/>
-
-                            </Trigger>
-
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-
-                                <Setter TargetName="MainBorder"
-                                        Property="Background"
-                                        Value="#FFFFFF"/>
-
-                            </Trigger>
-
-                            <Trigger Property="IsEnabled"
-                                     Value="False">
-
-                                <Setter TargetName="MainBorder"
-                                        Property="Opacity"
-                                        Value="0.5"/>
-
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
-
-
-        <!-- GROUP FILTER BUTTON -->
-        <Style x:Key="GroupFilterButtonStyle"
-               TargetType="Button">
-
-            <Setter Property="Background"
-                    Value="#EFFFFFFF"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#D7E3EB"/>
-
-            <Setter Property="BorderThickness"
-                    Value="1"/>
-
-            <Setter Property="Padding"
-                    Value="7,4"/>
-
-            <Setter Property="Cursor"
-                    Value="Hand"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="Button">
-
-                        <Border x:Name="FilterBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="8"
-                                Padding="{TemplateBinding Padding}">
-
-                            <ContentPresenter/>
-
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-
-                                <Setter TargetName="FilterBorder"
-                                        Property="Background"
-                                        Value="#E5F1F8"/>
-
-                            </Trigger>
-
-                            <DataTrigger Binding="{Binding IsSelected}"
-                                         Value="True">
-
-                                <Setter TargetName="FilterBorder"
-                                        Property="Background"
-                                        Value="#CFE5F3"/>
-
-                                <Setter TargetName="FilterBorder"
-                                        Property="BorderBrush"
-                                        Value="#8AB8D4"/>
-
-                            </DataTrigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
-
-
-        <!-- THIN VERTICAL SCROLLBAR -->
-        <Style x:Key="ThinScrollBarStyle"
-               TargetType="ScrollBar">
-
-            <Setter Property="Width"
-                    Value="8"/>
-
-            <Setter Property="Margin"
-                    Value="7,5,2,5"/>
-
-            <Setter Property="Background"
-                    Value="Transparent"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="ScrollBar">
-
-                        <Grid Width="8"
-                              Background="Transparent">
-
-                            <Track x:Name="PART_Track"
-                                   Orientation="{TemplateBinding Orientation}"
-                                   Maximum="{TemplateBinding Maximum}"
-                                   Minimum="{TemplateBinding Minimum}"
-                                   Value="{TemplateBinding Value}"
-                                   ViewportSize="{TemplateBinding ViewportSize}"
-                                   IsDirectionReversed="True"
-                                   Focusable="False">
-
-                                <Track.DecreaseRepeatButton>
-
-                                    <RepeatButton
-                                        Command="{x:Static ScrollBar.PageUpCommand}"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Opacity="0"
-                                        Focusable="False"/>
-
-                                </Track.DecreaseRepeatButton>
-
-
-                                <Track.Thumb>
-
-                                    <Thumb Width="6"
-                                           MinHeight="28"
-                                           Background="#B8C2CB">
-
-                                        <Thumb.Template>
-
-                                            <ControlTemplate TargetType="Thumb">
-
-                                                <Border
-                                                    Background="{TemplateBinding Background}"
-                                                    CornerRadius="3"/>
-
-                                            </ControlTemplate>
-
-                                        </Thumb.Template>
-
-                                    </Thumb>
-
-                                </Track.Thumb>
-
-
-                                <Track.IncreaseRepeatButton>
-
-                                    <RepeatButton
-                                        Command="{x:Static ScrollBar.PageDownCommand}"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Opacity="0"
-                                        Focusable="False"/>
-
-                                </Track.IncreaseRepeatButton>
-
-                            </Track>
-
-                        </Grid>
-
-                        <!--
-                        Scrollbar still reserves its width,
-                        but becomes invisible when scrolling
-                        is not required.
-                        -->
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="Maximum"
-                                     Value="0">
-
-                                <Setter Property="Opacity"
-                                        Value="0"/>
-
-                                <Setter Property="IsHitTestVisible"
-                                        Value="False"/>
-
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
-
-
-        <!-- PET LIST ITEM -->
         <Style x:Key="PetListItemStyle"
                TargetType="ListBoxItem">
 
@@ -423,6 +25,7 @@
                     Value="Hand"/>
 
             <Setter Property="Template">
+
                 <Setter.Value>
 
                     <ControlTemplate TargetType="ListBoxItem">
@@ -436,6 +39,7 @@
 
                         </Border>
 
+
                         <ControlTemplate.Triggers>
 
                             <Trigger Property="IsMouseOver"
@@ -446,6 +50,7 @@
                                         Value="#EEF6FB"/>
 
                             </Trigger>
+
 
                             <Trigger Property="IsSelected"
                                      Value="True">
@@ -461,12 +66,16 @@
                     </ControlTemplate>
 
                 </Setter.Value>
+
             </Setter>
 
         </Style>
 
 
-        <!-- CAT -->
+        <!-- =====================================================
+             CAT
+             ===================================================== -->
+
         <DataTemplate DataType="{x:Type models:CatManager}">
 
             <Grid>
@@ -476,6 +85,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+
 
                 <Border Width="34"
                         Height="34"
@@ -488,18 +98,20 @@
 
                 </Border>
 
+
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center">
 
                     <TextBlock Text="{Binding Name}"
                                FontWeight="SemiBold"
-                               Foreground="#344054"/>
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
 
                     <TextBlock Text="Cat Manager"
                                FontSize="11"
-                               Foreground="#7B8790"/>
+                               Foreground="{StaticResource TextMutedBrush}"/>
 
                 </StackPanel>
+
 
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
@@ -523,7 +135,10 @@
         </DataTemplate>
 
 
-        <!-- DOG -->
+        <!-- =====================================================
+             DOG
+             ===================================================== -->
+
         <DataTemplate DataType="{x:Type models:DogIntern}">
 
             <Grid>
@@ -533,6 +148,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+
 
                 <Border Width="34"
                         Height="34"
@@ -545,18 +161,20 @@
 
                 </Border>
 
+
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center">
 
                     <TextBlock Text="{Binding Name}"
                                FontWeight="SemiBold"
-                               Foreground="#344054"/>
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
 
                     <TextBlock Text="Dog Intern"
                                FontSize="11"
-                               Foreground="#7B8790"/>
+                               Foreground="{StaticResource TextMutedBrush}"/>
 
                 </StackPanel>
+
 
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
@@ -580,7 +198,10 @@
         </DataTemplate>
 
 
-        <!-- HAMSTER -->
+        <!-- =====================================================
+             HAMSTER
+             ===================================================== -->
+
         <DataTemplate DataType="{x:Type models:HamsterIT}">
 
             <Grid>
@@ -590,6 +211,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+
 
                 <Border Width="34"
                         Height="34"
@@ -602,18 +224,20 @@
 
                 </Border>
 
+
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center">
 
                     <TextBlock Text="{Binding Name}"
                                FontWeight="SemiBold"
-                               Foreground="#344054"/>
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
 
                     <TextBlock Text="Hamster IT"
                                FontSize="11"
-                               Foreground="#7B8790"/>
+                               Foreground="{StaticResource TextMutedBrush}"/>
 
                 </StackPanel>
+
 
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
@@ -637,7 +261,10 @@
         </DataTemplate>
 
 
-        <!-- PARROT -->
+        <!-- =====================================================
+             PARROT
+             ===================================================== -->
+
         <DataTemplate DataType="{x:Type models:ParrotReceptionist}">
 
             <Grid>
@@ -647,6 +274,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+
 
                 <Border Width="34"
                         Height="34"
@@ -659,18 +287,20 @@
 
                 </Border>
 
+
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center">
 
                     <TextBlock Text="{Binding Name}"
                                FontWeight="SemiBold"
-                               Foreground="#344054"/>
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
 
                     <TextBlock Text="Parrot Receptionist"
                                FontSize="11"
-                               Foreground="#7B8790"/>
+                               Foreground="{StaticResource TextMutedBrush}"/>
 
                 </StackPanel>
+
 
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
@@ -694,7 +324,10 @@
         </DataTemplate>
 
 
-        <!-- RABBIT -->
+        <!-- =====================================================
+             RABBIT
+             ===================================================== -->
+
         <DataTemplate DataType="{x:Type models:RabbitAccountant}">
 
             <Grid>
@@ -704,6 +337,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+
 
                 <Border Width="34"
                         Height="34"
@@ -716,18 +350,20 @@
 
                 </Border>
 
+
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center">
 
                     <TextBlock Text="{Binding Name}"
                                FontWeight="SemiBold"
-                               Foreground="#344054"/>
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
 
                     <TextBlock Text="Rabbit Accountant"
                                FontSize="11"
-                               Foreground="#7B8790"/>
+                               Foreground="{StaticResource TextMutedBrush}"/>
 
                 </StackPanel>
+
 
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
@@ -751,7 +387,10 @@
         </DataTemplate>
 
 
-        <!-- RACCOON -->
+        <!-- =====================================================
+             RACCOON
+             ===================================================== -->
+
         <DataTemplate DataType="{x:Type models:RaccoonBarista}">
 
             <Grid>
@@ -761,6 +400,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+
 
                 <Border Width="34"
                         Height="34"
@@ -773,18 +413,20 @@
 
                 </Border>
 
+
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center">
 
                     <TextBlock Text="{Binding Name}"
                                FontWeight="SemiBold"
-                               Foreground="#344054"/>
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
 
                     <TextBlock Text="Raccoon Barista"
                                FontSize="11"
-                               Foreground="#7B8790"/>
+                               Foreground="{StaticResource TextMutedBrush}"/>
 
                 </StackPanel>
+
 
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
@@ -808,7 +450,10 @@
         </DataTemplate>
 
 
-        <!-- OWL -->
+        <!-- =====================================================
+             OWL
+             ===================================================== -->
+
         <DataTemplate DataType="{x:Type models:OwlSysAdmin}">
 
             <Grid>
@@ -818,6 +463,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+
 
                 <Border Width="34"
                         Height="34"
@@ -830,18 +476,20 @@
 
                 </Border>
 
+
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center">
 
                     <TextBlock Text="{Binding Name}"
                                FontWeight="SemiBold"
-                               Foreground="#344054"/>
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
 
                     <TextBlock Text="Owl SysAdmin"
                                FontSize="11"
-                               Foreground="#7B8790"/>
+                               Foreground="{StaticResource TextMutedBrush}"/>
 
                 </StackPanel>
+
 
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
@@ -867,48 +515,24 @@
     </UserControl.Resources>
 
 
-    <Border Background="#EDF6FC"
-            BorderBrush="#DFE3E6"
+    <!-- =========================================================
+         OFFICE PETS CARD
+         ========================================================= -->
+
+    <Border Background="{StaticResource PetsCardBrush}"
+            BorderBrush="{StaticResource AppBorderBrush}"
             BorderThickness="1"
-            CornerRadius="12"
-            Padding="20">
+            CornerRadius="{StaticResource CardCornerRadius}"
+            Padding="{StaticResource CardPadding}">
 
         <Grid>
 
-            <!-- WATERMARK -->
-            <Rectangle IsHitTestVisible="False"
-                       Opacity="0.03">
-
-                <Rectangle.Fill>
-
-                    <DrawingBrush TileMode="Tile"
-                                  Viewport="0,0,120,88"
-                                  ViewportUnits="Absolute"
-                                  Stretch="None">
-
-                        <DrawingBrush.Drawing>
-
-                            <DrawingGroup>
-
-                                <ImageDrawing
-                                    ImageSource="/PetOffice.WpfApp;component/Assets/paw.png"
-                                    Rect="12,8,20,20"/>
-
-                                <ImageDrawing
-                                    ImageSource="/PetOffice.WpfApp;component/Assets/paw.png"
-                                    Rect="70,48,20,20"/>
-
-                            </DrawingGroup>
-
-                        </DrawingBrush.Drawing>
-
-                    </DrawingBrush>
-
-                </Rectangle.Fill>
-
-            </Rectangle>
+            <!-- BACKGROUND PATTERN -->
+            <Rectangle Fill="{StaticResource PetListWatermarkBrush}"
+                       IsHitTestVisible="False"/>
 
 
+            <!-- CONTENT -->
             <Grid>
 
                 <Grid.RowDefinitions>
@@ -919,7 +543,10 @@
                 </Grid.RowDefinitions>
 
 
-                <!-- HEADER -->
+                <!-- =================================================
+                     HEADER
+                     ================================================= -->
+
                 <StackPanel Grid.Row="0"
                             Orientation="Horizontal"
                             Margin="0,0,0,14">
@@ -932,13 +559,16 @@
                     <TextBlock Text="Office pets"
                                FontSize="18"
                                FontWeight="SemiBold"
-                               Foreground="#344054"
+                               Foreground="{StaticResource TextPrimaryBrush}"
                                VerticalAlignment="Center"/>
 
                 </StackPanel>
 
 
-                <!-- SEARCH + SORT -->
+                <!-- =================================================
+                     SEARCH + SORT
+                     ================================================= -->
+
                 <Grid Grid.Row="1"
                       Margin="0,0,0,12">
 
@@ -949,16 +579,18 @@
                     </Grid.ColumnDefinitions>
 
 
+                    <!-- SEARCH -->
                     <StackPanel Grid.Column="0">
 
                         <TextBlock Text="Search"
                                    FontSize="12"
-                                   Foreground="#667085"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
                                    Margin="2,0,0,4"/>
 
+
                         <Border Height="38"
-                                Background="#F9FCFE"
-                                BorderBrush="#CCDCE7"
+                                Background="{StaticResource SearchSurfaceBrush}"
+                                BorderBrush="{StaticResource BlueBorderBrush}"
                                 BorderThickness="1"
                                 CornerRadius="8">
 
@@ -973,12 +605,14 @@
                     </StackPanel>
 
 
+                    <!-- SORT -->
                     <StackPanel Grid.Column="2">
 
                         <TextBlock Text="Sort"
                                    FontSize="12"
-                                   Foreground="#667085"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
                                    Margin="2,0,0,4"/>
+
 
                         <ComboBox
                             Style="{StaticResource CompactComboBoxStyle}"
@@ -991,7 +625,10 @@
                 </Grid>
 
 
-                <!-- GROUP FILTERS -->
+                <!-- =================================================
+                     GROUP FILTERS
+                     ================================================= -->
+
                 <Grid Grid.Row="2"
                       Margin="0,0,0,10">
 
@@ -1000,22 +637,28 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+
                     <TextBlock Text="Groups"
                                FontSize="12"
-                               Foreground="#667085"
+                               Foreground="{StaticResource TextSecondaryBrush}"
                                VerticalAlignment="Center"
                                Margin="2,0,12,0"/>
+
 
                     <ItemsControl Grid.Column="1"
                                   ItemsSource="{Binding GroupFilters}">
 
                         <ItemsControl.ItemsPanel>
+
                             <ItemsPanelTemplate>
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
+
                         </ItemsControl.ItemsPanel>
 
+
                         <ItemsControl.ItemTemplate>
+
                             <DataTemplate>
 
                                 <Button
@@ -1045,6 +688,7 @@
                                 </Button>
 
                             </DataTemplate>
+
                         </ItemsControl.ItemTemplate>
 
                     </ItemsControl>
@@ -1052,10 +696,13 @@
                 </Grid>
 
 
-                <!-- PET LIST -->
+                <!-- =================================================
+                     PET LIST
+                     ================================================= -->
+
                 <Border Grid.Row="3"
                         Background="#F4FFFFFF"
-                        BorderBrush="#CCDCE7"
+                        BorderBrush="{StaticResource BlueBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="10"
                         Padding="8"

@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:PetOffice.WpfApp.Views"
+
         Title="Pet Office"
         Width="1180"
         SizeToContent="Height"
@@ -9,202 +10,11 @@
         MinWidth="900"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
-        Background="#F8F6F4"
-        Icon="Assets/petoffice_icon.ico"
-        FontFamily="Cascadia Code, Segoe UI">
 
-    <Window.Resources>
+        Background="{StaticResource AppWindowBackgroundBrush}"
+        FontFamily="{StaticResource AppFontFamily}"
 
-        <!-- MAIN BACKGROUND DOT PATTERN -->
-        <DrawingBrush x:Key="MainDotBackgroundBrush"
-              TileMode="Tile"
-              Viewport="0,0,30,30"
-              ViewportUnits="Absolute"
-              Stretch="None">
-
-            <DrawingBrush.Drawing>
-
-                <DrawingGroup>
-
-                    <!-- base background -->
-                    <GeometryDrawing Brush="#FFFDFC">
-
-                        <GeometryDrawing.Geometry>
-                            <RectangleGeometry Rect="0,0,30,30"/>
-                        </GeometryDrawing.Geometry>
-
-                    </GeometryDrawing>
-
-
-                    <!-- small dot -->
-                    <GeometryDrawing Brush="#16958D86">
-
-                        <GeometryDrawing.Geometry>
-
-                            <EllipseGeometry Center="7,7"
-                                     RadiusX="1.1"
-                                     RadiusY="1.1"/>
-
-                        </GeometryDrawing.Geometry>
-
-                    </GeometryDrawing>
-
-
-                    <!-- second shifted dot -->
-                    <GeometryDrawing Brush="#16958D86">
-
-                        <GeometryDrawing.Geometry>
-
-                            <EllipseGeometry Center="22,22"
-                                     RadiusX="1.1"
-                                     RadiusY="1.1"/>
-
-                        </GeometryDrawing.Geometry>
-
-                    </GeometryDrawing>
-
-                </DrawingGroup>
-
-            </DrawingBrush.Drawing>
-
-        </DrawingBrush>
-
-        <!-- Rounded tab button -->
-        <Style x:Key="RoundedTabItemStyle"
-               TargetType="TabItem">
-
-            <Setter Property="Foreground"
-                    Value="#667085"/>
-
-            <Setter Property="FontSize"
-                    Value="14"/>
-
-            <Setter Property="FontWeight"
-                    Value="SemiBold"/>
-
-            <Setter Property="Background"
-                    Value="#F2F4F7"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#E0E4E8"/>
-
-            <Setter Property="Cursor"
-                    Value="Hand"/>
-
-            <Setter Property="Template">
-
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="TabItem">
-
-                        <Grid Margin="4,3,4,3">
-
-                            <Border x:Name="TabBorder"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="11"
-                                    Padding="18,9">
-
-                                <ContentPresenter
-                                    ContentSource="Header"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
-
-                            </Border>
-
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-
-                                <Setter TargetName="TabBorder"
-                                        Property="Background"
-                                        Value="#ECEFF3"/>
-
-                            </Trigger>
-
-                            <Trigger Property="IsSelected"
-                                     Value="True">
-
-                                <Setter TargetName="TabBorder"
-                                        Property="Background"
-                                        Value="#E2DDF5"/>
-
-                                <Setter TargetName="TabBorder"
-                                        Property="BorderBrush"
-                                        Value="#CEC5EA"/>
-
-                                <Setter Property="Foreground"
-                                        Value="#4F4775"/>
-
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-
-            </Setter>
-
-        </Style>
-
-
-        <!-- Main tab container -->
-        <Style x:Key="RoundedTabControlStyle"
-               TargetType="TabControl">
-
-            <Setter Property="Background"
-                    Value="Transparent"/>
-
-            <Setter Property="BorderThickness"
-                    Value="0"/>
-
-            <Setter Property="Template">
-
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="TabControl">
-
-                        <Grid>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="6"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-
-                            <TabPanel Grid.Row="0"
-                                      IsItemsHost="True"
-                                      Background="Transparent"/>
-
-
-                            <Border Grid.Row="2"
-                                    Background="{StaticResource MainDotBackgroundBrush}"
-                                    BorderBrush="#DFE3E6"
-                                    BorderThickness="1"
-                                    CornerRadius="14">
-
-                                <ContentPresenter
-                                    ContentSource="SelectedContent"/>
-
-                            </Border>
-
-                        </Grid>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-
-            </Setter>
-
-        </Style>
-
-    </Window.Resources>
+        Icon="Assets/petoffice_icon.ico">
 
 
     <Grid Margin="12">
@@ -212,6 +22,8 @@
         <TabControl
             Style="{StaticResource RoundedTabControlStyle}">
 
+
+            <!-- PET OFFICE -->
             <TabItem
                 Header="Pet Office"
                 Style="{StaticResource RoundedTabItemStyle}">
@@ -221,6 +33,7 @@
             </TabItem>
 
 
+            <!-- CPU ANALYSIS -->
             <TabItem
                 Header="CPU Analysis"
                 Style="{StaticResource RoundedTabItemStyle}">
@@ -236,6 +49,7 @@
             </TabItem>
 
 
+            <!-- STORAGE -->
             <TabItem
                 Header="Storage"
                 Style="{StaticResource RoundedTabItemStyle}">
@@ -249,6 +63,7 @@
                 </ScrollViewer>
 
             </TabItem>
+
 
         </TabControl>
 

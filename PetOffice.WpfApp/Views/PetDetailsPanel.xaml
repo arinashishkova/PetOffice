@@ -5,233 +5,27 @@
 
     <UserControl.Resources>
 
-        <!-- ROUNDED ENERGY BAR -->
-        <Style x:Key="RoundedEnergyProgressBarStyle"
-       TargetType="ProgressBar">
-
-            <Setter Property="Height"
-            Value="18"/>
-
-            <Setter Property="Background"
-            Value="#E7E3EA"/>
-
-            <Setter Property="BorderThickness"
-            Value="0"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="ProgressBar">
-
-                        <Grid x:Name="PART_Track">
-
-                            <Border Background="{TemplateBinding Background}"
-                            CornerRadius="9"/>
-
-                            <Border x:Name="PART_Indicator"
-                            HorizontalAlignment="Left"
-                            Background="{TemplateBinding Foreground}"
-                            CornerRadius="9"/>
-
-                        </Grid>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
-
+        <!-- LOCAL CONVERTER -->
         <converters:EnergyLevelBrushConverter
-    x:Key="EnergyLevelBrushConverter"/>
-
-        <Style x:Key="ActionButtonStyle"
-               TargetType="Button">
-
-            <Setter Property="Height"
-                    Value="40"/>
-
-            <Setter Property="Padding"
-                    Value="9,5"/>
-
-            <Setter Property="FontSize"
-                    Value="12"/>
-
-            <Setter Property="FontWeight"
-                    Value="SemiBold"/>
-
-            <Setter Property="Foreground"
-                    Value="#344054"/>
-
-            <Setter Property="BorderThickness"
-                    Value="1"/>
-
-            <Setter Property="Cursor"
-                    Value="Hand"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="Button">
-
-                        <Border x:Name="ButtonBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="8"
-                                Padding="{TemplateBinding Padding}">
-
-                            <ContentPresenter
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Opacity"
-                                        Value="0.78"/>
-
-                            </Trigger>
-
-                            <Trigger Property="IsEnabled"
-                                     Value="False">
-
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Opacity"
-                                        Value="0.32"/>
-
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
-
-
-        <Style x:Key="WorkButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource ActionButtonStyle}">
-
-            <Setter Property="Background"
-                    Value="#D7EAF7"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#BDD9EC"/>
-
-        </Style>
-
-
-        <Style x:Key="CrazyButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource ActionButtonStyle}">
-
-            <Setter Property="Background"
-                    Value="#F5D6E4"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#E8BFD1"/>
-
-        </Style>
-
-
-        <Style x:Key="RestoreButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource ActionButtonStyle}">
-
-            <Setter Property="Background"
-                    Value="#E3F3E6"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#B8D8BE"/>
-
-            <Setter Property="Foreground"
-                    Value="#3F6F48"/>
-
-        </Style>
-
-
-        <Style x:Key="AbilityButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource ActionButtonStyle}">
-
-            <Setter Property="Background"
-                    Value="#F0ECF8"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#D7CFEA"/>
-
-        </Style>
-
-
-        <Style x:Key="RemoveButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource ActionButtonStyle}">
-
-            <Setter Property="Background"
-                    Value="#FBE0DE"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#F0C3BF"/>
-
-            <Setter Property="Foreground"
-                    Value="#A94F49"/>
-
-        </Style>
+            x:Key="EnergyLevelBrushConverter"/>
 
     </UserControl.Resources>
 
 
-    <Border Background="#F5F0FA"
-            BorderBrush="#DFE3E6"
+    <Border Background="{StaticResource SelectedCardBrush}"
+            BorderBrush="{StaticResource AppBorderBrush}"
             BorderThickness="1"
-            CornerRadius="12"
-            Padding="20">
+            CornerRadius="{StaticResource CardCornerRadius}"
+            Padding="{StaticResource CardPadding}">
 
         <Grid>
 
-            <!-- SELECTED PET WATERMARK -->
-            <Rectangle IsHitTestVisible="False"
-           Opacity="0.035">
-
-                <Rectangle.Fill>
-
-                    <DrawingBrush TileMode="Tile"
-              Viewport="0,0,110,78"
-              ViewportUnits="Absolute"
-              Stretch="None">
-
-                        <DrawingBrush.Drawing>
-
-                            <DrawingGroup>
-
-                                <ImageDrawing
-                ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
-                Rect="10,7,18,18"/>
-
-                                <ImageDrawing
-                ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
-                Rect="62,42,18,18"/>
-
-                            </DrawingGroup>
-
-                        </DrawingBrush.Drawing>
-
-                    </DrawingBrush>
-
-                </Rectangle.Fill>
-
-            </Rectangle>
+            <!-- BACKGROUND PATTERN -->
+            <Rectangle Fill="{StaticResource SelectedWatermarkBrush}"
+                       IsHitTestVisible="False"/>
 
 
+            <!-- CONTENT -->
             <Grid>
 
                 <Grid.RowDefinitions>
@@ -243,7 +37,10 @@
                 </Grid.RowDefinitions>
 
 
-                <!-- HEADER -->
+                <!-- =================================================
+                     HEADER
+                     ================================================= -->
+
                 <Grid Grid.Row="0"
                       Margin="0,0,0,14">
 
@@ -251,6 +48,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
+
 
                     <StackPanel Orientation="Horizontal"
                                 VerticalAlignment="Center">
@@ -264,7 +62,7 @@
                         <TextBlock Text="Selected pet"
                                    FontSize="18"
                                    FontWeight="SemiBold"
-                                   Foreground="#344054"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
                                    VerticalAlignment="Center"/>
 
                     </StackPanel>
@@ -294,12 +92,15 @@
                 </Grid>
 
 
-                <!-- PET NAME -->
+                <!-- =================================================
+                     PET NAME
+                     ================================================= -->
+
                 <Border Grid.Row="1"
-        Background="#80FFFFFF"
-        CornerRadius="8"
-        Padding="10,7"
-        Margin="0,0,0,14">
+                        Background="#80FFFFFF"
+                        CornerRadius="8"
+                        Padding="10,7"
+                        Margin="0,0,0,14">
 
                     <Grid>
 
@@ -309,29 +110,28 @@
                         </Grid.ColumnDefinitions>
 
 
-                        <TextBlock
-            Text="{Binding SelectedPetDisplayName}"
-            FontSize="17"
-            FontWeight="SemiBold"
-            Foreground="#252A30"
-            TextWrapping="Wrap"
-            VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding SelectedPetDisplayName}"
+                                   FontSize="17"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextStrongBrush}"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center"/>
 
 
+                        <!-- PET ICON -->
                         <Border Grid.Column="1"
-                Width="40"
-                Height="40"
-                Margin="12,0,0,0"
-                Background="#70FFFFFF"
-                CornerRadius="9">
+                                Width="40"
+                                Height="40"
+                                Margin="12,0,0,0"
+                                Background="#70FFFFFF"
+                                CornerRadius="9">
 
-                            <Image
-                Source="{Binding SelectedPetIconPath}"
-                Width="32"
-                Height="32"
-                Stretch="Uniform"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"/>
+                            <Image Source="{Binding SelectedPetIconPath}"
+                                   Width="32"
+                                   Height="32"
+                                   Stretch="Uniform"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
 
                         </Border>
 
@@ -340,7 +140,10 @@
                 </Border>
 
 
-                <!-- ENERGY -->
+                <!-- =================================================
+                     ENERGY
+                     ================================================= -->
+
                 <Grid Grid.Row="2"
                       Margin="0,0,0,15">
 
@@ -350,6 +153,7 @@
                     </Grid.RowDefinitions>
 
 
+                    <!-- ENERGY BAR -->
                     <Grid>
 
                         <Grid.ColumnDefinitions>
@@ -370,7 +174,7 @@
                                    Margin="0,0,5,0"/>
 
                             <TextBlock Text="Energy"
-                                       Foreground="#59666D"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
                                        VerticalAlignment="Center"/>
 
                         </StackPanel>
@@ -397,6 +201,7 @@
                     </Grid>
 
 
+                    <!-- STATISTICS -->
                     <Grid Grid.Row="1"
                           Margin="0,10,0,0">
 
@@ -405,14 +210,16 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
+
                         <TextBlock Text="{Binding SelectedPetTasksText}"
                                    FontSize="12"
-                                   Foreground="#667085"/>
+                                   Foreground="{StaticResource TextSecondaryBrush}"/>
+
 
                         <TextBlock Grid.Column="1"
                                    Text="{Binding SelectedPetReactionsText}"
                                    FontSize="12"
-                                   Foreground="#667085"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
                                    HorizontalAlignment="Right"/>
 
                     </Grid>
@@ -420,7 +227,10 @@
                 </Grid>
 
 
-                <!-- MAIN ACTIONS -->
+                <!-- =================================================
+                     MAIN ACTIONS
+                     ================================================= -->
+
                 <Grid Grid.Row="3"
                       Margin="0,0,0,9">
 
@@ -433,6 +243,7 @@
                     </Grid.ColumnDefinitions>
 
 
+                    <!-- WORK -->
                     <Button Grid.Column="0"
                             Style="{StaticResource WorkButtonStyle}"
                             Command="{Binding WorkCommand}">
@@ -453,6 +264,7 @@
                     </Button>
 
 
+                    <!-- CRAZY -->
                     <Button Grid.Column="2"
                             Style="{StaticResource CrazyButtonStyle}"
                             Command="{Binding CrazyCommand}">
@@ -473,6 +285,7 @@
                     </Button>
 
 
+                    <!-- RESTORE -->
                     <Button Grid.Column="4"
                             Style="{StaticResource RestoreButtonStyle}"
                             Command="{Binding RestoreEnergyCommand}">
@@ -495,7 +308,10 @@
                 </Grid>
 
 
-                <!-- ABILITIES -->
+                <!-- =================================================
+                     ABILITIES
+                     ================================================= -->
+
                 <Grid Grid.Row="4">
 
                     <Grid.ColumnDefinitions>
@@ -507,6 +323,7 @@
                     </Grid.ColumnDefinitions>
 
 
+                    <!-- TALK -->
                     <Button Grid.Column="0"
                             Style="{StaticResource AbilityButtonStyle}"
                             Command="{Binding CommunicateCommand}">
@@ -525,6 +342,7 @@
                     </Button>
 
 
+                    <!-- COFFEE -->
                     <Button Grid.Column="2"
                             Style="{StaticResource AbilityButtonStyle}"
                             Command="{Binding CoffeeCommand}">
@@ -543,6 +361,7 @@
                     </Button>
 
 
+                    <!-- FIX PC -->
                     <Button Grid.Column="4"
                             Style="{StaticResource AbilityButtonStyle}"
                             Command="{Binding FixCommand}">
