@@ -49,26 +49,198 @@
         </Style>
 
 
-        <Style x:Key="InputComboBoxStyle"
-               TargetType="ComboBox">
+        <!-- COMBOBOX ITEM -->
+        <Style x:Key="InputComboBoxItemStyle"
+       TargetType="ComboBoxItem">
 
-            <Setter Property="Height"
-                    Value="36"/>
+            <Setter Property="HorizontalContentAlignment"
+            Value="Stretch"/>
 
             <Setter Property="Padding"
-                    Value="7,4"/>
+            Value="10,7"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="ComboBoxItem">
+
+                        <Border x:Name="ItemBorder"
+                        Background="Transparent"
+                        CornerRadius="6"
+                        Padding="{TemplateBinding Padding}"
+                        Margin="4,2">
+
+                            <ContentPresenter/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsHighlighted"
+                             Value="True">
+
+                                <Setter TargetName="ItemBorder"
+                                Property="Background"
+                                Value="#FFF2E5"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsSelected"
+                             Value="True">
+
+                                <Setter TargetName="ItemBorder"
+                                Property="Background"
+                                Value="#FBE5D0"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+
+        <!-- ADD PET TYPE COMBOBOX -->
+        <Style x:Key="InputComboBoxStyle"
+       TargetType="ComboBox">
+
+            <Setter Property="Height"
+            Value="38"/>
 
             <Setter Property="FontSize"
-                    Value="14"/>
+            Value="13"/>
+
+            <Setter Property="Foreground"
+            Value="#252A30"/>
 
             <Setter Property="Background"
-                    Value="Transparent"/>
+            Value="#FDFBFA"/>
+
+            <Setter Property="BorderBrush"
+            Value="#D7CFC7"/>
 
             <Setter Property="BorderThickness"
-                    Value="0"/>
+            Value="1"/>
 
-            <Setter Property="VerticalContentAlignment"
-                    Value="Center"/>
+            <Setter Property="ItemContainerStyle"
+            Value="{StaticResource InputComboBoxItemStyle}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="ComboBox">
+
+                        <Grid>
+
+                            <Border x:Name="MainBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8"/>
+
+
+                            <ContentPresenter
+                        Margin="11,0,34,0"
+                        VerticalAlignment="Center"
+                        Content="{TemplateBinding SelectionBoxItem}"
+                        ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                        ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                        IsHitTestVisible="False"/>
+
+
+                            <Path Width="8"
+                          Height="5"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Margin="0,0,12,0"
+                          Stroke="#667085"
+                          StrokeThickness="1.5"
+                          Data="M 0 0 L 4 4 L 8 0"
+                          IsHitTestVisible="False"/>
+
+
+                            <ToggleButton
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Focusable="False"
+                                FocusVisualStyle="{x:Null}"
+                                ClickMode="Press"
+                                IsChecked="{Binding IsDropDownOpen,
+                                                   RelativeSource={RelativeSource TemplatedParent},
+                                                   Mode=TwoWay}">
+
+                                <ToggleButton.Template>
+
+                                    <ControlTemplate TargetType="ToggleButton">
+
+                                        <Border Background="Transparent"/>
+
+                                    </ControlTemplate>
+
+                                </ToggleButton.Template>
+
+                            </ToggleButton>
+
+
+                            <Popup x:Name="PART_Popup"
+                           IsOpen="{TemplateBinding IsDropDownOpen}"
+                           Placement="Bottom"
+                           AllowsTransparency="True"
+                           Focusable="False"
+                           PopupAnimation="Fade">
+
+                                <Border Background="White"
+                                BorderBrush="#D7CFC7"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Margin="0,4,0,0"
+                                MinWidth="{TemplateBinding ActualWidth}">
+
+                                    <ScrollViewer MaxHeight="250"
+                                          VerticalScrollBarVisibility="Auto">
+
+                                        <ItemsPresenter/>
+
+                                    </ScrollViewer>
+
+                                </Border>
+
+                            </Popup>
+
+                        </Grid>
+
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsDropDownOpen"
+                             Value="True">
+
+                                <Setter TargetName="MainBorder"
+                                Property="BorderBrush"
+                                Value="#C9A98B"/>
+
+                            </Trigger>
+
+
+                            <Trigger Property="IsMouseOver"
+                             Value="True">
+
+                                <Setter TargetName="MainBorder"
+                                Property="Background"
+                                Value="#FFFFFF"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
 
         </Style>
 
@@ -218,7 +390,7 @@
         <!-- ADD CARD WATERMARK -->
         <DrawingBrush x:Key="AddWatermarkBrush"
               TileMode="Tile"
-              Viewport="0,0,150,110"
+              Viewport="0,0,110,78"
               ViewportUnits="Absolute"
               Stretch="None">
 
@@ -228,11 +400,11 @@
 
                     <ImageDrawing
                 ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
-                Rect="14,10,24,24"/>
+                Rect="10,7,18,18"/>
 
                     <ImageDrawing
                 ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
-                Rect="88,62,24,24"/>
+                Rect="62,42,18,18"/>
 
                 </DrawingGroup>
 
@@ -536,22 +708,13 @@
                                                VerticalAlignment="Center"/>
 
 
-                                    <Border Grid.Column="1"
-                                            Height="38"
-                                            Background="#D9FFFFFF"
-                                            BorderBrush="#D7CFC7"
-                                            BorderThickness="1"
-                                            CornerRadius="8">
+                                <ComboBox Grid.Column="1"
+                                          Style="{StaticResource InputComboBoxStyle}"
+                                          ItemsSource="{Binding RepositoryNames}"
+                                          SelectedItem="{Binding SelectedRepository,
+                                                                 Mode=TwoWay}"/>
 
-                                        <ComboBox
-                                            Style="{StaticResource InputComboBoxStyle}"
-                                            ItemsSource="{Binding RepositoryNames}"
-                                            SelectedItem="{Binding SelectedRepository,
-                                                                   Mode=TwoWay}"/>
-
-                                    </Border>
-
-                                </Grid>
+                            </Grid>
 
 
                                 <!-- NAME -->

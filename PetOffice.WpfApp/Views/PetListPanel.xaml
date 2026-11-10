@@ -142,13 +142,26 @@
                                   IsHitTestVisible="False"/>
 
                             <ToggleButton
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Focusable="False"
-                                ClickMode="Press"
-                                IsChecked="{Binding IsDropDownOpen,
-                                                   RelativeSource={RelativeSource TemplatedParent},
-                                                   Mode=TwoWay}"/>
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Focusable="False"
+                                    FocusVisualStyle="{x:Null}"
+                                    ClickMode="Press"
+                                    IsChecked="{Binding IsDropDownOpen,
+                                                       RelativeSource={RelativeSource TemplatedParent},
+                                                       Mode=TwoWay}">
+
+                                <ToggleButton.Template>
+
+                                    <ControlTemplate TargetType="ToggleButton">
+
+                                        <Border Background="Transparent"/>
+
+                                    </ControlTemplate>
+
+                                </ToggleButton.Template>
+
+                            </ToggleButton>
 
                             <Popup x:Name="PART_Popup"
                                    IsOpen="{TemplateBinding IsDropDownOpen}"
@@ -869,7 +882,7 @@
                 <Rectangle.Fill>
 
                     <DrawingBrush TileMode="Tile"
-                                  Viewport="0,0,160,120"
+                                  Viewport="0,0,120,88"
                                   ViewportUnits="Absolute"
                                   Stretch="None">
 
@@ -879,11 +892,11 @@
 
                                 <ImageDrawing
                                     ImageSource="/PetOffice.WpfApp;component/Assets/paw.png"
-                                    Rect="18,10,28,28"/>
+                                    Rect="12,8,20,20"/>
 
                                 <ImageDrawing
                                     ImageSource="/PetOffice.WpfApp;component/Assets/paw.png"
-                                    Rect="98,70,28,28"/>
+                                    Rect="70,48,20,20"/>
 
                             </DrawingGroup>
 

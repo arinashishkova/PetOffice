@@ -40,7 +40,7 @@
                 </Setter.Value>
             </Setter>
 
-        </Style>s
+        </Style>
 
         <converters:EnergyLevelBrushConverter
     x:Key="EnergyLevelBrushConverter"/>
@@ -205,21 +205,21 @@
                 <Rectangle.Fill>
 
                     <DrawingBrush TileMode="Tile"
-                      Viewport="0,0,150,110"
-                      ViewportUnits="Absolute"
-                      Stretch="None">
+              Viewport="0,0,110,78"
+              ViewportUnits="Absolute"
+              Stretch="None">
 
                         <DrawingBrush.Drawing>
 
                             <DrawingGroup>
 
                                 <ImageDrawing
-                        ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
-                        Rect="14,10,24,24"/>
+                ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
+                Rect="10,7,18,18"/>
 
                                 <ImageDrawing
-                        ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
-                        Rect="88,62,24,24"/>
+                ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
+                Rect="62,42,18,18"/>
 
                             </DrawingGroup>
 

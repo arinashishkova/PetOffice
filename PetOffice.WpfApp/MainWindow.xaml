@@ -11,7 +11,7 @@
         ResizeMode="CanResize"
         Background="#F8F6F4"
         Icon="Assets/petoffice_icon.ico"
-        FontFamily="Consolas">
+        FontFamily="Cascadia Code, Segoe UI">
 
     <Window.Resources>
 
