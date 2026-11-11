@@ -211,28 +211,23 @@
 
                                         <!-- MESSAGE -->
                                         <TextBlock Grid.Column="0"
+                                                   FontSize="13"
                                                    Foreground="#4F5F58"
                                                    TextWrapping="Wrap"
                                                    VerticalAlignment="Center">
-                                            <Run Text="{Binding Prefix}"/>
-                                            <Run Text="{Binding PetName}"
+
+                                            <Run Text="{Binding Prefix, Mode=OneWay}"/>
+
+                                            <Run Text="{Binding PetName, Mode=OneWay}"
                                                  FontWeight="Bold"
-                                                 Foreground="{Binding PetColor}"/>
-                                            <Run Text="{Binding PetTypeText}"
-                                                 FontSize="11"
+                                                 Foreground="{Binding PetColor, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding PetTypeText, Mode=OneWay}"
                                                  FontWeight="SemiBold"
-                                                 Foreground="{Binding PetColor}"
-                                                 Background="{Binding PetBackgroundColor}"/>
-                                            <Run Text="{Binding MiddleText}"/>
-                                            <Run Text="{Binding SecondPetName}"
+                                                 Foreground="{Binding PetColor, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding MiddleText, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding SecondPetName, Mode=OneWay}"
                                                  FontWeight="Bold"
-                                                 Foreground="{Binding SecondPetColor}"/>
-                                            <Run Text="{Binding SecondPetTypeText}"
-                                                 FontSize="11"
+                                                 Foreground="{Binding SecondPetColor, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding SecondPetTypeText, Mode=OneWay}"
                                                  FontWeight="SemiBold"
-                                                 Foreground="{Binding SecondPetColor}"
-                                                 Background="{Binding SecondPetBackgroundColor}"/>
-                                            <Run Text="{Binding Suffix}"/>
+                                                 Foreground="{Binding SecondPetColor, Mode=OneWay}"/><Run Text="{Binding Suffix, Mode=OneWay}"/>
+
                                         </TextBlock>
 
                                         <!-- TIME -->

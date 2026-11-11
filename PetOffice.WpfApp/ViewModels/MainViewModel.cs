@@ -175,7 +175,15 @@ namespace PetOffice.WpfApp.ViewModels
 
         private void Repository_ReactionOccurred(object? sender, ReactionEventArgs e)
         {
-            Log.InsertReaction(0, e.Message, GetAllPets());
+            List<OfficePet> pets = GetAllPets().ToList();
+
+            if (SelectedPet is not null &&
+                pets.All(pet => pet.Id != SelectedPet.Id))
+            {
+                pets.Add(SelectedPet);
+            }
+
+            Log.InsertReaction(0, e.Message, pets);
             UpdateSelectedPetState();
         }
 
