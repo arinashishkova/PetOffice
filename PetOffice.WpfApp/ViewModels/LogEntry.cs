@@ -108,10 +108,32 @@ namespace PetOffice.WpfApp.ViewModels
         // Example: Meow - CatManager welcomes Leonard - CatManager.
         public static LogEntry FromReaction(string message, IEnumerable<OfficePet> pets, DateTime time)
         {
-            List<PetMessageMatch> matches = pets
-                .Select(pet => new PetMessageMatch(
-                    pet, message.IndexOf(pet.DisplayName, StringComparison.Ordinal)))
-                .Where(match => match.Index >= 0)
+            List<PetMessageMatch> matches = new();
+
+            // One DisplayName is enough for formatting even if
+            // several repository objects have the same name and class.
+            IEnumerable<OfficePet> uniquePets = pets
+                .GroupBy(pet => pet.DisplayName)
+                .Select(group => group.First());
+
+            foreach (OfficePet pet in uniquePets)
+            {
+                int searchIndex = 0;
+
+                while (searchIndex < message.Length)
+                {
+                    int index = message.IndexOf(pet.DisplayName, searchIndex, StringComparison.Ordinal);
+
+                    if (index < 0) break;
+
+                    matches.Add(new PetMessageMatch(pet, index));
+                    searchIndex = index + pet.DisplayName.Length;
+                }
+            }
+
+            matches = matches
+                .GroupBy(match => match.Index)
+                .Select(group => group.First())
                 .OrderBy(match => match.Index)
                 .ToList();
 
@@ -124,15 +146,22 @@ namespace PetOffice.WpfApp.ViewModels
             string prefix = message[..first.Index];
             int firstEnd = first.Index + first.Pet.DisplayName.Length;
 
-            // Only one pet was found.
+            // Only one pet occurrence was found.
             if (matches.Count == 1)
             {
                 string suffix = FormatSuffix(message[firstEnd..]);
                 return new LogEntry(message, time, prefix, first.Pet.Name, first.Pet.GetType().Name, "", "", "", suffix);
             }
 
-            // Two pets were found.
             PetMessageMatch second = matches[1];
+
+            // Safety check against overlapping matches.
+            if (second.Index < firstEnd)
+            {
+                string suffix = FormatSuffix(message[firstEnd..]);
+                return new LogEntry(message, time, prefix, first.Pet.Name, first.Pet.GetType().Name, "", "", "", suffix);
+            }
+
             string middleText = $" {message[firstEnd..second.Index].Trim()} ";
             int secondEnd = second.Index + second.Pet.DisplayName.Length;
             string finalSuffix = FormatSuffix(message[secondEnd..]);
