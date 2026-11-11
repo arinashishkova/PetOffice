@@ -8,7 +8,7 @@ namespace PetOffice.WpfApp.ViewModels
 {
     public sealed class LogEntry
     {
-        // Original message. Kept for compatibility with the current UI.
+        // Original message. Kept for compatibility.
         public string Message { get; }
         public DateTime Time { get; }
         public string TimeText => Time.ToString("HH:mm");
@@ -19,7 +19,7 @@ namespace PetOffice.WpfApp.ViewModels
         // First pet.
         public string PetName { get; }
         public string PetType { get; }
-        public string PetTypeText => string.IsNullOrWhiteSpace(PetType) ? "" : $"({PetType})";
+        public string PetTypeText => string.IsNullOrWhiteSpace(PetType) ? "" : $" ({PetType})";
 
         // Text between two pets. Example: " welcomes "
         public string MiddleText { get; }
@@ -27,20 +27,18 @@ namespace PetOffice.WpfApp.ViewModels
         // Optional second pet.
         public string SecondPetName { get; }
         public string SecondPetType { get; }
-        public string SecondPetTypeText => string.IsNullOrWhiteSpace(SecondPetType) ? "" : $"({SecondPetType})";
+        public string SecondPetTypeText => string.IsNullOrWhiteSpace(SecondPetType) ? "" : $" ({SecondPetType})";
 
         // Text after the last pet.
         public string Suffix { get; }
 
-        // Colors used later by the Activity Log XAML.
+        // Colors for pet name and class.
         public string PetColor => GetPetColor(PetType);
-        public string PetBackgroundColor => GetPetBackgroundColor(PetType);
         public string SecondPetColor => GetPetColor(SecondPetType);
-        public string SecondPetBackgroundColor => GetPetBackgroundColor(SecondPetType);
 
-        // True when the entry contains structured pet information.
         public bool HasPet => !string.IsNullOrWhiteSpace(PetName);
         public bool HasSecondPet => !string.IsNullOrWhiteSpace(SecondPetName);
+
 
         // Plain log entry.
         public LogEntry(string message, DateTime time)
@@ -64,6 +62,7 @@ namespace PetOffice.WpfApp.ViewModels
         {
             Message = message;
             Time = time;
+
             Prefix = prefix;
             PetName = petName;
             PetType = petType;
@@ -73,41 +72,45 @@ namespace PetOffice.WpfApp.ViewModels
             Suffix = suffix;
         }
 
-        // Creates a structured entry when one known pet caused the message.
+
+        // Message produced by one known pet.
         public static LogEntry FromPet(string message, OfficePet pet, DateTime time)
         {
             string type = pet.GetType().Name;
 
-            // Some messages already contain: "Name - Class"
+            // Messages containing "Name - Class".
             int displayNameIndex = message.IndexOf(pet.DisplayName, StringComparison.Ordinal);
 
             if (displayNameIndex >= 0)
             {
                 string prefix = message[..displayNameIndex];
-                string suffix = message[(displayNameIndex + pet.DisplayName.Length)..];
+                string suffix = FormatSuffix(message[(displayNameIndex + pet.DisplayName.Length)..]);
+
                 return new LogEntry(message, time, prefix, pet.Name, type, "", "", "", suffix);
             }
 
-            // Other pet actions contain only the pet name.
+            // Messages containing only the pet name.
             int nameIndex = message.IndexOf(pet.Name, StringComparison.Ordinal);
 
             if (nameIndex >= 0)
             {
                 string prefix = message[..nameIndex];
-                string suffix = message[(nameIndex + pet.Name.Length)..];
+                string suffix = FormatSuffix(message[(nameIndex + pet.Name.Length)..]);
+
                 return new LogEntry(message, time, prefix, pet.Name, type, "", "", "", suffix);
             }
 
-            // If the message does not contain the name, keep it as a normal log entry.
             return new LogEntry(message, time);
         }
 
-        // Reaction messages can contain two pets (e.g. "Meow - CatManager welcomes Leonard - CatManager.").
-        // This keeps both pets separate for UI formatting.
+
+        // Reaction messages may contain two pets.
+        // Example: Meow - CatManager welcomes Leonard - CatManager.
         public static LogEntry FromReaction(string message, IEnumerable<OfficePet> pets, DateTime time)
         {
             List<PetMessageMatch> matches = pets
-                .Select(pet => new PetMessageMatch(pet, message.IndexOf(pet.DisplayName, StringComparison.Ordinal)))
+                .Select(pet => new PetMessageMatch(
+                    pet, message.IndexOf(pet.DisplayName, StringComparison.Ordinal)))
                 .Where(match => match.Index >= 0)
                 .OrderBy(match => match.Index)
                 .ToList();
@@ -124,15 +127,15 @@ namespace PetOffice.WpfApp.ViewModels
             // Only one pet was found.
             if (matches.Count == 1)
             {
-                string suffix = message[firstEnd..];
+                string suffix = FormatSuffix(message[firstEnd..]);
                 return new LogEntry(message, time, prefix, first.Pet.Name, first.Pet.GetType().Name, "", "", "", suffix);
             }
 
             // Two pets were found.
             PetMessageMatch second = matches[1];
-            string middleText = message[firstEnd..second.Index].Trim();
+            string middleText = $" {message[firstEnd..second.Index].Trim()} ";
             int secondEnd = second.Index + second.Pet.DisplayName.Length;
-            string finalSuffix = message[secondEnd..].TrimStart();
+            string finalSuffix = FormatSuffix(message[secondEnd..]);
 
             return new LogEntry(
                 message, time, prefix,
@@ -140,7 +143,25 @@ namespace PetOffice.WpfApp.ViewModels
                 second.Pet.Name, second.Pet.GetType().Name, finalSuffix);
         }
 
-        // Darker color for the pet name / class text.
+
+        // Controls spacing after a pet/class.
+        private static string FormatSuffix(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return "";
+
+            string value = text.TrimStart();
+            if (value.Length == 0) return "";
+
+            char first = value[0];
+
+            // Punctuation must stay attached to the previous word.
+            if (first is '.' or ',' or '!' or '?' or ';' or ':' or '\'') return value;
+
+            return " " + value;
+        }
+
+
+        // Color for each pet class.
         private static string GetPetColor(string petType) => petType switch
         {
             "CatManager" => "#9A5B27",
@@ -153,18 +174,6 @@ namespace PetOffice.WpfApp.ViewModels
             _ => "#4F5F58"
         };
 
-        // Same pastel palette used for the animal cards.
-        private static string GetPetBackgroundColor(string petType) => petType switch
-        {
-            "CatManager" => "#FFF4E8",
-            "DogIntern" => "#F5F0FA",
-            "HamsterIT" => "#FFF8EC",
-            "ParrotReceptionist" => "#EFF8F2",
-            "RabbitAccountant" => "#FDEFF5",
-            "RaccoonBarista" => "#FBEFE3",
-            "OwlSysAdmin" => "#EEF0F8",
-            _ => "#F4F6F5"
-        };
 
         private sealed class PetMessageMatch
         {
@@ -178,6 +187,7 @@ namespace PetOffice.WpfApp.ViewModels
             }
         }
     }
+
 
     public sealed class LogEntryCollection : ObservableCollection<LogEntry>
     {

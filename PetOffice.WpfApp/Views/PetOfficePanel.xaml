@@ -214,21 +214,16 @@
                                                    FontSize="13"
                                                    Foreground="#4F5F58"
                                                    TextWrapping="Wrap"
-                                                   VerticalAlignment="Center">
+                                                   VerticalAlignment="Center"><Run Text="{Binding Prefix, Mode=OneWay}"/><Run Text="{Binding PetName, Mode=OneWay}"
+                                                            FontWeight="Bold"
+                                                            Foreground="{Binding PetColor, Mode=OneWay}"/><Run Text="{Binding PetTypeText, Mode=OneWay}"
+                                                            FontWeight="SemiBold"
+                                                            Foreground="{Binding PetColor, Mode=OneWay}"/><Run Text="{Binding MiddleText, Mode=OneWay}"/><Run Text="{Binding SecondPetName, Mode=OneWay}"
+                                                            FontWeight="Bold"
+                                                            Foreground="{Binding SecondPetColor, Mode=OneWay}"/><Run Text="{Binding SecondPetTypeText, Mode=OneWay}"
+                                                            FontWeight="SemiBold"
+                                                            Foreground="{Binding SecondPetColor, Mode=OneWay}"/><Run Text="{Binding Suffix, Mode=OneWay}"/></TextBlock>
 
-                                            <Run Text="{Binding Prefix, Mode=OneWay}"/>
-
-                                            <Run Text="{Binding PetName, Mode=OneWay}"
-                                                 FontWeight="Bold"
-                                                 Foreground="{Binding PetColor, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding PetTypeText, Mode=OneWay}"
-                                                 FontWeight="SemiBold"
-                                                 Foreground="{Binding PetColor, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding MiddleText, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding SecondPetName, Mode=OneWay}"
-                                                 FontWeight="Bold"
-                                                 Foreground="{Binding SecondPetColor, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding SecondPetTypeText, Mode=OneWay}"
-                                                 FontWeight="SemiBold"
-                                                 Foreground="{Binding SecondPetColor, Mode=OneWay}"/><Run Text="{Binding Suffix, Mode=OneWay}"/>
-
-                                        </TextBlock>
 
                                         <!-- TIME -->
                                         <TextBlock Grid.Column="1"

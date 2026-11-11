@@ -15,33 +15,20 @@
 
     <Window.Resources>
 
-        <!-- folder-style tab item -->
-        <Style x:Key="FolderTabItemStyle"
-               TargetType="TabItem">
-
-            <Setter Property="Foreground"
-                    Value="#6C7585"/>
-
-            <Setter Property="FontSize"
-                    Value="14"/>
-
-            <Setter Property="FontWeight"
-                    Value="SemiBold"/>
-
-            <Setter Property="Background"
-                    Value="#EEF1F4"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#D7DDE4"/>
-
-            <Setter Property="Cursor"
-                    Value="Hand"/>
+        <!-- ===================================================== -->
+        <!-- Folder-style Tab Item                                 -->
+        <!-- ===================================================== -->
+        <Style x:Key="FolderTabItemStyle" TargetType="TabItem">
+            <Setter Property="Foreground" Value="#6C7585"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="#EEF1F4"/>
+            <Setter Property="BorderBrush" Value="#D7DDE4"/>
+            <Setter Property="Cursor" Value="Hand"/>
 
             <Setter Property="Template">
                 <Setter.Value>
-
                     <ControlTemplate TargetType="TabItem">
-
                         <Border x:Name="TabBorder"
                                 Margin="0,0,8,0"
                                 Padding="18,11"
@@ -49,82 +36,46 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="1"
                                 CornerRadius="14,14,0,0">
-
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
                                               ContentSource="Header"/>
-
                         </Border>
 
                         <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-
-                                <Setter TargetName="TabBorder"
-                                        Property="Background"
-                                        Value="#F5F6F8"/>
-
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#F5F6F8"/>
                             </Trigger>
-
-                            <Trigger Property="IsSelected"
-                                     Value="True">
-
-                                <Setter Property="Foreground"
-                                        Value="#4A5570"/>
-
-                                <Setter TargetName="TabBorder"
-                                        Property="Background"
-                                        Value="#FFFDFC"/>
-
-                                <Setter TargetName="TabBorder"
-                                        Property="BorderBrush"
-                                        Value="#D7DDE4"/>
-
-                                <Setter TargetName="TabBorder"
-                                        Property="BorderThickness"
-                                        Value="1,1,1,0"/>
-
-                                <Setter TargetName="TabBorder"
-                                        Property="Margin"
-                                        Value="0,0,8,-1"/>
-
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Foreground" Value="#4A5570"/>
+                                <Setter TargetName="TabBorder" Property="Background" Value="#FFFDFC"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="#D7DDE4"/>
+                                <Setter TargetName="TabBorder" Property="BorderThickness" Value="1,1,1,0"/>
+                                <Setter TargetName="TabBorder" Property="Margin" Value="0,0,8,-1"/>
                             </Trigger>
-
                         </ControlTemplate.Triggers>
-
                     </ControlTemplate>
-
                 </Setter.Value>
             </Setter>
-
         </Style>
 
 
-        <!-- tab control -->
-        <Style x:Key="FolderTabControlStyle"
-               TargetType="TabControl">
-
-            <Setter Property="Background"
-                    Value="Transparent"/>
-
-            <Setter Property="BorderThickness"
-                    Value="0"/>
-
-            <Setter Property="Padding"
-                    Value="0"/>
+        <!-- ===================================================== -->
+        <!-- Folder-style Tab Control                              -->
+        <!-- ===================================================== -->
+        <Style x:Key="FolderTabControlStyle" TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
 
             <Setter Property="Template">
                 <Setter.Value>
-
                     <ControlTemplate TargetType="TabControl">
-
                         <Grid ClipToBounds="False">
-
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
+
                             <TabPanel Grid.Row="0"
                                       Panel.ZIndex="10"
                                       Margin="0,0,0,-1"
@@ -137,64 +88,39 @@
                                     BorderThickness="1"
                                     CornerRadius="0,16,16,16"
                                     Padding="0">
-
                                 <ContentPresenter ContentSource="SelectedContent"/>
-
                             </Border>
-
                         </Grid>
-
                     </ControlTemplate>
-
                 </Setter.Value>
             </Setter>
-
         </Style>
 
     </Window.Resources>
 
 
     <Grid Margin="12">
-
         <TabControl Style="{StaticResource FolderTabControlStyle}">
 
-            <TabItem Header="Pet Office"
-                     Style="{StaticResource FolderTabItemStyle}">
-
+            <TabItem Header="Pet Office" Style="{StaticResource FolderTabItemStyle}">
                 <views:PetOfficePanel/>
-
             </TabItem>
-
 
             <TabItem Header="CPU Analysis"
-                     Style="{StaticResource FolderTabItemStyle}">
-
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Disabled"
-                              Background="Transparent">
-
-                    <views:AnalysisPanel Margin="18"/>
-
-                </ScrollViewer>
+                    Style="{StaticResource FolderTabItemStyle}">
+                <views:AnalysisPanel Margin="18"/>
 
             </TabItem>
 
-
-            <TabItem Header="Storage"
-                     Style="{StaticResource FolderTabItemStyle}">
-
+            <TabItem Header="Storage" Style="{StaticResource FolderTabItemStyle}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled"
                               Background="Transparent">
-
                     <views:StoragePanel Margin="18"/>
-
                 </ScrollViewer>
-
             </TabItem>
 
         </TabControl>
-
     </Grid>
 
 </Window>
