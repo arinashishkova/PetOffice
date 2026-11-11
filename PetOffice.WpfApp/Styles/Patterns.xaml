@@ -1,212 +1,140 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- =========================================================
-         ADD OFFICE PET
-         ========================================================= -->
-
+    <!-- ========================================================= -->
+    <!-- ADD OFFICE PET                                            -->
+    <!-- ========================================================= -->
     <DrawingBrush x:Key="AddWatermarkBrush"
                   TileMode="Tile"
                   Viewport="0,0,110,78"
                   ViewportUnits="Absolute"
                   Stretch="None"
                   Opacity="0.055">
-
         <DrawingBrush.Drawing>
-
             <DrawingGroup>
-
-                <ImageDrawing
-                    ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
-                    Rect="10,7,18,18"/>
-
-                <ImageDrawing
-                    ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
-                    Rect="62,42,18,18"/>
-
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
+                              Rect="10,7,18,18" />
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
+                              Rect="62,42,18,18" />
             </DrawingGroup>
-
         </DrawingBrush.Drawing>
-
     </DrawingBrush>
 
 
-    <!-- =========================================================
-         SELECTED PET
-         ========================================================= -->
-
+    <!-- ========================================================= -->
+    <!-- SELECTED PET                                              -->
+    <!-- ========================================================= -->
     <DrawingBrush x:Key="SelectedWatermarkBrush"
                   TileMode="Tile"
                   Viewport="0,0,110,78"
                   ViewportUnits="Absolute"
                   Stretch="None"
                   Opacity="0.055">
-
         <DrawingBrush.Drawing>
-
             <DrawingGroup>
-
-                <ImageDrawing
-                    ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
-                    Rect="10,7,18,18"/>
-
-                <ImageDrawing
-                    ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
-                    Rect="62,42,18,18"/>
-
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
+                              Rect="10,7,18,18" />
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/selected_back_watermarkpng.png"
+                              Rect="62,42,18,18" />
             </DrawingGroup>
-
         </DrawingBrush.Drawing>
-
     </DrawingBrush>
 
 
-    <!-- =========================================================
-         ACTIVITY LOG
-         ========================================================= -->
-
+    <!-- ========================================================= -->
+    <!-- ACTIVITY LOG                                              -->
+    <!-- ========================================================= -->
     <DrawingBrush x:Key="LogWatermarkBrush"
                   TileMode="Tile"
                   Viewport="0,0,115,80"
                   ViewportUnits="Absolute"
                   Stretch="None"
                   Opacity="0.055">
-
         <DrawingBrush.Drawing>
-
             <DrawingGroup>
-
-                <ImageDrawing
-                    ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
-                    Rect="10,7,18,18"/>
-
-                <ImageDrawing
-                    ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
-                    Rect="65,43,18,18"/>
-
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
+                              Rect="10,7,18,18" />
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"
+                              Rect="65,43,18,18" />
             </DrawingGroup>
-
         </DrawingBrush.Drawing>
-
     </DrawingBrush>
 
 
-    <!-- =========================================================
-         OFFICE PETS
-         ========================================================= -->
-
+    <!-- ========================================================= -->
+    <!-- OFFICE PETS                                               -->
+    <!-- ========================================================= -->
     <DrawingBrush x:Key="PetListWatermarkBrush"
                   TileMode="Tile"
                   Viewport="0,0,120,88"
                   ViewportUnits="Absolute"
                   Stretch="None"
                   Opacity="0.05">
-
         <DrawingBrush.Drawing>
-
             <DrawingGroup>
-
-                <ImageDrawing
-                    ImageSource="/PetOffice.WpfApp;component/Assets/paw.png"
-                    Rect="12,8,20,20"/>
-
-                <ImageDrawing
-                    ImageSource="/PetOffice.WpfApp;component/Assets/paw.png"
-                    Rect="70,48,20,20"/>
-
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/paw.png"
+                              Rect="12,8,20,20" />
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/paw.png"
+                              Rect="70,48,20,20" />
             </DrawingGroup>
-
         </DrawingBrush.Drawing>
-
     </DrawingBrush>
 
 
-    <!-- =========================================================
-     CPU ANALYSIS
-     ========================================================= -->
-
+    <!-- ========================================================= -->
+    <!-- CPU ANALYSIS                                              -->
+    <!-- ========================================================= -->
     <DrawingBrush x:Key="CpuWatermarkBrush"
-              TileMode="Tile"
-              Viewport="0,0,140,100"
-              ViewportUnits="Absolute"
-              Stretch="None"
-              Opacity="0.075">
-
+                  TileMode="Tile"
+                  Viewport="0,0,140,100"
+                  ViewportUnits="Absolute"
+                  Stretch="None"
+                  Opacity="0.075">
         <DrawingBrush.Drawing>
-
             <DrawingGroup>
-
-                <ImageDrawing
-                ImageSource="/PetOffice.WpfApp;component/Assets/cpu_back_watermark.png"
-                Rect="12,10,35,35"/>
-
-                <ImageDrawing
-                ImageSource="/PetOffice.WpfApp;component/Assets/cpu_back_watermark.png"
-                Rect="82,57,35,35"/>
-
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/cpu_back_watermark.png"
+                              Rect="12,10,35,35" />
+                <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/cpu_back_watermark.png"
+                              Rect="82,57,35,35" />
             </DrawingGroup>
-
         </DrawingBrush.Drawing>
-
     </DrawingBrush>
 
 
-    <!-- =========================================================
-         MAIN WINDOW DOTS
-         ========================================================= -->
-
+    <!-- ========================================================= -->
+    <!-- MAIN WINDOW DOTS                                          -->
+    <!-- ========================================================= -->
     <DrawingBrush x:Key="MainDotBackgroundBrush"
                   TileMode="Tile"
                   Viewport="0,0,28,28"
                   ViewportUnits="Absolute"
                   Stretch="None">
-
         <DrawingBrush.Drawing>
-
             <DrawingGroup>
 
-                <!-- base -->
+                <!-- Base -->
                 <GeometryDrawing Brush="#FFFDFC">
-
                     <GeometryDrawing.Geometry>
-                        <RectangleGeometry Rect="0,0,28,28"/>
+                        <RectangleGeometry Rect="0,0,28,28" />
                     </GeometryDrawing.Geometry>
-
                 </GeometryDrawing>
 
-
-                <!-- dot 1 -->
+                <!-- Dot 1 -->
                 <GeometryDrawing Brush="#34958D86">
-
                     <GeometryDrawing.Geometry>
-
-                        <EllipseGeometry Center="6,6"
-                                         RadiusX="1.2"
-                                         RadiusY="1.2"/>
-
+                        <EllipseGeometry Center="6,6" RadiusX="1.2" RadiusY="1.2" />
                     </GeometryDrawing.Geometry>
-
                 </GeometryDrawing>
 
-
-                <!-- dot 2 -->
+                <!-- Dot 2 -->
                 <GeometryDrawing Brush="#34958D86">
-
                     <GeometryDrawing.Geometry>
-
-                        <EllipseGeometry Center="20,20"
-                                         RadiusX="1.2"
-                                         RadiusY="1.2"/>
-
+                        <EllipseGeometry Center="20,20" RadiusX="1.2" RadiusY="1.2" />
                     </GeometryDrawing.Geometry>
-
                 </GeometryDrawing>
 
             </DrawingGroup>
-
         </DrawingBrush.Drawing>
-
     </DrawingBrush>
 
 </ResourceDictionary>

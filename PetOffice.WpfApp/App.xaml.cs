@@ -11,55 +11,34 @@ namespace PetOffice.WpfApp
     {
         private ServiceProvider? serviceProvider;
 
-        protected override void OnStartup(
-            StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            ServiceCollection services =
-                new();
-
+            ServiceCollection services = new();
             ConfigureServices(services);
 
-            serviceProvider =
-                services.BuildServiceProvider();
+            serviceProvider = services.BuildServiceProvider();
 
-            MainWindow =
-                serviceProvider
-                    .GetRequiredService<MainWindow>();
-
+            MainWindow = serviceProvider.GetRequiredService<MainWindow>();
             MainWindow.Show();
         }
 
-        private static void ConfigureServices(
-            IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
-            services.AddKeyedSingleton<
-                IWorldStorage,
-                JsonWorldStorage>("json");
+            services.AddKeyedSingleton<IWorldStorage, JsonWorldStorage>("json");
+            services.AddKeyedSingleton<IWorldStorage, XmlWorldStorage>("xml");
+            services.AddKeyedSingleton<IWorldStorage, LocalDbWorldStorage>("localdb");
 
-            services.AddKeyedSingleton<
-                IWorldStorage,
-                XmlWorldStorage>("xml");
-
-            services.AddKeyedSingleton<
-    IWorldStorage,
-    LocalDbWorldStorage>("localdb");
-
-            services.AddSingleton<
-                IFileDialogService,
-                WpfFileDialogService>();
+            services.AddSingleton<IFileDialogService, WpfFileDialogService>();
 
             services.AddTransient<MainViewModel>();
-
             services.AddTransient<MainWindow>();
         }
 
-        protected override void OnExit(
-            ExitEventArgs e)
+        protected override void OnExit(ExitEventArgs e)
         {
             serviceProvider?.Dispose();
-
             base.OnExit(e);
         }
     }
