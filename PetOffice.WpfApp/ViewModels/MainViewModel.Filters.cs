@@ -8,7 +8,9 @@ namespace PetOffice.WpfApp.ViewModels
 {
     public class PetGroupFilterItem
     {
-        public PetGroupFilterItem(string typeName, string displayName, string iconPath, int count, bool isSelected)
+        public PetGroupFilterItem(
+            string typeName, string displayName,
+            string iconPath, int count, bool isSelected)
         {
             TypeName = typeName;
             DisplayName = displayName;
@@ -24,13 +26,16 @@ namespace PetOffice.WpfApp.ViewModels
         public bool IsSelected { get; }
     }
 
+
     public partial class MainViewModel
     {
         private readonly ObservableCollection<PetGroupFilterItem> groupFilters = new();
         private readonly HashSet<string> selectedGroupFilters = new();
+
         private ICollectionView? filteredPetsView;
         private bool petFiltersInitialized;
         private RelayCommand<PetGroupFilterItem>? toggleGroupFilterCommand;
+
 
         public ObservableCollection<PetGroupFilterItem> GroupFilters
         {
@@ -50,8 +55,11 @@ namespace PetOffice.WpfApp.ViewModels
             }
         }
 
+        public int TotalPetsCount => GetAllPets().Count();
+
         public RelayCommand<PetGroupFilterItem> ToggleGroupFilterCommand =>
             toggleGroupFilterCommand ??= new RelayCommand<PetGroupFilterItem>(ToggleGroupFilter);
+
 
         private void EnsurePetFiltersInitialized()
         {
@@ -65,6 +73,7 @@ namespace PetOffice.WpfApp.ViewModels
             RefreshGroupFilters();
         }
 
+
         private bool PetMatchesSelectedGroups(object item)
         {
             if (selectedGroupFilters.Count == 0) return true;
@@ -72,6 +81,7 @@ namespace PetOffice.WpfApp.ViewModels
 
             return selectedGroupFilters.Contains(pet.GetType().Name);
         }
+
 
         private void ToggleGroupFilter(PetGroupFilterItem? item)
         {
@@ -83,14 +93,17 @@ namespace PetOffice.WpfApp.ViewModels
             }
 
             SelectedPet = null;
+
             RefreshGroupFilters();
             filteredPetsView?.Refresh();
         }
+
 
         private void VisiblePets_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             RefreshGroupFilters();
         }
+
 
         private void RefreshGroupFilters()
         {
@@ -124,6 +137,8 @@ namespace PetOffice.WpfApp.ViewModels
                     count,
                     selectedGroupFilters.Contains(definition.TypeName)));
             }
+
+            OnPropertyChanged(nameof(TotalPetsCount));
         }
     }
 }

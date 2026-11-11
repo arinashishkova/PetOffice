@@ -16,15 +16,15 @@ namespace PetOffice.WpfApp.ViewModels
         // Text before the first pet. Example: "Added: "
         public string Prefix { get; }
 
-        // First pet.
+        // First pet or grouped pet names.
         public string PetName { get; }
         public string PetType { get; }
         public string PetTypeText => string.IsNullOrWhiteSpace(PetType) ? "" : $" ({PetType})";
 
-        // Text between two pets. Example: " welcomes "
+        // Text between pet groups. Example: " welcomes " or " welcome "
         public string MiddleText { get; }
 
-        // Optional second pet.
+        // Second pet.
         public string SecondPetName { get; }
         public string SecondPetType { get; }
         public string SecondPetTypeText => string.IsNullOrWhiteSpace(SecondPetType) ? "" : $" ({SecondPetType})";
@@ -104,72 +104,58 @@ namespace PetOffice.WpfApp.ViewModels
         }
 
 
-        // Reaction messages may contain two pets.
-        // Example: Meow - CatManager welcomes Leonard - CatManager.
-        public static LogEntry FromReaction(string message, IEnumerable<OfficePet> pets, DateTime time)
+        // Grouped repository reaction.
+        // Example: Leonard, Meow (CatManager) welcome Bob (CatManager).
+        public static LogEntry FromReactionGroup(
+            OfficePet source,
+            IEnumerable<OfficePet> reactors,
+            ReactionKind kind,
+            DateTime time)
         {
-            List<PetMessageMatch> matches = new();
+            List<OfficePet> reactorList = reactors.ToList();
 
-            // One DisplayName is enough for formatting even if
-            // several repository objects have the same name and class.
-            IEnumerable<OfficePet> uniquePets = pets
-                .GroupBy(pet => pet.DisplayName)
-                .Select(group => group.First());
-
-            foreach (OfficePet pet in uniquePets)
+            if (reactorList.Count == 0)
             {
-                int searchIndex = 0;
-
-                while (searchIndex < message.Length)
-                {
-                    int index = message.IndexOf(pet.DisplayName, searchIndex, StringComparison.Ordinal);
-
-                    if (index < 0) break;
-
-                    matches.Add(new PetMessageMatch(pet, index));
-                    searchIndex = index + pet.DisplayName.Length;
-                }
+                return new LogEntry("No reactions.", time);
             }
 
-            matches = matches
-                .GroupBy(match => match.Index)
-                .Select(group => group.First())
-                .OrderBy(match => match.Index)
-                .ToList();
+            string reactorNames = string.Join(", ", reactorList.Select(pet => pet.Name));
+            string reactorType = reactorList[0].GetType().Name;
+            string sourceType = source.GetType().Name;
+            bool multiple = reactorList.Count > 1;
 
-            if (matches.Count == 0)
+            string middleText;
+            string suffix;
+
+            switch (kind)
             {
-                return new LogEntry(message, time);
+                case ReactionKind.Welcome:
+                    middleText = multiple ? " welcome " : " welcomes ";
+                    suffix = ".";
+                    break;
+
+                case ReactionKind.Goodbye:
+                    middleText = multiple ? " say goodbye to " : " says goodbye to ";
+                    suffix = ".";
+                    break;
+
+                case ReactionKind.CrazyAction:
+                    middleText = multiple ? " react to " : " reacts to ";
+                    suffix = "'s crazy action.";
+                    break;
+
+                default:
+                    middleText = multiple ? " react to " : " reacts to ";
+                    suffix = ".";
+                    break;
             }
 
-            PetMessageMatch first = matches[0];
-            string prefix = message[..first.Index];
-            int firstEnd = first.Index + first.Pet.DisplayName.Length;
-
-            // Only one pet occurrence was found.
-            if (matches.Count == 1)
-            {
-                string suffix = FormatSuffix(message[firstEnd..]);
-                return new LogEntry(message, time, prefix, first.Pet.Name, first.Pet.GetType().Name, "", "", "", suffix);
-            }
-
-            PetMessageMatch second = matches[1];
-
-            // Safety check against overlapping matches.
-            if (second.Index < firstEnd)
-            {
-                string suffix = FormatSuffix(message[firstEnd..]);
-                return new LogEntry(message, time, prefix, first.Pet.Name, first.Pet.GetType().Name, "", "", "", suffix);
-            }
-
-            string middleText = $" {message[firstEnd..second.Index].Trim()} ";
-            int secondEnd = second.Index + second.Pet.DisplayName.Length;
-            string finalSuffix = FormatSuffix(message[secondEnd..]);
+            string message = $"{reactorNames} ({reactorType}){middleText}{source.Name} ({sourceType}){suffix}";
 
             return new LogEntry(
-                message, time, prefix,
-                first.Pet.Name, first.Pet.GetType().Name, middleText,
-                second.Pet.Name, second.Pet.GetType().Name, finalSuffix);
+                message, time, "",
+                reactorNames, reactorType, middleText,
+                source.Name, sourceType, suffix);
         }
 
 
@@ -183,7 +169,7 @@ namespace PetOffice.WpfApp.ViewModels
 
             char first = value[0];
 
-            // Punctuation must stay attached to the previous word.
+            // Punctuation stays attached to the previous word.
             if (first is '.' or ',' or '!' or '?' or ';' or ':' or '\'') return value;
 
             return " " + value;
@@ -202,19 +188,6 @@ namespace PetOffice.WpfApp.ViewModels
             "OwlSysAdmin" => "#56638C",
             _ => "#4F5F58"
         };
-
-
-        private sealed class PetMessageMatch
-        {
-            public OfficePet Pet { get; }
-            public int Index { get; }
-
-            public PetMessageMatch(OfficePet pet, int index)
-            {
-                Pet = pet;
-                Index = index;
-            }
-        }
     }
 
 
@@ -232,10 +205,10 @@ namespace PetOffice.WpfApp.ViewModels
             base.Insert(index, LogEntry.FromPet(message, pet, DateTime.Now));
         }
 
-        // Repository reaction that may contain two pets.
-        public void InsertReaction(int index, string message, IEnumerable<OfficePet> pets)
+        // Grouped repository reaction.
+        public void InsertReactionGroup(int index, OfficePet source, IEnumerable<OfficePet> reactors, ReactionKind kind)
         {
-            base.Insert(index, LogEntry.FromReaction(message, pets, DateTime.Now));
+            base.Insert(index, LogEntry.FromReactionGroup(source, reactors, kind, DateTime.Now));
         }
     }
 }

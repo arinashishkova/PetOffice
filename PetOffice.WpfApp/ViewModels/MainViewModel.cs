@@ -173,17 +173,16 @@ namespace PetOffice.WpfApp.ViewModels
             RefreshAnalysisPets();
         }
 
-        private void Repository_ReactionOccurred(object? sender, ReactionEventArgs e)
+        private void Repository_ReactionOccurred(
+            object? sender,
+            ReactionEventArgs e)
         {
-            List<OfficePet> pets = GetAllPets().ToList();
+            Log.InsertReactionGroup(
+                0,
+                e.Source,
+                e.Reactors,
+                e.Kind);
 
-            if (SelectedPet is not null &&
-                pets.All(pet => pet.Id != SelectedPet.Id))
-            {
-                pets.Add(SelectedPet);
-            }
-
-            Log.InsertReaction(0, e.Message, pets);
             UpdateSelectedPetState();
         }
 
