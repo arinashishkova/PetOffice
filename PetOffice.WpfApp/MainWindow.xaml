@@ -9,49 +9,11 @@
         MinWidth="900"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
-        Background="#F8F6F4"
+        Background="{StaticResource AppWindowBackgroundBrush}"
         Icon="Assets/petoffice_icon.ico"
-        FontFamily="Cascadia Code">
+        FontFamily="{StaticResource AppFontFamily}">
 
     <Window.Resources>
-
-        <!-- main background -->
-        <DrawingBrush x:Key="MainDotBackgroundBrush"
-                      TileMode="Tile"
-                      Viewport="0,0,30,30"
-                      ViewportUnits="Absolute"
-                      Stretch="None">
-
-            <DrawingBrush.Drawing>
-                <DrawingGroup>
-
-                    <GeometryDrawing Brush="#FFFDFC">
-                        <GeometryDrawing.Geometry>
-                            <RectangleGeometry Rect="0,0,30,30"/>
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-
-                    <GeometryDrawing Brush="#16958D86">
-                        <GeometryDrawing.Geometry>
-                            <EllipseGeometry Center="7,7"
-                                             RadiusX="1.1"
-                                             RadiusY="1.1"/>
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-
-                    <GeometryDrawing Brush="#16958D86">
-                        <GeometryDrawing.Geometry>
-                            <EllipseGeometry Center="22,22"
-                                             RadiusX="1.1"
-                                             RadiusY="1.1"/>
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-
-                </DrawingGroup>
-            </DrawingBrush.Drawing>
-
-        </DrawingBrush>
-
 
         <!-- folder-style tab item -->
         <Style x:Key="FolderTabItemStyle"
@@ -170,7 +132,7 @@
                                       Background="Transparent"/>
 
                             <Border Grid.Row="1"
-                                    Background="{StaticResource MainDotBackgroundBrush}"
+                                    Background="{DynamicResource MainDotBackgroundBrush}"
                                     BorderBrush="#D7DDE4"
                                     BorderThickness="1"
                                     CornerRadius="0,16,16,16"

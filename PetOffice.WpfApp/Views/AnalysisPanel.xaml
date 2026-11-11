@@ -385,13 +385,13 @@
                     Value="0"/>
 
             <Setter Property="Background"
-                    Value="White"/>
+                    Value="#E8FFFFFF"/>
 
             <Setter Property="RowBackground"
-                    Value="White"/>
+                    Value="#F2FFFFFF"/>
 
-            <Setter Property="AlternatingRowBackground"
-                    Value="#F8F9FC"/>
+             <Setter Property="AlternatingRowBackground"
+                    Value="#EAF8F9FC"/>
 
             <Setter Property="RowHeaderWidth"
                     Value="0"/>
@@ -1001,7 +1001,7 @@
                                    Margin="2,0,0,7"/>
 
 
-                        <Border Background="White"
+                        <Border Background="#DFFFFFFF"
                                 BorderBrush="#D7DCE8"
                                 BorderThickness="1"
                                 CornerRadius="10">
@@ -1069,7 +1069,7 @@
                                    Margin="2,0,0,7"/>
 
 
-                        <Border Background="White"
+                        <Border Background="#DFFFFFFF"
                                 BorderBrush="#D7DCE8"
                                 BorderThickness="1"
                                 CornerRadius="10">
