@@ -19,6 +19,7 @@
     <None Remove="Assets\cpu_large.png" />
     <None Remove="Assets\cpu_medium.png" />
     <None Remove="Assets\cpu_small.png" />
+    <None Remove="Assets\creative_group.png" />
     <None Remove="Assets\dog.png" />
     <None Remove="Assets\easter-bunny.png" />
     <None Remove="Assets\energy.png" />
@@ -29,6 +30,7 @@
     <None Remove="Assets\owl.png" />
     <None Remove="Assets\parrot.png" />
     <None Remove="Assets\paw.png" />
+    <None Remove="Assets\perfomance_group.png" />
     <None Remove="Assets\petoffice_icon.ico" />
     <None Remove="Assets\pet_name.png" />
     <None Remove="Assets\rabbit.png" />
@@ -46,6 +48,7 @@
     <None Remove="Assets\storage_status.png" />
     <None Remove="Assets\storage_storage.png" />
     <None Remove="Assets\storage_xml.png" />
+    <None Remove="Assets\tech_group.png" />
     <None Remove="Assets\total_office.png" />
     <None Remove="Assets\work.png" />
   </ItemGroup>
@@ -56,7 +59,9 @@
     <Resource Include="Assets\cpu_large.png" />
     <Resource Include="Assets\cpu_medium.png" />
     <Resource Include="Assets\cpu_small.png" />
+    <Resource Include="Assets\creative_group.png" />
     <Resource Include="Assets\log_back_watermark.png" />
+    <Resource Include="Assets\perfomance_group.png" />
     <Resource Include="Assets\restore.png" />
   </ItemGroup>
 
@@ -98,6 +103,7 @@
     <Resource Include="Assets\storage_status.png" />
     <Resource Include="Assets\storage_storage.png" />
     <Resource Include="Assets\storage_xml.png" />
+    <Resource Include="Assets\tech_group.png" />
     <Resource Include="Assets\total_office.png" />
     <Resource Include="Assets\work.png" />
   </ItemGroup>

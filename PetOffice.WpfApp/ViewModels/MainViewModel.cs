@@ -36,7 +36,14 @@ namespace PetOffice.WpfApp.ViewModels
             "Name A-Z", "Name Z-A", "Energy high to low", "Energy low to high"
         };
 
-        public IReadOnlyList<string> OfficeGroupNames => OfficeGroups.All;
+        public IReadOnlyList<OfficeGroupOption> OfficeGroupOptions { get; } = new List<OfficeGroupOption>
+        {
+            new(OfficeGroups.PawformanceHub, "/PetOffice.WpfApp;component/Assets/perfomance_group.png"),
+
+            new(OfficeGroups.CreativeCorner, "/PetOffice.WpfApp;component/Assets/creative_group.png"),
+
+            new(OfficeGroups.TechDen, "/PetOffice.WpfApp;component/Assets/tech_group.png")
+        };
 
         // Pets currently shown in UI
         public ObservableCollection<OfficePet> VisiblePets { get; } = new();
@@ -136,6 +143,22 @@ namespace PetOffice.WpfApp.ViewModels
 
         // Selected pet state
         public string SelectedPetDisplayName => SelectedPet?.DisplayName ?? "No pet selected";
+
+        public string SelectedPetName => SelectedPet?.Name ?? "No pet selected";
+
+        public string SelectedPetType => SelectedPet switch
+        {
+            CatManager => "Cat Manager",
+            DogIntern => "Dog Intern",
+            HamsterIT => "Hamster IT",
+            ParrotReceptionist => "Parrot Receptionist",
+            RabbitAccountant => "Rabbit Accountant",
+            RaccoonBarista => "Raccoon Barista",
+            OwlSysAdmin => "Owl SysAdmin",
+            _ => ""
+        };
+
+        public string SelectedPetIdText => SelectedPet is null ? "" : $"ID: {SelectedPet.Id:D}";
 
         public string? SelectedPetIconPath => SelectedPet switch
         {
@@ -484,6 +507,9 @@ namespace PetOffice.WpfApp.ViewModels
             OnPropertyChanged(nameof(SelectedPetEnergyText));
             OnPropertyChanged(nameof(SelectedPetTasksText));
             OnPropertyChanged(nameof(SelectedPetReactionsText));
+            OnPropertyChanged(nameof(SelectedPetIdText));
+            OnPropertyChanged(nameof(SelectedPetName));
+            OnPropertyChanged(nameof(SelectedPetType));
         }
 
         private void UpdateCommandStates()

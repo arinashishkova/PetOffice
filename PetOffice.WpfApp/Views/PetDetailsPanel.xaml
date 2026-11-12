@@ -24,6 +24,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- HEADER -->
@@ -47,36 +48,46 @@
                 </Grid>
 
                 <!-- PET NAME + GROUP -->
-                <Border Grid.Row="1" Background="#80FFFFFF" CornerRadius="8" Padding="10,7" Margin="0,0,0,14">
+                <Border Grid.Row="1" Background="#80FFFFFF" CornerRadius="8" Padding="10,9" Margin="0,0,0,14">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="220"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- NAME + GROUP -->
-                        <Grid Grid.Column="0" Margin="0,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" Text="{Binding SelectedPetDisplayName}" FontSize="18" FontWeight="SemiBold" Foreground="#477D9D" VerticalAlignment="Center"/>
-
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock Text="Group" Foreground="#667085" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                                <Border Width="190" Background="#99FFFFFF" BorderBrush="#D7CFE0" BorderThickness="1" CornerRadius="8">
-                                    <ComboBox Style="{StaticResource InputComboBoxStyle}"
-                                              ItemsSource="{Binding OfficeGroupNames}"
-                                              SelectedItem="{Binding SelectedPetGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </Border>
-                            </StackPanel>
-                        </Grid>
-
                         <!-- PET ICON -->
-                        <Border Grid.Column="1" Width="40" Height="40" Margin="12,0,0,0" Background="#70FFFFFF" CornerRadius="9">
-                            <Image Source="{Binding SelectedPetIconPath}" Width="32" Height="32" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Border Grid.Column="0" Width="44" Height="44" Background="#70FFFFFF" CornerRadius="9" VerticalAlignment="Center">
+                            <Image Source="{Binding SelectedPetIconPath}" Width="38" Height="38" Stretch="Uniform"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+
+                        <!-- NAME AND CLASS -->
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                            <TextBlock Text="{Binding SelectedPetName}" FontSize="18" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Text="{Binding SelectedPetType}" FontSize="12"
+                                       Foreground="{StaticResource TextMutedBrush}" Margin="0,3,0,0" TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+
+                        <!-- GROUP -->
+                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                            <TextBlock Text="Group" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="2,0,0,5"/>
+
+                            <ComboBox Style="{StaticResource RoundedComboBoxStyle}"
+                                      ItemsSource="{Binding OfficeGroupOptions}"
+                                      SelectedValuePath="Name"
+                                      SelectedValue="{Binding SelectedPetGroup, Mode=TwoWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{Binding IconPath}" Width="20" Height="20" Stretch="Uniform" Margin="0,0,8,0"/>
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="12" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
                     </Grid>
                 </Border>
 
@@ -118,7 +129,8 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="{Binding SelectedPetTasksText}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
-                        <TextBlock Grid.Column="1" Text="{Binding SelectedPetReactionsText}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SelectedPetReactionsText}" FontSize="12"
+                                   Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Right"/>
                     </Grid>
                 </Grid>
 
@@ -185,6 +197,15 @@
                         </StackPanel>
                     </Button>
                 </Grid>
+
+                <!-- PET ID -->
+                <TextBlock Grid.Row="5"
+                           Text="{Binding SelectedPetIdText}"
+                           FontFamily="Consolas"
+                           FontSize="11"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           TextWrapping="Wrap"
+                           Margin="2,0,0,12"/>
             </Grid>
         </Grid>
     </Border>
