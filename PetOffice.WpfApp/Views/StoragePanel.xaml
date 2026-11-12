@@ -39,7 +39,7 @@
     </UserControl.Resources>
 
 
-    <Grid>
+    <Grid Margin="{StaticResource PageContentMargin}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>

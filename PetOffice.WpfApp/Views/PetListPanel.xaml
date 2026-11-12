@@ -233,39 +233,28 @@
             <Rectangle Fill="{StaticResource PetListWatermarkBrush}" IsHitTestVisible="False"/>
 
             <!-- CONTENT -->
-            <StackPanel Grid.Row="0"
-            Orientation="Horizontal"
-            Margin="0,0,0,14">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <Grid Width="36"
-          Height="36"
-          Margin="0,0,10,0"
-          VerticalAlignment="Center">
+                <!-- HEADER -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,14">
+                    <!-- Иконка с цифрой внутри -->
+                    <Grid Width="36" Height="36" Margin="0,0,10,0" VerticalAlignment="Center">
+                        <Image Source="/PetOffice.WpfApp;component/Assets/total_office.png" Width="36" Height="36" Stretch="Uniform"/>
+                        <TextBlock Text="{Binding TotalPetsCount, Mode=OneWay}"
+                                   FontSize="11" FontWeight="Bold" Foreground="#344054"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                    </Grid>
 
-                    <Image Source="/PetOffice.WpfApp;component/Assets/total_office.png"
-               Width="36"
-               Height="36"
-               Stretch="Uniform"/>
+                    <TextBlock Text="Office pets" FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                </StackPanel>
 
-                    <TextBlock Text="{Binding TotalPetsCount, Mode=OneWay}"
-                   FontSize="11"
-                   FontWeight="Bold"
-                   Foreground="#344054"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   TextAlignment="Center"/>
-
-                </Grid>
-
-                <TextBlock Text="Office pets"
-               FontSize="18"
-               FontWeight="SemiBold"
-               Foreground="{StaticResource TextPrimaryBrush}"
-               VerticalAlignment="Center"/>
-
-            </StackPanel>
-
-            <!-- SEARCH + SORT -->
+                <!-- SEARCH + SORT -->
                 <Grid Grid.Row="1" Margin="0,0,0,12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

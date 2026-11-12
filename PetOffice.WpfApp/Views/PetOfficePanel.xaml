@@ -170,7 +170,10 @@
                     <!-- HEADER -->
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
                         <Image Source="/PetOffice.WpfApp;component/Assets/log.png"
-                               Width="25" Height="25" Stretch="Uniform" Margin="0,0,9,0"/>
+                               Width="32"
+                               Height="32"
+                               Stretch="Uniform"
+                               Margin="0,0,10,0"/>
                         <TextBlock Text="Activity log"
                                    FontSize="17"
                                    FontWeight="SemiBold"
