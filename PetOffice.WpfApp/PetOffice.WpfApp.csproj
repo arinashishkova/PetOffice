@@ -46,6 +46,7 @@
     <None Remove="Assets\storage_status.png" />
     <None Remove="Assets\storage_storage.png" />
     <None Remove="Assets\storage_xml.png" />
+    <None Remove="Assets\total_office.png" />
     <None Remove="Assets\work.png" />
   </ItemGroup>
 
@@ -97,6 +98,7 @@
     <Resource Include="Assets\storage_status.png" />
     <Resource Include="Assets\storage_storage.png" />
     <Resource Include="Assets\storage_xml.png" />
+    <Resource Include="Assets\total_office.png" />
     <Resource Include="Assets\work.png" />
   </ItemGroup>
 
