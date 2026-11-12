@@ -36,6 +36,8 @@ namespace PetOffice.WpfApp.ViewModels
             "Name A-Z", "Name Z-A", "Energy high to low", "Energy low to high"
         };
 
+        public IReadOnlyList<string> OfficeGroupNames => OfficeGroups.All;
+
         // Pets currently shown in UI
         public ObservableCollection<OfficePet> VisiblePets { get; } = new();
         public LogEntryCollection Log { get; } = new();
@@ -111,6 +113,26 @@ namespace PetOffice.WpfApp.ViewModels
                 RefreshVisiblePets();
             }
         }
+
+        public string? SelectedPetGroup
+        {
+            get => SelectedPet?.GroupName;
+            set
+            {
+                if (SelectedPet is null || string.IsNullOrWhiteSpace(value) || SelectedPet.GroupName == value)
+                {
+                    return;
+                }
+
+                string oldGroup = SelectedPet.GroupName;
+                SelectedPet.ChangeGroup(value);
+
+                OnPropertyChanged();
+
+                Log.Insert(0, $"{SelectedPet.DisplayName} moved from {oldGroup} to {value}.");
+            }
+        }
+
 
         // Selected pet state
         public string SelectedPetDisplayName => SelectedPet?.DisplayName ?? "No pet selected";
@@ -456,6 +478,7 @@ namespace PetOffice.WpfApp.ViewModels
         private void UpdateSelectedPetState()
         {
             OnPropertyChanged(nameof(SelectedPetDisplayName));
+            OnPropertyChanged(nameof(SelectedPetGroup));
             OnPropertyChanged(nameof(SelectedPetIconPath));
             OnPropertyChanged(nameof(SelectedPetEnergy));
             OnPropertyChanged(nameof(SelectedPetEnergyText));

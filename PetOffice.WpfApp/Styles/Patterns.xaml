@@ -9,7 +9,7 @@
                   Viewport="0,0,110,78"
                   ViewportUnits="Absolute"
                   Stretch="None"
-                  Opacity="0.055">
+                  Opacity="0.075">
         <DrawingBrush.Drawing>
             <DrawingGroup>
                 <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/add_back_watermark.png"
@@ -49,7 +49,7 @@
                   Viewport="0,0,115,80"
                   ViewportUnits="Absolute"
                   Stretch="None"
-                  Opacity="0.055">
+                  Opacity="0.075">
         <DrawingBrush.Drawing>
             <DrawingGroup>
                 <ImageDrawing ImageSource="/PetOffice.WpfApp;component/Assets/log_back_watermark.png"

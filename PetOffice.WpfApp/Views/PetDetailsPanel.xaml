@@ -4,30 +4,20 @@
              xmlns:converters="clr-namespace:PetOffice.WpfApp.Converters">
 
     <UserControl.Resources>
-
-        <!-- LOCAL CONVERTER -->
-        <converters:EnergyLevelBrushConverter
-            x:Key="EnergyLevelBrushConverter"/>
-
+        <converters:EnergyLevelBrushConverter x:Key="EnergyLevelBrushConverter"/>
     </UserControl.Resources>
-
 
     <Border Background="{StaticResource SelectedCardBrush}"
             BorderBrush="{StaticResource AppBorderBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource CardCornerRadius}"
             Padding="{StaticResource CardPadding}">
-
         <Grid>
-
             <!-- BACKGROUND PATTERN -->
-            <Rectangle Fill="{StaticResource SelectedWatermarkBrush}"
-                       IsHitTestVisible="False"/>
-
+            <Rectangle Fill="{StaticResource SelectedWatermarkBrush}" IsHitTestVisible="False"/>
 
             <!-- CONTENT -->
             <Grid>
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -36,204 +26,104 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-
-                <!-- =================================================
-                     HEADER
-                     ================================================= -->
-
-                <Grid Grid.Row="0"
-                      Margin="0,0,0,14">
-
+                <!-- HEADER -->
+                <Grid Grid.Row="0" Margin="0,0,0,14">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-
-                    <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Center">
-
-                        <Image Source="/PetOffice.WpfApp;component/Assets/badge.png"
-                               Width="32"
-                               Height="32"
-                               Stretch="Uniform"
-                               Margin="0,0,10,0"/>
-
-                        <TextBlock Text="Selected pet"
-                                   FontSize="18"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextPrimaryBrush}"
-                                   VerticalAlignment="Center"/>
-
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/PetOffice.WpfApp;component/Assets/badge.png" Width="32" Height="32" Stretch="Uniform" Margin="0,0,10,0"/>
+                        <TextBlock Text="Selected pet" FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center"/>
                     </StackPanel>
 
-
-                    <Button Grid.Column="1"
-                            Width="88"
-                            Height="34"
-                            Style="{StaticResource RemoveButtonStyle}"
-                            Command="{Binding RemoveCommand}">
-
+                    <Button Grid.Column="1" Width="88" Height="34" Style="{StaticResource RemoveButtonStyle}" Command="{Binding RemoveCommand}">
                         <StackPanel Orientation="Horizontal">
-
-                            <Image Source="/PetOffice.WpfApp;component/Assets/remove.png"
-                                   Width="15"
-                                   Height="15"
-                                   Stretch="Uniform"
-                                   Margin="0,0,5,0"/>
-
-                            <TextBlock Text="Remove"
-                                       VerticalAlignment="Center"/>
-
+                            <Image Source="/PetOffice.WpfApp;component/Assets/remove.png" Width="15" Height="15" Stretch="Uniform" Margin="0,0,5,0"/>
+                            <TextBlock Text="Remove" VerticalAlignment="Center"/>
                         </StackPanel>
-
                     </Button>
-
                 </Grid>
 
-
-                <!-- =================================================
-                     PET NAME
-                     ================================================= -->
-
-                <Border Grid.Row="1"
-                        Background="#80FFFFFF"
-                        CornerRadius="8"
-                        Padding="10,7"
-                        Margin="0,0,0,14">
-
+                <!-- PET NAME + GROUP -->
+                <Border Grid.Row="1" Background="#80FFFFFF" CornerRadius="8" Padding="10,7" Margin="0,0,0,14">
                     <Grid>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
+                        <!-- NAME + GROUP -->
+                        <Grid Grid.Column="0" Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="{Binding SelectedPetDisplayName}"
-                                   FontSize="17"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextStrongBrush}"
-                                   TextWrapping="Wrap"
-                                   VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="0" Text="{Binding SelectedPetDisplayName}" FontSize="18" FontWeight="SemiBold" Foreground="#477D9D" VerticalAlignment="Center"/>
 
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="Group" Foreground="#667085" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <Border Width="190" Background="#99FFFFFF" BorderBrush="#D7CFE0" BorderThickness="1" CornerRadius="8">
+                                    <ComboBox Style="{StaticResource InputComboBoxStyle}"
+                                              ItemsSource="{Binding OfficeGroupNames}"
+                                              SelectedItem="{Binding SelectedPetGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
 
                         <!-- PET ICON -->
-                        <Border Grid.Column="1"
-                                Width="40"
-                                Height="40"
-                                Margin="12,0,0,0"
-                                Background="#70FFFFFF"
-                                CornerRadius="9">
-
-                            <Image Source="{Binding SelectedPetIconPath}"
-                                   Width="32"
-                                   Height="32"
-                                   Stretch="Uniform"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"/>
-
+                        <Border Grid.Column="1" Width="40" Height="40" Margin="12,0,0,0" Background="#70FFFFFF" CornerRadius="9">
+                            <Image Source="{Binding SelectedPetIconPath}" Width="32" Height="32" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-
                     </Grid>
-
                 </Border>
 
-
-                <!-- =================================================
-                     ENERGY
-                     ================================================= -->
-
-                <Grid Grid.Row="2"
-                      Margin="0,0,0,15">
-
+                <!-- ENERGY -->
+                <Grid Grid.Row="2" Margin="0,0,0,15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-
                     <!-- ENERGY BAR -->
                     <Grid>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-
-                        <StackPanel Orientation="Horizontal"
-                                    VerticalAlignment="Center"
-                                    Margin="0,0,9,0">
-
-                            <Image Source="/PetOffice.WpfApp;component/Assets/energy.png"
-                                   Width="18"
-                                   Height="18"
-                                   Stretch="Uniform"
-                                   Margin="0,0,5,0"/>
-
-                            <TextBlock Text="Energy"
-                                       Foreground="{StaticResource TextSecondaryBrush}"
-                                       VerticalAlignment="Center"/>
-
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,9,0">
+                            <Image Source="/PetOffice.WpfApp;component/Assets/energy.png" Width="18" Height="18" Stretch="Uniform" Margin="0,0,5,0"/>
+                            <TextBlock Text="Energy" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"/>
                         </StackPanel>
 
-
-                        <ProgressBar Grid.Column="1"
-                                     Style="{StaticResource RoundedEnergyProgressBarStyle}"
-                                     Minimum="0"
-                                     Maximum="100"
-                                     Value="{Binding SelectedPetEnergy,
-                                                     Mode=OneWay}"
+                        <ProgressBar Grid.Column="1" Style="{StaticResource RoundedEnergyProgressBarStyle}" Minimum="0" Maximum="100"
+                                     Value="{Binding SelectedPetEnergy, Mode=OneWay}"
                                      Margin="0,0,10,0"
-                                     Foreground="{Binding SelectedPetEnergy,
-                                                          Converter={StaticResource EnergyLevelBrushConverter}}"/>
+                                     Foreground="{Binding SelectedPetEnergy, Converter={StaticResource EnergyLevelBrushConverter}}"/>
 
-
-                        <TextBlock Grid.Column="2"
-                                   Text="{Binding SelectedPetEnergyText}"
-                                   Foreground="{Binding SelectedPetEnergy,
-                                                        Converter={StaticResource EnergyLevelBrushConverter}}"
-                                   FontWeight="SemiBold"
-                                   VerticalAlignment="Center"/>
-
+                        <TextBlock Grid.Column="2" Text="{Binding SelectedPetEnergyText}"
+                                   Foreground="{Binding SelectedPetEnergy, Converter={StaticResource EnergyLevelBrushConverter}}"
+                                   FontWeight="SemiBold" VerticalAlignment="Center"/>
                     </Grid>
-
 
                     <!-- STATISTICS -->
-                    <Grid Grid.Row="1"
-                          Margin="0,10,0,0">
-
+                    <Grid Grid.Row="1" Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-
-                        <TextBlock Text="{Binding SelectedPetTasksText}"
-                                   FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}"/>
-
-
-                        <TextBlock Grid.Column="1"
-                                   Text="{Binding SelectedPetReactionsText}"
-                                   FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}"
-                                   HorizontalAlignment="Right"/>
-
+                        <TextBlock Text="{Binding SelectedPetTasksText}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SelectedPetReactionsText}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Right"/>
                     </Grid>
-
                 </Grid>
 
-
-                <!-- =================================================
-                     MAIN ACTIONS
-                     ================================================= -->
-
-                <Grid Grid.Row="3"
-                      Margin="0,0,0,9">
-
+                <!-- MAIN ACTIONS -->
+                <Grid Grid.Row="3" Margin="0,0,0,9">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="7"/>
@@ -242,78 +132,30 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-
-                    <!-- WORK -->
-                    <Button Grid.Column="0"
-                            Style="{StaticResource WorkButtonStyle}"
-                            Command="{Binding WorkCommand}">
-
+                    <Button Grid.Column="0" Style="{StaticResource WorkButtonStyle}" Command="{Binding WorkCommand}">
                         <StackPanel Orientation="Horizontal">
-
-                            <Image Source="/PetOffice.WpfApp;component/Assets/work.png"
-                                   Width="18"
-                                   Height="18"
-                                   Stretch="Uniform"
-                                   Margin="0,0,5,0"/>
-
-                            <TextBlock Text="Work"
-                                       VerticalAlignment="Center"/>
-
+                            <Image Source="/PetOffice.WpfApp;component/Assets/work.png" Width="18" Height="18" Stretch="Uniform" Margin="0,0,5,0"/>
+                            <TextBlock Text="Work" VerticalAlignment="Center"/>
                         </StackPanel>
-
                     </Button>
 
-
-                    <!-- CRAZY -->
-                    <Button Grid.Column="2"
-                            Style="{StaticResource CrazyButtonStyle}"
-                            Command="{Binding CrazyCommand}">
-
+                    <Button Grid.Column="2" Style="{StaticResource CrazyButtonStyle}" Command="{Binding CrazyCommand}">
                         <StackPanel Orientation="Horizontal">
-
-                            <Image Source="/PetOffice.WpfApp;component/Assets/action.png"
-                                   Width="18"
-                                   Height="18"
-                                   Stretch="Uniform"
-                                   Margin="0,0,5,0"/>
-
-                            <TextBlock Text="Crazy"
-                                       VerticalAlignment="Center"/>
-
+                            <Image Source="/PetOffice.WpfApp;component/Assets/action.png" Width="18" Height="18" Stretch="Uniform" Margin="0,0,5,0"/>
+                            <TextBlock Text="Crazy" VerticalAlignment="Center"/>
                         </StackPanel>
-
                     </Button>
 
-
-                    <!-- RESTORE -->
-                    <Button Grid.Column="4"
-                            Style="{StaticResource RestoreButtonStyle}"
-                            Command="{Binding RestoreEnergyCommand}">
-
+                    <Button Grid.Column="4" Style="{StaticResource RestoreButtonStyle}" Command="{Binding RestoreEnergyCommand}">
                         <StackPanel Orientation="Horizontal">
-
-                            <Image Source="/PetOffice.WpfApp;component/Assets/restore.png"
-                                   Width="18"
-                                   Height="18"
-                                   Stretch="Uniform"
-                                   Margin="0,0,5,0"/>
-
-                            <TextBlock Text="Restore"
-                                       VerticalAlignment="Center"/>
-
+                            <Image Source="/PetOffice.WpfApp;component/Assets/restore.png" Width="18" Height="18" Stretch="Uniform" Margin="0,0,5,0"/>
+                            <TextBlock Text="Restore" VerticalAlignment="Center"/>
                         </StackPanel>
-
                     </Button>
-
                 </Grid>
 
-
-                <!-- =================================================
-                     ABILITIES
-                     ================================================= -->
-
+                <!-- ABILITIES -->
                 <Grid Grid.Row="4">
-
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="7"/>
@@ -322,69 +164,29 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-
-                    <!-- TALK -->
-                    <Button Grid.Column="0"
-                            Style="{StaticResource AbilityButtonStyle}"
-                            Command="{Binding CommunicateCommand}">
-
+                    <Button Grid.Column="0" Style="{StaticResource AbilityButtonStyle}" Command="{Binding CommunicateCommand}">
                         <StackPanel Orientation="Horizontal">
-
-                            <Image Source="/PetOffice.WpfApp;component/Assets/speech-bubble.png"
-                                   Width="16"
-                                   Height="16"
-                                   Margin="0,0,4,0"/>
-
+                            <Image Source="/PetOffice.WpfApp;component/Assets/speech-bubble.png" Width="16" Height="16" Margin="0,0,4,0"/>
                             <TextBlock Text="Talk"/>
-
                         </StackPanel>
-
                     </Button>
 
-
-                    <!-- COFFEE -->
-                    <Button Grid.Column="2"
-                            Style="{StaticResource AbilityButtonStyle}"
-                            Command="{Binding CoffeeCommand}">
-
+                    <Button Grid.Column="2" Style="{StaticResource AbilityButtonStyle}" Command="{Binding CoffeeCommand}">
                         <StackPanel Orientation="Horizontal">
-
-                            <Image Source="/PetOffice.WpfApp;component/Assets/coffee-cup.png"
-                                   Width="16"
-                                   Height="16"
-                                   Margin="0,0,4,0"/>
-
+                            <Image Source="/PetOffice.WpfApp;component/Assets/coffee-cup.png" Width="16" Height="16" Margin="0,0,4,0"/>
                             <TextBlock Text="Coffee"/>
-
                         </StackPanel>
-
                     </Button>
 
-
-                    <!-- FIX PC -->
-                    <Button Grid.Column="4"
-                            Style="{StaticResource AbilityButtonStyle}"
-                            Command="{Binding FixCommand}">
-
+                    <Button Grid.Column="4" Style="{StaticResource AbilityButtonStyle}" Command="{Binding FixCommand}">
                         <StackPanel Orientation="Horizontal">
-
-                            <Image Source="/PetOffice.WpfApp;component/Assets/fix.png"
-                                   Width="16"
-                                   Height="16"
-                                   Margin="0,0,4,0"/>
-
+                            <Image Source="/PetOffice.WpfApp;component/Assets/fix.png" Width="16" Height="16" Margin="0,0,4,0"/>
                             <TextBlock Text="Fix PC"/>
-
                         </StackPanel>
-
                     </Button>
-
                 </Grid>
-
             </Grid>
-
         </Grid>
-
     </Border>
 
 </UserControl>
