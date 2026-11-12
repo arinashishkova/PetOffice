@@ -74,29 +74,22 @@
     <!-- ========================================================= -->
     <!-- BUTTON COLORS                                             -->
     <!-- ========================================================= -->
-
-    <!-- Add -->
     <SolidColorBrush x:Key="AddButtonBackgroundBrush" Color="#B7D8D3"/>
     <SolidColorBrush x:Key="AddButtonBorderBrush" Color="#9FC6C0"/>
 
-    <!-- Work -->
     <SolidColorBrush x:Key="WorkButtonBackgroundBrush" Color="#D7EAF7"/>
     <SolidColorBrush x:Key="WorkButtonBorderBrush" Color="#BDD9EC"/>
 
-    <!-- Crazy -->
     <SolidColorBrush x:Key="CrazyButtonBackgroundBrush" Color="#F5D6E4"/>
     <SolidColorBrush x:Key="CrazyButtonBorderBrush" Color="#E8BFD1"/>
 
-    <!-- Restore -->
     <SolidColorBrush x:Key="RestoreButtonBackgroundBrush" Color="#E3F3E6"/>
     <SolidColorBrush x:Key="RestoreButtonBorderBrush" Color="#B8D8BE"/>
     <SolidColorBrush x:Key="RestoreButtonTextBrush" Color="#3F6F48"/>
 
-    <!-- Ability -->
     <SolidColorBrush x:Key="AbilityButtonBackgroundBrush" Color="#F0ECF8"/>
     <SolidColorBrush x:Key="AbilityButtonBorderBrush" Color="#D7CFEA"/>
 
-    <!-- Remove -->
     <SolidColorBrush x:Key="RemoveButtonBackgroundBrush" Color="#FBE0DE"/>
     <SolidColorBrush x:Key="RemoveButtonBorderBrush" Color="#F0C3BF"/>
     <SolidColorBrush x:Key="RemoveButtonTextBrush" Color="#A94F49"/>
@@ -110,6 +103,25 @@
     <SolidColorBrush x:Key="GroupFilterHoverBrush" Color="#E5F1F8"/>
     <SolidColorBrush x:Key="GroupFilterSelectedBrush" Color="#CFE5F3"/>
     <SolidColorBrush x:Key="GroupFilterSelectedBorderBrush" Color="#8AB8D4"/>
+
+
+    <!-- ========================================================= -->
+    <!-- PAGE HEADERS                                              -->
+    <!-- ========================================================= -->
+    <Style x:Key="PageTitleStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+    </Style>
+
+    <Style x:Key="PageSubtitleStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+        <Setter Property="Margin" Value="1,4,0,0"/>
+    </Style>
+
+    <Thickness x:Key="PageContentMargin">28</Thickness>
+    <Thickness x:Key="PageHeaderMargin">0,0,0,20</Thickness>
 
 
     <!-- ========================================================= -->

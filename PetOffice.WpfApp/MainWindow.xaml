@@ -116,7 +116,7 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled"
                               Background="Transparent">
-                    <views:StoragePanel Margin="18"/>
+                    <views:StoragePanel/>
                 </ScrollViewer>
             </TabItem>
 

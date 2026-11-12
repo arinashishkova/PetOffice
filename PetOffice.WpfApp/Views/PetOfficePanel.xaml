@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:views="clr-namespace:PetOffice.WpfApp.Views">
 
-    <Grid Margin="28">
+    <Grid Margin="{StaticResource PageContentMargin}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -15,21 +15,15 @@
         <!-- ===================================================== -->
         <!-- HEADER                                                -->
         <!-- ===================================================== -->
-        <Grid Grid.Row="0" Margin="0,0,0,20">
+        <Grid Grid.Row="0" Margin="{StaticResource PageHeaderMargin}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Pet Office"
-                           FontSize="30"
-                           FontWeight="Bold"
-                           Foreground="{StaticResource TextPrimaryBrush}"/>
-                <TextBlock Text="Where serious business meets paws"
-                           FontSize="13"
-                           Foreground="{StaticResource TextMutedBrush}"
-                           Margin="1,4,0,0"/>
+                <TextBlock Text="Pet Office" Style="{StaticResource PageTitleStyle}"/>
+                <TextBlock Text="Where serious business meets paws" Style="{StaticResource PageSubtitleStyle}"/>
             </StackPanel>
 
             <!-- PET ICONS -->
