@@ -26,15 +26,26 @@ namespace PetOffice.WpfApp.ViewModels
         public bool IsSelected { get; }
     }
 
+    public sealed record OfficeGroupFilterItem(
+        string Name,
+        string IconPath,
+        int Count,
+        bool IsSelected);
+
 
     public partial class MainViewModel
     {
         private readonly ObservableCollection<PetGroupFilterItem> groupFilters = new();
         private readonly HashSet<string> selectedGroupFilters = new();
 
+        private readonly ObservableCollection<OfficeGroupFilterItem> officeGroupFilters = new();
+        private readonly HashSet<string> selectedOfficeGroupFilters = new();
+
+        private RelayCommand<PetGroupFilterItem>? toggleGroupFilterCommand;
+        private RelayCommand<OfficeGroupFilterItem>? toggleOfficeGroupFilterCommand;
+
         private ICollectionView? filteredPetsView;
         private bool petFiltersInitialized;
-        private RelayCommand<PetGroupFilterItem>? toggleGroupFilterCommand;
 
 
         public ObservableCollection<PetGroupFilterItem> GroupFilters
@@ -43,6 +54,15 @@ namespace PetOffice.WpfApp.ViewModels
             {
                 EnsurePetFiltersInitialized();
                 return groupFilters;
+            }
+        }
+
+        public ObservableCollection<OfficeGroupFilterItem> OfficeGroupFilters
+        {
+            get
+            {
+                EnsurePetFiltersInitialized();
+                return officeGroupFilters;
             }
         }
 
@@ -60,6 +80,9 @@ namespace PetOffice.WpfApp.ViewModels
         public RelayCommand<PetGroupFilterItem> ToggleGroupFilterCommand =>
             toggleGroupFilterCommand ??= new RelayCommand<PetGroupFilterItem>(ToggleGroupFilter);
 
+        public RelayCommand<OfficeGroupFilterItem> ToggleOfficeGroupFilterCommand =>
+            toggleOfficeGroupFilterCommand ??= new RelayCommand<OfficeGroupFilterItem>(ToggleOfficeGroupFilter);
+
 
         private void EnsurePetFiltersInitialized()
         {
@@ -67,19 +90,27 @@ namespace PetOffice.WpfApp.ViewModels
             petFiltersInitialized = true;
 
             filteredPetsView = CollectionViewSource.GetDefaultView(VisiblePets);
-            filteredPetsView.Filter = PetMatchesSelectedGroups;
+            filteredPetsView.Filter = PetMatchesFilters;
             VisiblePets.CollectionChanged += VisiblePets_CollectionChanged;
 
             RefreshGroupFilters();
+            RefreshOfficeGroupFilters();
         }
 
 
-        private bool PetMatchesSelectedGroups(object item)
+        private bool PetMatchesFilters(object item)
         {
-            if (selectedGroupFilters.Count == 0) return true;
             if (item is not OfficePet pet) return false;
 
-            return selectedGroupFilters.Contains(pet.GetType().Name);
+            bool matchesType =
+                selectedGroupFilters.Count == 0 ||
+                selectedGroupFilters.Contains(pet.GetType().Name);
+
+            bool matchesOfficeGroup =
+                selectedOfficeGroupFilters.Count == 0 ||
+                selectedOfficeGroupFilters.Contains(pet.GroupName);
+
+            return matchesType && matchesOfficeGroup;
         }
 
 
@@ -98,10 +129,26 @@ namespace PetOffice.WpfApp.ViewModels
             filteredPetsView?.Refresh();
         }
 
+        private void ToggleOfficeGroupFilter(OfficeGroupFilterItem? item)
+        {
+            if (item is null) return;
+
+            if (!selectedOfficeGroupFilters.Add(item.Name))
+            {
+                selectedOfficeGroupFilters.Remove(item.Name);
+            }
+
+            SelectedPet = null;
+
+            RefreshOfficeGroupFilters();
+            filteredPetsView?.Refresh();
+        }
+
 
         private void VisiblePets_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             RefreshGroupFilters();
+            RefreshOfficeGroupFilters();
         }
 
 
@@ -139,6 +186,27 @@ namespace PetOffice.WpfApp.ViewModels
             }
 
             OnPropertyChanged(nameof(TotalPetsCount));
+        }
+
+
+        private void RefreshOfficeGroupFilters()
+        {
+            Dictionary<string, int> counts = GetAllPets()
+                .GroupBy(pet => pet.GroupName)
+                .ToDictionary(group => group.Key, group => group.Count());
+
+            officeGroupFilters.Clear();
+
+            foreach (OfficeGroupOption option in OfficeGroupOptions)
+            {
+                counts.TryGetValue(option.Name, out int count);
+
+                officeGroupFilters.Add(new OfficeGroupFilterItem(
+                    option.Name,
+                    option.IconPath,
+                    count,
+                    selectedOfficeGroupFilters.Contains(option.Name)));
+            }
         }
     }
 }

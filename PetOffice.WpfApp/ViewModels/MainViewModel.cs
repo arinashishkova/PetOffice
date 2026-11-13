@@ -37,18 +37,12 @@ namespace PetOffice.WpfApp.ViewModels
             "Name A-Z", "Name Z-A", "Energy high to low", "Energy low to high"
         };
 
-        public IReadOnlyList<OfficeGroupOption> OfficeGroupOptions { get; }
-            = new List<OfficeGroupOption>
-            {
-        new(OfficeGroups.PawformanceHub,
-            AppIconPaths.PawformanceHub),
-
-        new(OfficeGroups.CreativeCorner,
-            AppIconPaths.CreativeCorner),
-
-        new(OfficeGroups.TechDen,
-            AppIconPaths.TechDen)
-            };
+        public IReadOnlyList<OfficeGroupOption> OfficeGroupOptions { get; } = new List<OfficeGroupOption>
+        {
+            new(OfficeGroups.PawformanceHub, AppIconPaths.PawformanceHub),
+            new(OfficeGroups.CreativeCorner, AppIconPaths.CreativeCorner),
+            new(OfficeGroups.TechDen, AppIconPaths.TechDen)
+        };
 
         // Pets currently shown in UI
         public ObservableCollection<OfficePet> VisiblePets { get; } = new();
@@ -65,6 +59,7 @@ namespace PetOffice.WpfApp.ViewModels
         public RelayCommand CommunicateCommand { get; }
         public RelayCommand CoffeeCommand { get; }
         public RelayCommand FixCommand { get; }
+
 
         public string SelectedRepository
         {
@@ -131,24 +126,24 @@ namespace PetOffice.WpfApp.ViewModels
             get => SelectedPet?.GroupName;
             set
             {
-                if (SelectedPet is null || string.IsNullOrWhiteSpace(value) || SelectedPet.GroupName == value)
-                {
-                    return;
-                }
+                if (SelectedPet is null || string.IsNullOrWhiteSpace(value) || SelectedPet.GroupName == value) return;
 
-                string oldGroup = SelectedPet.GroupName;
-                SelectedPet.ChangeGroup(value);
+                OfficePet pet = SelectedPet;
+                string oldGroup = pet.GroupName;
+
+                pet.ChangeGroup(value);
 
                 OnPropertyChanged();
+                Log.Insert(0, $"{pet.DisplayName} moved from {oldGroup} to {value}.", pet);
 
-                Log.Insert(0, $"{SelectedPet.DisplayName} moved from {oldGroup} to {value}.", SelectedPet);
+                RefreshOfficeGroupFilters();
+                filteredPetsView?.Refresh();
             }
         }
 
 
         // Selected pet state
         public string SelectedPetDisplayName => SelectedPet?.DisplayName ?? "No pet selected";
-
         public string SelectedPetName => SelectedPet?.Name ?? "No pet selected";
 
         public string SelectedPetType => SelectedPet switch
@@ -181,6 +176,7 @@ namespace PetOffice.WpfApp.ViewModels
         public string SelectedPetEnergyText => $"{SelectedPet?.Energy ?? 0} / 100";
         public string SelectedPetTasksText => $"Tasks completed: {SelectedPet?.TasksCompleted ?? 0}";
         public string SelectedPetReactionsText => $"Reactions: {SelectedPet?.ReactionsCount ?? 0}";
+
 
         public MainViewModel(
             [FromKeyedServices("json")] IWorldStorage jsonStorage,
@@ -223,16 +219,10 @@ namespace PetOffice.WpfApp.ViewModels
             RefreshAnalysisPets();
         }
 
-        private void Repository_ReactionOccurred(
-            object? sender,
-            ReactionEventArgs e)
-        {
-            Log.InsertReactionGroup(
-                0,
-                e.Source,
-                e.Reactors,
-                e.Kind);
 
+        private void Repository_ReactionOccurred(object? sender, ReactionEventArgs e)
+        {
+            Log.InsertReactionGroup(0, e.Source, e.Reactors, e.Kind);
             UpdateSelectedPetState();
         }
 
@@ -245,46 +235,16 @@ namespace PetOffice.WpfApp.ViewModels
                 OfficePet pet;
                 switch (SelectedRepository)
                 {
-                    case "CatManager":
-                        var cat = new CatManager(NewPetName);
-                        catRepository.Add(cat);
-                        pet = cat;
-                        break;
-                    case "DogIntern":
-                        var dog = new DogIntern(NewPetName);
-                        dogRepository.Add(dog);
-                        pet = dog;
-                        break;
-                    case "HamsterIT":
-                        var hamster = new HamsterIT(NewPetName);
-                        hamsterRepository.Add(hamster);
-                        pet = hamster;
-                        break;
-                    case "ParrotReceptionist":
-                        var parrot = new ParrotReceptionist(NewPetName);
-                        parrotRepository.Add(parrot);
-                        pet = parrot;
-                        break;
-                    case "RabbitAccountant":
-                        var rabbit = new RabbitAccountant(NewPetName);
-                        rabbitRepository.Add(rabbit);
-                        pet = rabbit;
-                        break;
-                    case "RaccoonBarista":
-                        var raccoon = new RaccoonBarista(NewPetName);
-                        raccoonRepository.Add(raccoon);
-                        pet = raccoon;
-                        break;
-                    case "OwlSysAdmin":
-                        var owl = new OwlSysAdmin(NewPetName);
-                        owlRepository.Add(owl);
-                        pet = owl;
-                        break;
-                    default:
-                        return;
+                    case "CatManager": var cat = new CatManager(NewPetName); catRepository.Add(cat); pet = cat; break;
+                    case "DogIntern": var dog = new DogIntern(NewPetName); dogRepository.Add(dog); pet = dog; break;
+                    case "HamsterIT": var hamster = new HamsterIT(NewPetName); hamsterRepository.Add(hamster); pet = hamster; break;
+                    case "ParrotReceptionist": var parrot = new ParrotReceptionist(NewPetName); parrotRepository.Add(parrot); pet = parrot; break;
+                    case "RabbitAccountant": var rabbit = new RabbitAccountant(NewPetName); rabbitRepository.Add(rabbit); pet = rabbit; break;
+                    case "RaccoonBarista": var raccoon = new RaccoonBarista(NewPetName); raccoonRepository.Add(raccoon); pet = raccoon; break;
+                    case "OwlSysAdmin": var owl = new OwlSysAdmin(NewPetName); owlRepository.Add(owl); pet = owl; break;
+                    default: return;
                 }
 
-                // AddPet
                 Log.Insert(0, $"Added: {pet.DisplayName}", pet);
                 RefreshVisiblePets();
                 RefreshSummary();
@@ -436,7 +396,6 @@ namespace PetOffice.WpfApp.ViewModels
 
         private void RefreshAfterAction(OfficePet pet)
         {
-            // Refresh sorting after state changes
             RefreshVisiblePets();
             SelectedPet = pet;
             UpdateSelectedPetState();
@@ -450,14 +409,12 @@ namespace PetOffice.WpfApp.ViewModels
             VisiblePets.Clear();
             IEnumerable<OfficePet> pets = GetAllPets();
 
-            // Where
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
                 string search = SearchText.Trim();
                 pets = pets.Where(pet => pet.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
             }
 
-            // OrderBy
             pets = SelectedSortOption switch
             {
                 "Name Z-A" => pets.OrderByDescending(pet => pet.Name),
@@ -466,10 +423,7 @@ namespace PetOffice.WpfApp.ViewModels
                 _ => pets.OrderBy(pet => pet.Name)
             };
 
-            foreach (OfficePet pet in pets)
-            {
-                VisiblePets.Add(pet);
-            }
+            foreach (OfficePet pet in pets) VisiblePets.Add(pet);
         }
 
         private IEnumerable<OfficePet> GetAllPets()
@@ -487,20 +441,13 @@ namespace PetOffice.WpfApp.ViewModels
         {
             Summary.Clear();
 
-            // GroupBy
             var groups = GetAllPets()
                 .GroupBy(pet => pet.GetType().Name)
                 .OrderBy(group => group.Key);
 
-            foreach (var group in groups)
-            {
-                Summary.Add($"{group.Key}: {group.Count()}");
-            }
+            foreach (var group in groups) Summary.Add($"{group.Key}: {group.Count()}");
 
-            if (Summary.Count == 0)
-            {
-                Summary.Add("No pets");
-            }
+            if (Summary.Count == 0) Summary.Add("No pets");
         }
 
         private void UpdateSelectedPetState()
