@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace PetOffice.Core.Models
 {
-    public abstract class OfficePet
+    public abstract class OfficePet : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public Guid Id { get; private set; }
         public string Name { get; }
         public string GroupName { get; private set; }
@@ -42,7 +45,12 @@ namespace PetOffice.Core.Models
                 throw new ArgumentException("Group name is required.", nameof(groupName));
             }
 
-            GroupName = groupName.Trim();
+            string newGroup = groupName.Trim();
+
+            if (GroupName == newGroup) return;
+
+            GroupName = newGroup;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GroupName)));
         }
 
 
@@ -129,10 +137,7 @@ namespace PetOffice.Core.Models
         }
 
 
-        protected void CompleteTask()
-        {
-            TasksCompleted++;
-        }
+        protected void CompleteTask() => TasksCompleted++;
 
 
         internal void HandlePetAdded(object? sender, OfficePetEventArgs e)

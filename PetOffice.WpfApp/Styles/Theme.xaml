@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!-- IMAGE RESOURCES -->
+    <BitmapImage x:Key="FingerprintIcon" UriSource="pack://application:,,,/PetOffice.WpfApp;component/Assets/id_fingerprint.png"/>
+
     <!-- ========================================================= -->
     <!-- FONT                                                      -->
     <!-- Change this one value to change the whole app font later. -->
@@ -58,6 +61,11 @@
     <!-- ========================================================= -->
     <SolidColorBrush x:Key="LogItemHoverBrush" Color="#EEF8F0"/>
     <SolidColorBrush x:Key="LogItemSelectedBrush" Color="#DFF1E6"/>
+
+
+    <!-- CPU ANALYSIS SELECTION -->
+    <SolidColorBrush x:Key="AnalysisRowHoverBrush" Color="#EFF1F9"/>
+    <SolidColorBrush x:Key="AnalysisRowSelectedBrush" Color="#E1E5F3"/>
 
 
     <!-- ========================================================= -->

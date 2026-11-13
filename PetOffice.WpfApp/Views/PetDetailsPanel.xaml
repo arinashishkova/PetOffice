@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="PetOffice.WpfApp.Views.PetDetailsPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:PetOffice.WpfApp.Converters">
+             xmlns:converters="clr-namespace:PetOffice.WpfApp.Converters"
+             xmlns:icons="clr-namespace:PetOffice.WpfApp.Presentation">
 
     <UserControl.Resources>
         <converters:EnergyLevelBrushConverter x:Key="EnergyLevelBrushConverter"/>
@@ -81,7 +82,7 @@
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="{Binding IconPath}" Width="20" Height="20" Stretch="Uniform" Margin="0,0,8,0"/>
+                                            <Image Source="{Binding IconPath}" Style="{StaticResource GroupIconStyle}"/>
                                             <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="12" FontWeight="SemiBold"/>
                                         </StackPanel>
                                     </DataTemplate>
@@ -199,13 +200,25 @@
                 </Grid>
 
                 <!-- PET ID -->
-                <TextBlock Grid.Row="5"
-                           Text="{Binding SelectedPetIdText}"
-                           FontFamily="Consolas"
-                           FontSize="11"
-                           Foreground="{StaticResource TextSecondaryBrush}"
-                           TextWrapping="Wrap"
-                           Margin="2,0,0,12"/>
+                <StackPanel Grid.Row="5"
+            Orientation="Horizontal"
+            VerticalAlignment="Center"
+            Margin="2,14,0,0">
+
+                    <Image Source="{StaticResource FingerprintIcon}"
+           Width="16"
+           Height="16"
+           Stretch="Uniform"
+           VerticalAlignment="Center"
+           Margin="0,0,8,0"/>
+
+                    <TextBlock Text="{Binding SelectedPetIdText}"
+               FontFamily="Consolas"
+               FontSize="11"
+               Foreground="{StaticResource TextSecondaryBrush}"
+               VerticalAlignment="Center"/>
+
+                </StackPanel>
             </Grid>
         </Grid>
     </Border>

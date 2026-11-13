@@ -1,9 +1,12 @@
 ﻿<UserControl x:Class="PetOffice.WpfApp.Views.PetListPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:converters="clr-namespace:PetOffice.WpfApp.Converters"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:models="clr-namespace:PetOffice.Core.Models;assembly=PetOffice.Core">
 
     <UserControl.Resources>
+
+        <converters:PetVisualConverter x:Key="PetVisualConverter"/>
 
         <!-- ===================================================== -->
         <!-- PET LIST ITEM                                         -->
@@ -42,180 +45,7 @@
         <!-- PET TEMPLATES                                         -->
         <!-- ===================================================== -->
 
-        <!-- CAT -->
-        <DataTemplate DataType="{x:Type models:CatManager}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="42"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Width="34" Height="34" Background="#FFF4E8" CornerRadius="8">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/cat.png" Width="27" Height="27"/>
-                </Border>
-
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                    <TextBlock Text="Cat Manager" FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,3,0">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/energy.png" Width="15" Height="15" Opacity="0.8"/>
-                    <TextBlock Text="{Binding Energy}" Margin="4,0,0,0" FontSize="12" Foreground="#7C6B48"/>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
-
-        <!-- DOG -->
-        <DataTemplate DataType="{x:Type models:DogIntern}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="42"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Width="34" Height="34" Background="#F5F0FA" CornerRadius="8">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/dog.png" Width="27" Height="27"/>
-                </Border>
-
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                    <TextBlock Text="Dog Intern" FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,3,0">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/energy.png" Width="15" Height="15" Opacity="0.8"/>
-                    <TextBlock Text="{Binding Energy}" Margin="4,0,0,0" FontSize="12" Foreground="#7C6B48"/>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
-
-        <!-- HAMSTER -->
-        <DataTemplate DataType="{x:Type models:HamsterIT}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="42"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Width="34" Height="34" Background="#FFF8EC" CornerRadius="8">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/hamster.png" Width="27" Height="27"/>
-                </Border>
-
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                    <TextBlock Text="Hamster IT" FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,3,0">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/energy.png" Width="15" Height="15" Opacity="0.8"/>
-                    <TextBlock Text="{Binding Energy}" Margin="4,0,0,0" FontSize="12" Foreground="#7C6B48"/>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
-
-        <!-- PARROT -->
-        <DataTemplate DataType="{x:Type models:ParrotReceptionist}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="42"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Width="34" Height="34" Background="#EFF8F2" CornerRadius="8">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/parrot.png" Width="27" Height="27"/>
-                </Border>
-
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                    <TextBlock Text="Parrot Receptionist" FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,3,0">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/energy.png" Width="15" Height="15" Opacity="0.8"/>
-                    <TextBlock Text="{Binding Energy}" Margin="4,0,0,0" FontSize="12" Foreground="#7C6B48"/>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
-
-        <!-- RABBIT -->
-        <DataTemplate DataType="{x:Type models:RabbitAccountant}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="42"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Width="34" Height="34" Background="#FDEFF5" CornerRadius="8">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/rabbit.png" Width="27" Height="27"/>
-                </Border>
-
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                    <TextBlock Text="Rabbit Accountant" FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,3,0">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/energy.png" Width="15" Height="15" Opacity="0.8"/>
-                    <TextBlock Text="{Binding Energy}" Margin="4,0,0,0" FontSize="12" Foreground="#7C6B48"/>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
-
-        <!-- RACCOON -->
-        <DataTemplate DataType="{x:Type models:RaccoonBarista}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="42"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Width="34" Height="34" Background="#FBEFE3" CornerRadius="8">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/raccoon.png" Width="27" Height="27"/>
-                </Border>
-
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                    <TextBlock Text="Raccoon Barista" FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,3,0">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/energy.png" Width="15" Height="15" Opacity="0.8"/>
-                    <TextBlock Text="{Binding Energy}" Margin="4,0,0,0" FontSize="12" Foreground="#7C6B48"/>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
-
-        <!-- OWL -->
-        <DataTemplate DataType="{x:Type models:OwlSysAdmin}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="42"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Width="34" Height="34" Background="#EEF0F8" CornerRadius="8">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/owl.png" Width="27" Height="27"/>
-                </Border>
-
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                    <TextBlock Text="Owl SysAdmin" FontSize="11" Foreground="{StaticResource TextMutedBrush}"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,3,0">
-                    <Image Source="/PetOffice.WpfApp;component/Assets/energy.png" Width="15" Height="15" Opacity="0.8"/>
-                    <TextBlock Text="{Binding Energy}" Margin="4,0,0,0" FontSize="12" Foreground="#7C6B48"/>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
+       
 
     </UserControl.Resources>
 
@@ -325,6 +155,84 @@
                         <ListBox.Resources>
                             <Style TargetType="ScrollBar" BasedOn="{StaticResource ThinScrollBarStyle}"/>
                         </ListBox.Resources>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="42"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- PET ICON -->
+                                    <Border Grid.Column="0"
+                    Width="34"
+                    Height="34"
+                    CornerRadius="8"
+                    Background="{Binding Converter={StaticResource PetVisualConverter},
+                                         ConverterParameter=Background}">
+
+                                        <Image Source="{Binding Converter={StaticResource PetVisualConverter},
+                                        ConverterParameter=Icon}"
+                       Width="27"
+                       Height="27"
+                       Stretch="Uniform"/>
+
+                                    </Border>
+
+                                    <!-- PET NAME, ROLE AND GROUP -->
+                                    <StackPanel Grid.Column="1"
+                        VerticalAlignment="Center">
+
+                                        <TextBlock Text="{Binding Name}"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource TextPrimaryBrush}"/>
+
+                                        <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center">
+
+                                            <TextBlock Text="{Binding Converter={StaticResource PetVisualConverter},
+                                              ConverterParameter=Role}"
+                               FontSize="11"
+                               Foreground="{StaticResource TextMutedBrush}"
+                               VerticalAlignment="Center"/>
+
+                                            <Image Source="{Binding GroupName,
+                                            Converter={StaticResource PetVisualConverter},
+                                            ConverterParameter=GroupIcon}"
+                           Width="18"
+                           Height="18"
+                           Margin="8,0,0,0"
+                           Stretch="Uniform"
+                           ToolTip="{Binding GroupName}"/>
+
+                                        </StackPanel>
+
+                                    </StackPanel>
+
+                                    <!-- ENERGY -->
+                                    <StackPanel Grid.Column="2"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        Margin="10,0,3,0">
+
+                                        <Image Source="/PetOffice.WpfApp;component/Assets/energy.png"
+                       Width="15"
+                       Height="15"
+                       Opacity="0.8"/>
+
+                                        <TextBlock Text="{Binding Energy}"
+                           Margin="4,0,0,0"
+                           FontSize="12"
+                           Foreground="#7C6B48"/>
+
+                                    </StackPanel>
+
+                                </Grid>
+
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                 </Border>
 

@@ -25,6 +25,7 @@
     <None Remove="Assets\energy.png" />
     <None Remove="Assets\fix.png" />
     <None Remove="Assets\hamster.png" />
+    <None Remove="Assets\id_fingerprint.png" />
     <None Remove="Assets\log.png" />
     <None Remove="Assets\log_back_watermark.png" />
     <None Remove="Assets\owl.png" />
@@ -60,6 +61,7 @@
     <Resource Include="Assets\cpu_medium.png" />
     <Resource Include="Assets\cpu_small.png" />
     <Resource Include="Assets\creative_group.png" />
+    <Resource Include="Assets\id_fingerprint.png" />
     <Resource Include="Assets\log_back_watermark.png" />
     <Resource Include="Assets\perfomance_group.png" />
     <Resource Include="Assets\restore.png" />

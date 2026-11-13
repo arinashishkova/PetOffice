@@ -37,15 +37,9 @@
 
                                 <ContentPresenter VerticalAlignment="Center"/>
 
-                                <TextBlock x:Name="CheckMark"
-                                           Grid.Column="1"
-                                           Text="✓"
-                                           FontSize="16"
-                                           FontWeight="Bold"
-                                           Foreground="#4A7A5A"
-                                           VerticalAlignment="Center"
-                                           Margin="8,0,2,0"
-                                           Visibility="Collapsed"/>
+                                <TextBlock x:Name="CheckMark" Grid.Column="1" Text="✓"
+                                           FontSize="16" FontWeight="Bold" Foreground="#4A7A5A"
+                                           VerticalAlignment="Center" Margin="8,0,2,0" Visibility="Collapsed"/>
                             </Grid>
                         </Border>
 
@@ -187,6 +181,8 @@
             <Setter Property="AlternatingRowBackground" Value="#EAF8F9FC"/>
             <Setter Property="RowHeaderWidth" Value="0"/>
             <Setter Property="FontSize" Value="12"/>
+            <Setter Property="RowStyle" Value="{StaticResource AnalysisRowStyle}"/>
+            <Setter Property="CellStyle" Value="{StaticResource AnalysisCellStyle}"/>
         </Style>
 
         <Style x:Key="AnalysisColumnHeaderStyle" TargetType="DataGridColumnHeader">
@@ -221,16 +217,10 @@
 
                 <!-- HEADER -->
                 <StackPanel Grid.Row="0" Margin="0,0,0,18">
-                    <TextBlock Text="CPU Analysis"
-                               FontSize="26"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                    <TextBlock Text="CPU Analysis" FontSize="26" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
                     <TextBlock Text="Compare sequential and parallel calculations using the same pet snapshots."
-                               Margin="0,5,0,0"
-                               FontSize="12"
-                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                               Margin="0,5,0,0" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
                 </StackPanel>
-
 
                 <!-- CONTROLS -->
                 <Grid Grid.Row="1" Margin="0,0,0,14">
@@ -242,14 +232,10 @@
 
                     <!-- PET SELECTION -->
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Choose at least 3 pets"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextPrimaryBrush}"
-                                   Margin="0,0,0,8"/>
+                        <TextBlock Text="Choose at least 3 pets" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+
                         <Border Background="#DFFFFFFF" BorderBrush="#D7DCE8" BorderThickness="1" CornerRadius="10" Padding="10">
-                            <ScrollViewer Height="190"
-                                          VerticalScrollBarVisibility="Auto"
-                                          HorizontalScrollBarVisibility="Disabled">
+                            <ScrollViewer Height="190" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                 <ScrollViewer.Resources>
                                     <Style TargetType="ScrollBar" BasedOn="{StaticResource ThinScrollBarStyle}"/>
                                 </ScrollViewer.Resources>
@@ -262,8 +248,7 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <ToggleButton Style="{StaticResource PetAnalysisToggleStyle}"
-                                                          IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                                            <ToggleButton Style="{StaticResource PetAnalysisToggleStyle}" IsChecked="{Binding IsSelected, Mode=TwoWay}">
                                                 <StackPanel Orientation="Horizontal">
                                                     <Image Source="{Binding IconPath}" Width="34" Height="34" Stretch="Uniform" Margin="0,0,9,0" VerticalAlignment="Center"/>
                                                     <StackPanel VerticalAlignment="Center">
@@ -278,19 +263,13 @@
                             </ScrollViewer>
                         </Border>
 
-                        <!-- Reserved warning line -->
-                        <TextBlock Text="{Binding AnalysisWarningText}"
-                                   MinHeight="19" Margin="4,6,0,0"
-                                   FontSize="11" FontWeight="SemiBold"
-                                   Foreground="#B85B4C" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding AnalysisWarningText}" MinHeight="19" Margin="4,6,0,0"
+                                   FontSize="11" FontWeight="SemiBold" Foreground="#B85B4C" TextWrapping="Wrap"/>
                     </StackPanel>
 
                     <!-- WORKLOAD -->
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Workload"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextPrimaryBrush}"
-                                   Margin="0,0,0,8"/>
+                        <TextBlock Text="Workload" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
 
                         <!-- SMALL / MEDIUM / LARGE -->
                         <Grid Margin="0,0,0,12">
@@ -302,24 +281,21 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Button Grid.Column="0" Style="{StaticResource SmallWorkloadButtonStyle}"
-                                    Command="{Binding SelectWorkloadCommand}" CommandParameter="Small">
+                            <Button Grid.Column="0" Style="{StaticResource SmallWorkloadButtonStyle}" Command="{Binding SelectWorkloadCommand}" CommandParameter="Small">
                                 <StackPanel>
                                     <Image Source="/PetOffice.WpfApp;component/Assets/cpu_small.png" Width="34" Height="34" Stretch="Uniform" HorizontalAlignment="Center"/>
                                     <TextBlock Text="Small" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Grid.Column="2" Style="{StaticResource MediumWorkloadButtonStyle}"
-                                    Command="{Binding SelectWorkloadCommand}" CommandParameter="Medium">
+                            <Button Grid.Column="2" Style="{StaticResource MediumWorkloadButtonStyle}" Command="{Binding SelectWorkloadCommand}" CommandParameter="Medium">
                                 <StackPanel>
                                     <Image Source="/PetOffice.WpfApp;component/Assets/cpu_medium.png" Width="34" Height="34" Stretch="Uniform" HorizontalAlignment="Center"/>
                                     <TextBlock Text="Medium" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Grid.Column="4" Style="{StaticResource LargeWorkloadButtonStyle}"
-                                    Command="{Binding SelectWorkloadCommand}" CommandParameter="Large">
+                            <Button Grid.Column="4" Style="{StaticResource LargeWorkloadButtonStyle}" Command="{Binding SelectWorkloadCommand}" CommandParameter="Large">
                                 <StackPanel>
                                     <Image Source="/PetOffice.WpfApp;component/Assets/cpu_large.png" Width="34" Height="34" Stretch="Uniform" HorizontalAlignment="Center"/>
                                     <TextBlock Text="Large" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
@@ -351,11 +327,9 @@
                         </Grid>
 
                         <TextBlock Text="Sequential runs first, then parallel uses the same snapshot input."
-                                   Margin="2,10,0,0" TextWrapping="Wrap" FontSize="11"
-                                   Foreground="{StaticResource TextSecondaryBrush}"/>
+                                   Margin="2,10,0,0" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
                     </StackPanel>
                 </Grid>
-
 
                 <!-- PERMANENT ANALYSIS STATUS -->
                 <Border Grid.Row="2" Height="46" Background="#EDF1F7" BorderBrush="#D5DCE6" BorderThickness="1" CornerRadius="10" Padding="11,8" Margin="0,0,0,14">
@@ -366,7 +340,6 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- STATUS TEXT -->
                         <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
@@ -392,9 +365,7 @@
                             </TextBlock.Style>
                         </TextBlock>
 
-                        <!-- ROUNDED TRACK -->
                         <Border Grid.Column="2" Height="14" Background="#DDE3EA" BorderBrush="#CBD2DC" BorderThickness="1" CornerRadius="7" Padding="1" VerticalAlignment="Center">
-                            <!-- ProgressBar uses Hidden instead of Collapsed. -->
                             <ProgressBar Height="10" IsIndeterminate="True" Background="Transparent" BorderThickness="0" Foreground="#4CBF70">
                                 <ProgressBar.Style>
                                     <Style TargetType="ProgressBar">
@@ -411,7 +382,6 @@
                     </Grid>
                 </Border>
 
-
                 <!-- SUMMARY -->
                 <Grid Grid.Row="3" Margin="0,0,0,16">
                     <Grid.ColumnDefinitions>
@@ -422,7 +392,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- SEQUENTIAL -->
                     <Border Grid.Column="0" Style="{StaticResource AnalysisSummaryStyle}" Background="#EDF5FC">
                         <StackPanel>
                             <TextBlock Text="Sequential" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,5"/>
@@ -430,7 +399,6 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- PARALLEL -->
                     <Border Grid.Column="2" Style="{StaticResource AnalysisSummaryStyle}" Background="#EDF8F1">
                         <StackPanel>
                             <TextBlock Text="Parallel" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,5"/>
@@ -438,7 +406,6 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- COMPARISON -->
                     <Border Grid.Column="4" Style="{StaticResource AnalysisSummaryStyle}" Background="#F6F0FC">
                         <StackPanel>
                             <TextBlock Text="Comparison" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,5"/>
@@ -447,10 +414,7 @@
                     </Border>
                 </Grid>
 
-
-                <!-- ===================================================== -->
-                <!-- REPORTS                                               -->
-                <!-- ===================================================== -->
+                <!-- REPORTS -->
                 <Grid Grid.Row="4" VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -489,15 +453,9 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
 
-                                <!-- Overlay Scrollbar -->
-                                <ScrollBar x:Name="SequentialOverlayScrollBar"
-                                           Style="{StaticResource ThinScrollBarStyle}"
-                                           Orientation="Vertical"
-                                           HorizontalAlignment="Right"
-                                           VerticalAlignment="Stretch"
-                                           Width="8"
-                                           Margin="0,38,3,5"
-                                           Visibility="Collapsed"/>
+                                <ScrollBar x:Name="SequentialOverlayScrollBar" Style="{StaticResource ThinScrollBarStyle}"
+                                           Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                                           Width="8" Margin="0,38,3,5" Visibility="Collapsed"/>
                             </Grid>
                         </Border>
                     </Grid>
@@ -533,20 +491,13 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
 
-                                <!-- Overlay Scrollbar -->
-                                <ScrollBar x:Name="ParallelOverlayScrollBar"
-                                           Style="{StaticResource ThinScrollBarStyle}"
-                                           Orientation="Vertical"
-                                           HorizontalAlignment="Right"
-                                           VerticalAlignment="Stretch"
-                                           Width="8"
-                                           Margin="0,38,3,5"
-                                           Visibility="Collapsed"/>
+                                <ScrollBar x:Name="ParallelOverlayScrollBar" Style="{StaticResource ThinScrollBarStyle}"
+                                           Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                                           Width="8" Margin="0,38,3,5" Visibility="Collapsed"/>
                             </Grid>
                         </Border>
                     </Grid>
                 </Grid>
-
             </Grid>
         </Grid>
     </Border>

@@ -5,6 +5,7 @@ using PetOffice.Core.Models;
 using PetOffice.Core.Persistence;
 using PetOffice.Core.Repositories;
 using PetOffice.WpfApp.Services;
+using PetOffice.WpfApp.Presentation;
 
 namespace PetOffice.WpfApp.ViewModels
 {
@@ -36,14 +37,18 @@ namespace PetOffice.WpfApp.ViewModels
             "Name A-Z", "Name Z-A", "Energy high to low", "Energy low to high"
         };
 
-        public IReadOnlyList<OfficeGroupOption> OfficeGroupOptions { get; } = new List<OfficeGroupOption>
-        {
-            new(OfficeGroups.PawformanceHub, "/PetOffice.WpfApp;component/Assets/perfomance_group.png"),
+        public IReadOnlyList<OfficeGroupOption> OfficeGroupOptions { get; }
+            = new List<OfficeGroupOption>
+            {
+        new(OfficeGroups.PawformanceHub,
+            AppIconPaths.PawformanceHub),
 
-            new(OfficeGroups.CreativeCorner, "/PetOffice.WpfApp;component/Assets/creative_group.png"),
+        new(OfficeGroups.CreativeCorner,
+            AppIconPaths.CreativeCorner),
 
-            new(OfficeGroups.TechDen, "/PetOffice.WpfApp;component/Assets/tech_group.png")
-        };
+        new(OfficeGroups.TechDen,
+            AppIconPaths.TechDen)
+            };
 
         // Pets currently shown in UI
         public ObservableCollection<OfficePet> VisiblePets { get; } = new();
@@ -136,7 +141,7 @@ namespace PetOffice.WpfApp.ViewModels
 
                 OnPropertyChanged();
 
-                Log.Insert(0, $"{SelectedPet.DisplayName} moved from {oldGroup} to {value}.");
+                Log.Insert(0, $"{SelectedPet.DisplayName} moved from {oldGroup} to {value}.", SelectedPet);
             }
         }
 
@@ -162,13 +167,13 @@ namespace PetOffice.WpfApp.ViewModels
 
         public string? SelectedPetIconPath => SelectedPet switch
         {
-            CatManager => "/PetOffice.WpfApp;component/Assets/cat.png",
-            DogIntern => "/PetOffice.WpfApp;component/Assets/dog.png",
-            HamsterIT => "/PetOffice.WpfApp;component/Assets/hamster.png",
-            ParrotReceptionist => "/PetOffice.WpfApp;component/Assets/parrot.png",
-            RabbitAccountant => "/PetOffice.WpfApp;component/Assets/rabbit.png",
-            RaccoonBarista => "/PetOffice.WpfApp;component/Assets/raccoon.png",
-            OwlSysAdmin => "/PetOffice.WpfApp;component/Assets/owl.png",
+            CatManager => AppIconPaths.Cat,
+            DogIntern => AppIconPaths.Dog,
+            HamsterIT => AppIconPaths.Hamster,
+            ParrotReceptionist => AppIconPaths.Parrot,
+            RabbitAccountant => AppIconPaths.Rabbit,
+            RaccoonBarista => AppIconPaths.Raccoon,
+            OwlSysAdmin => AppIconPaths.Owl,
             _ => null
         };
 

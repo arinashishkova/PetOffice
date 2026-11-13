@@ -262,6 +262,52 @@
 
 
     <!-- ========================================================= -->
+    <!-- ANALYSIS DATA GRID SELECTION                              -->
+    <!-- ========================================================= -->
+
+    <Style x:Key="AnalysisRowStyle"
+       TargetType="DataGridRow">
+
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background"
+                    Value="{DynamicResource AnalysisRowHoverBrush}"/>
+            </Trigger>
+
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background"
+                    Value="{DynamicResource AnalysisRowSelectedBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <Style x:Key="AnalysisCellStyle"
+       TargetType="DataGridCell">
+
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+        <Setter Property="Foreground"
+            Value="{DynamicResource TextPrimaryBrush}"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background"
+                    Value="{DynamicResource AnalysisRowSelectedBrush}"/>
+                <Setter Property="Foreground"
+                    Value="{DynamicResource TextPrimaryBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+
+    <!-- ========================================================= -->
     <!-- BASE ROUNDED BUTTON                                       -->
     <!-- ========================================================= -->
     <Style x:Key="BaseRoundedButtonStyle" TargetType="Button">
@@ -339,6 +385,15 @@
         <Setter Property="Background" Value="{DynamicResource RemoveButtonBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource RemoveButtonBorderBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource RemoveButtonTextBrush}"/>
+    </Style>
+    
+
+    <!-- OFFICE GROUP ICON -->
+    <Style x:Key="GroupIconStyle" TargetType="Image">
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Stretch" Value="Uniform"/>
+        <Setter Property="Margin" Value="0,0,8,0"/>
     </Style>
 
 
