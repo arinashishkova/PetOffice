@@ -155,6 +155,7 @@
                 Style="{StaticResource CardStyle}"
                 Background="{StaticResource LogCardBrush}"
                 Margin="0,0,0,20"
+                MaxHeight="280"
                 MinHeight="190">
             <Grid>
                 <!-- BACKGROUND PATTERN -->

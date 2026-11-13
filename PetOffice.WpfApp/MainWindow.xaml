@@ -4,8 +4,9 @@
         xmlns:views="clr-namespace:PetOffice.WpfApp.Views"
         Title="Pet Office"
         Width="1180"
-        SizeToContent="Height"
-        MinHeight="650"
+        Height="700"
+        SizeToContent="Manual"
+        MinHeight="540"
         MinWidth="900"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
@@ -103,13 +104,21 @@
         <TabControl Style="{StaticResource FolderTabControlStyle}">
 
             <TabItem Header="Pet Office" Style="{StaticResource FolderTabItemStyle}">
-                <views:PetOfficePanel/>
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Disabled"
+                    CanContentScroll="False">
+                    <views:PetOfficePanel/>
+                </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="CPU Analysis"
-                    Style="{StaticResource FolderTabItemStyle}">
-                <views:AnalysisPanel Margin="18"/>
-
+            <TabItem Header="CPU Analysis" Style="{StaticResource FolderTabItemStyle}">
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Disabled"
+                    CanContentScroll="False">
+                    <views:AnalysisPanel Margin="18"/>
+                </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Storage" Style="{StaticResource FolderTabItemStyle}">
