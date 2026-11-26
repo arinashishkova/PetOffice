@@ -36,5 +36,11 @@ namespace PetOffice.Core.Models
 
             return $"{Name} fixed a computer in the office.";
         }
+
+        protected override string GetRestoreEnergyMessage()
+        {
+            return
+                $"{Name} filled its cheeks with seeds, rested in the wheel, and restored energy to 100.";
+        }
     }
 }

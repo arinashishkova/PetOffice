@@ -8,6 +8,8 @@
 
         public string Name { get; set; } = "";
 
+        public string GroupName { get; set; } = "";
+
         public int Energy { get; set; }
 
         public int TasksCompleted { get; set; }

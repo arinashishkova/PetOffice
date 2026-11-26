@@ -3,201 +3,133 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:PetOffice.WpfApp.Views"
         Title="Pet Office"
-        Height="820"
-        Width="1050"
-        MinHeight="650"
+        Width="1180"
+        Height="700"
+        SizeToContent="Manual"
+        MinHeight="540"
         MinWidth="900"
         WindowStartupLocation="CenterScreen"
-        Background="#F8F6F4"
-        Icon="Assets/petoffice_icon.ico">
+        ResizeMode="CanResize"
+        Background="{StaticResource AppWindowBackgroundBrush}"
+        Icon="Assets/petoffice_icon.ico"
+        FontFamily="{StaticResource AppFontFamily}">
 
     <Window.Resources>
 
-        <!-- Rounded tab button -->
-        <Style x:Key="RoundedTabItemStyle"
-               TargetType="TabItem">
-
-            <Setter Property="Foreground"
-                    Value="#667085"/>
-
-            <Setter Property="FontSize"
-                    Value="14"/>
-
-            <Setter Property="FontWeight"
-                    Value="SemiBold"/>
-
-            <Setter Property="Background"
-                    Value="#F2F4F7"/>
-
-            <Setter Property="BorderBrush"
-                    Value="#E0E4E8"/>
-
-            <Setter Property="Cursor"
-                    Value="Hand"/>
+        <!-- ===================================================== -->
+        <!-- Folder-style Tab Item                                 -->
+        <!-- ===================================================== -->
+        <Style x:Key="FolderTabItemStyle" TargetType="TabItem">
+            <Setter Property="Foreground" Value="#6C7585"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="#EEF1F4"/>
+            <Setter Property="BorderBrush" Value="#D7DDE4"/>
+            <Setter Property="Cursor" Value="Hand"/>
 
             <Setter Property="Template">
-
                 <Setter.Value>
-
                     <ControlTemplate TargetType="TabItem">
-
-                        <!--
-                        Spacing is inside the template,
-                        so TabPanel does not cut the corners.
-                        -->
-                        <Grid Margin="4,3,4,3">
-
-                            <Border x:Name="TabBorder"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="11"
-                                    Padding="18,9">
-
-                                <ContentPresenter
-                                    ContentSource="Header"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
-
-                            </Border>
-
-                        </Grid>
+                        <Border x:Name="TabBorder"
+                                Margin="0,0,8,0"
+                                Padding="18,11"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="14,14,0,0">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              ContentSource="Header"/>
+                        </Border>
 
                         <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-
-                                <Setter TargetName="TabBorder"
-                                        Property="Background"
-                                        Value="#ECEFF3"/>
-
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#F5F6F8"/>
                             </Trigger>
-
-                            <Trigger Property="IsSelected"
-                                     Value="True">
-
-                                <Setter TargetName="TabBorder"
-                                        Property="Background"
-                                        Value="#E2DDF5"/>
-
-                                <Setter TargetName="TabBorder"
-                                        Property="BorderBrush"
-                                        Value="#CEC5EA"/>
-
-                                <Setter Property="Foreground"
-                                        Value="#4F4775"/>
-
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Foreground" Value="#4A5570"/>
+                                <Setter TargetName="TabBorder" Property="Background" Value="#FFFDFC"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="#D7DDE4"/>
+                                <Setter TargetName="TabBorder" Property="BorderThickness" Value="1,1,1,0"/>
+                                <Setter TargetName="TabBorder" Property="Margin" Value="0,0,8,-1"/>
                             </Trigger>
-
                         </ControlTemplate.Triggers>
-
                     </ControlTemplate>
-
                 </Setter.Value>
-
             </Setter>
-
         </Style>
 
 
-        <!-- Main tab container -->
-        <Style x:Key="RoundedTabControlStyle"
-               TargetType="TabControl">
-
-            <Setter Property="Background"
-                    Value="Transparent"/>
-
-            <Setter Property="BorderThickness"
-                    Value="0"/>
+        <!-- ===================================================== -->
+        <!-- Folder-style Tab Control                              -->
+        <!-- ===================================================== -->
+        <Style x:Key="FolderTabControlStyle" TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
 
             <Setter Property="Template">
-
                 <Setter.Value>
-
                     <ControlTemplate TargetType="TabControl">
-
-                        <Grid>
-
+                        <Grid ClipToBounds="False">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="6"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <!-- Tab buttons -->
                             <TabPanel Grid.Row="0"
+                                      Panel.ZIndex="10"
+                                      Margin="0,0,0,-1"
                                       IsItemsHost="True"
                                       Background="Transparent"/>
 
-
-                            <!-- Selected page -->
-                            <Border Grid.Row="2"
-                                    Background="#FFFDFC"
-                                    BorderBrush="#DFE3E6"
+                            <Border Grid.Row="1"
+                                    Background="{DynamicResource MainDotBackgroundBrush}"
+                                    BorderBrush="#D7DDE4"
                                     BorderThickness="1"
-                                    CornerRadius="14">
-
-                                <ContentPresenter
-                                    ContentSource="SelectedContent"/>
-
+                                    CornerRadius="0,16,16,16"
+                                    Padding="0">
+                                <ContentPresenter ContentSource="SelectedContent"/>
                             </Border>
-
                         </Grid>
-
                     </ControlTemplate>
-
                 </Setter.Value>
-
             </Setter>
-
         </Style>
 
     </Window.Resources>
 
 
     <Grid Margin="12">
+        <TabControl Style="{StaticResource FolderTabControlStyle}">
 
-        <TabControl
-            Style="{StaticResource RoundedTabControlStyle}">
-
-            <TabItem
-                Header="Pet Office"
-                Style="{StaticResource RoundedTabItemStyle}">
-
-                <views:PetOfficePanel/>
-
-            </TabItem>
-
-
-            <TabItem
-                Header="CPU Analysis"
-                Style="{StaticResource RoundedTabItemStyle}">
-
+            <TabItem Header="Pet Office" Style="{StaticResource FolderTabItemStyle}">
                 <ScrollViewer
                     VerticalScrollBarVisibility="Auto"
-                    HorizontalScrollBarVisibility="Disabled">
-
-                    <views:AnalysisPanel Margin="18"/>
-
+                    HorizontalScrollBarVisibility="Disabled"
+                    CanContentScroll="False">
+                    <views:PetOfficePanel/>
                 </ScrollViewer>
-
             </TabItem>
 
-            <TabItem Header="Storage"
-         Style="{StaticResource RoundedTabItemStyle}">
-
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
-
-                    <views:StoragePanel Margin="18"/>
-
+            <TabItem Header="CPU Analysis" Style="{StaticResource FolderTabItemStyle}">
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Disabled"
+                    CanContentScroll="False">
+                    <views:AnalysisPanel Margin="18"/>
                 </ScrollViewer>
+            </TabItem>
 
+            <TabItem Header="Storage" Style="{StaticResource FolderTabItemStyle}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              Background="Transparent">
+                    <views:StoragePanel/>
+                </ScrollViewer>
             </TabItem>
 
         </TabControl>
-
     </Grid>
 
 </Window>

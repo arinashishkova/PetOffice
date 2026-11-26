@@ -1,159 +1,169 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace PetOffice.Core.Models
 {
-    public abstract class OfficePet
+    public abstract class OfficePet : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public Guid Id { get; private set; }
         public string Name { get; }
+        public string GroupName { get; private set; }
         public int Energy { get; private set; }
         public int TasksCompleted { get; private set; }
-
-        // reaction state
         public int ReactionsCount { get; private set; }
 
-        public string DisplayName =>
-            $"{Name} - {GetType().Name}";
+        public string DisplayName => $"{Name} - {GetType().Name}";
+
 
         protected OfficePet(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentException(
-                    "Name is required.");
+                throw new ArgumentException("Name is required.");
             }
 
             Id = Guid.NewGuid();
             Name = name.Trim();
+            GroupName = OfficeGroups.PawformanceHub;
+
             Energy = 100;
             TasksCompleted = 0;
             ReactionsCount = 0;
         }
 
-        public abstract string Work();
 
+        public abstract string Work();
         public abstract string CrazyAction();
 
-        // restores saved state after loading
-        internal void RestoreState(
-            Guid id,
-            int energy,
-            int tasksCompleted,
-            int reactionsCount)
+
+        public void ChangeGroup(string groupName)
+        {
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                throw new ArgumentException("Group name is required.", nameof(groupName));
+            }
+
+            string newGroup = groupName.Trim();
+
+            if (GroupName == newGroup) return;
+
+            GroupName = newGroup;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GroupName)));
+        }
+
+
+        // Restores saved state after loading.
+        internal void RestoreState(Guid id, string groupName, int energy, int tasksCompleted, int reactionsCount)
         {
             if (id == Guid.Empty)
             {
-                throw new ArgumentException(
-                    "Pet ID is required.");
+                throw new ArgumentException("Pet ID is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                throw new ArgumentException("Group name is required.");
             }
 
             if (energy < 0 || energy > 100)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(energy),
-                    "Energy must be between 0 and 100.");
+                throw new ArgumentOutOfRangeException(nameof(energy), "Energy must be between 0 and 100.");
             }
 
             if (tasksCompleted < 0)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(tasksCompleted),
-                    "Tasks completed cannot be negative.");
+                throw new ArgumentOutOfRangeException(nameof(tasksCompleted), "Tasks completed cannot be negative.");
             }
 
             if (reactionsCount < 0)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(reactionsCount),
-                    "Reactions count cannot be negative.");
+                throw new ArgumentOutOfRangeException(nameof(reactionsCount), "Reactions count cannot be negative.");
             }
 
             Id = id;
+            GroupName = groupName.Trim();
             Energy = energy;
             TasksCompleted = tasksCompleted;
             ReactionsCount = reactionsCount;
         }
 
+
         protected void SpendEnergy(int amount)
         {
             if (amount <= 0)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(amount),
-                    "Energy amount must be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(amount), "Energy amount must be greater than 0.");
             }
 
             if (amount > Energy)
             {
-                throw new InvalidOperationException(
-                    "Not enough energy.");
+                throw new InvalidOperationException("Not enough energy.");
             }
 
             Energy -= amount;
         }
 
+
         protected void RestoreEnergy(int amount)
         {
             if (amount <= 0)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(amount),
-                    "Energy amount must be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(amount), "Energy amount must be greater than 0.");
             }
 
-            Energy = Math.Min(
-                100,
-                Energy + amount);
+            Energy = Math.Min(100, Energy + amount);
         }
 
-        protected void CompleteTask()
-        {
-            TasksCompleted++;
-        }
 
-        internal void HandlePetAdded(
-            object? sender,
-            OfficePetEventArgs e)
+        public string RestoreToFullEnergy()
         {
-            if (ReferenceEquals(this, e.Source))
+            if (Energy >= 100)
             {
-                return;
+                return $"{DisplayName} already has full energy.";
             }
+
+            int restoredAmount = 100 - Energy;
+            RestoreEnergy(restoredAmount);
+
+            return GetRestoreEnergyMessage();
+        }
+
+
+        protected virtual string GetRestoreEnergyMessage()
+        {
+            return $"{DisplayName} took a break and restored energy to 100.";
+        }
+
+
+        protected void CompleteTask() => TasksCompleted++;
+
+
+        internal void HandlePetAdded(object? sender, OfficePetEventArgs e)
+        {
+            if (ReferenceEquals(this, e.Source)) return;
 
             ReactionsCount++;
-
-            e.AddReaction(
-                $"{DisplayName} welcomes {e.Source.DisplayName}.");
+            e.AddReaction($"{DisplayName} welcomes {e.Source.DisplayName}.");
         }
 
-        internal void HandlePetRemoved(
-            object? sender,
-            OfficePetEventArgs e)
+
+        internal void HandlePetRemoved(object? sender, OfficePetEventArgs e)
         {
-            if (ReferenceEquals(this, e.Source))
-            {
-                return;
-            }
+            if (ReferenceEquals(this, e.Source)) return;
 
             ReactionsCount++;
-
-            e.AddReaction(
-                $"{DisplayName} says goodbye to {e.Source.DisplayName}.");
+            e.AddReaction($"{DisplayName} says goodbye to {e.Source.DisplayName}.");
         }
 
-        internal void HandleCrazyAction(
-            object? sender,
-            OfficePetEventArgs e)
+
+        internal void HandleCrazyAction(object? sender, OfficePetEventArgs e)
         {
-            if (ReferenceEquals(this, e.Source))
-            {
-                return;
-            }
+            if (ReferenceEquals(this, e.Source)) return;
 
             ReactionsCount++;
-
-            e.AddReaction(
-                $"{DisplayName} reacts to {e.Source.DisplayName}'s crazy action.");
+            e.AddReaction($"{DisplayName} reacts to {e.Source.DisplayName}'s crazy action.");
         }
     }
 }

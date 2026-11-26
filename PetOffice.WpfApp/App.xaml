@@ -5,5 +5,18 @@
 
     <Application.Resources>
 
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="Styles/Theme.xaml"/>
+                <ResourceDictionary Source="Styles/Patterns.xaml"/>
+                <ResourceDictionary Source="Styles/Controls.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
     </Application.Resources>
+
 </Application>

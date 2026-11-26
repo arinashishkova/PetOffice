@@ -40,5 +40,11 @@ namespace PetOffice.Core.Models
 
             return $"{Name} sent a very serious message to the whole office.";
         }
+
+        protected override string GetRestoreEnergyMessage()
+        {
+            return
+                $"{Name} curled up in a warm spot, took a nap, and restored energy to 100.";
+        }
     }
 }
