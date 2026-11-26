@@ -1,8 +1,11 @@
-﻿namespace PetOffice.Core.Persistence.Dto
+﻿
+using System.Text.Json.Serialization;
+
+namespace PetOffice.Core.Persistence.Dto
 {
     public class WorldDto
     {
-        public List<PetDto> Pets { get; set; }
-            = new();
+        [JsonRequired]
+        public List<PetDto> Pets { get; set; } = new();
     }
 }
