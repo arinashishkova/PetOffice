@@ -58,7 +58,7 @@
 
                         <!-- PET ICON -->
                         <Border Grid.Column="0" Width="44" Height="44" Background="#70FFFFFF" CornerRadius="9" VerticalAlignment="Center">
-                            <Image Source="{Binding SelectedPetIconPath}" Width="38" Height="38" Stretch="Uniform"
+                            <Image Source="{Binding SelectedPetIconPath, TargetNullValue={x:Null}}" Width="38" Height="38" Stretch="Uniform"
                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
 
